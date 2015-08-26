@@ -1,6 +1,6 @@
 # fnafb-in-gm
 Porting Five Nights at F***boy's to GML  
-By porting FNaFB to GML, it will be able to run on other platforms, e.g. Android, iOS, Windows Phone, Better support for Windows 7+, Mac OSX, Linux, HTML 5 and even more!  
+By porting FNaFB to GML, it will be able to run on other platforms, e.g. Android, iOS, Windows Phone, Better support for Windows 7+, Mac OSX, Linux, HTML 5 and even more! Plus, the rpgmaker runtime won't be required to play.
 
 Anyone experienced in writing GML and/or testing game logic is welcome.
 
