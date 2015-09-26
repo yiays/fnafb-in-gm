@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-10000</depth>
   <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -60,6 +60,7 @@ if global.saveslot&gt;0 {
           <argument>
             <kind>1</kind>
             <string>///Destroy Self
+room_goto(rmStage);
 instance_destroy();
 </string>
           </argument>
@@ -92,6 +93,37 @@ instance_destroy();
        alarm[0]=20;
        newgame=0;
     }
+} else {
+  if fade&gt;0 {
+     fade=fade-0.05;
+  }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Draw game gui
+if room&gt;rmInitGame {
+    draw_set_alpha(0.3);
+    draw_sprite_stretched(sprStatic,-1,0,0,2.27,3.09);
 }
 </string>
           </argument>
@@ -116,7 +148,7 @@ instance_destroy();
           <argument>
             <kind>1</kind>
             <string>///Draw git gud and join today poster
-if newgame {
+if fade&gt;0 {
     draw_set_alpha(1);
     draw_set_colour(c_black);
     draw_rectangle(0,0,544,416,0);

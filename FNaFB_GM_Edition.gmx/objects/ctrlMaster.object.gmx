@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-10000</depth>
   <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,8 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Stop Music and transition
-audio_stop_all();
+            <string>///End Game
+
 </string>
           </argument>
         </arguments>
@@ -49,7 +49,8 @@ audio_stop_all();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>room_goto(1);
+            <string>///Initialize
+room_goto(1);
 globalvar input, gamemode, copyright, saveslot;
 input=-1;
 copyright=0;

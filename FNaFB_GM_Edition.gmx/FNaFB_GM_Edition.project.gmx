@@ -93,8 +93,6 @@
       <sound>sound\sndfoxy2</sound>
       <sound>sound\sndfoxy3</sound>
       <sound>sound\sndfoxy4</sound>
-      <sound>sound\sndfredd13</sound>
-      <sound>sound\sndfreddy1b</sound>
       <sound>sound\sndfreddy2</sound>
       <sound>sound\sndfreddy3</sound>
       <sound>sound\sndfreddy4</sound>
@@ -106,6 +104,7 @@
       <sound>sound\sndfreddy10</sound>
       <sound>sound\sndfreddy11</sound>
       <sound>sound\sndfreddy12</sound>
+      <sound>sound\sndfreddy13</sound>
       <sound>sound\sndfreddy14</sound>
       <sound>sound\sndfreddy15</sound>
       <sound>sound\sndfreddy16</sound>
@@ -154,10 +153,10 @@
       <sprite>sprites\sprBonBon1</sprite>
       <sprite>sprites\sprgammapartyhat</sprite>
       <sprite>sprites\sprGolden_Freddy</sprite>
-      <sprite>sprites\sprMangle</sprite>
+      <sprite>sprites\spreneMangle</sprite>
       <sprite>sprites\spromegapartyhat</sprite>
       <sprite>sprites\sprpartyhat</sprite>
-      <sprite>sprites\sprpuppet</sprite>
+      <sprite>sprites\sprenePuppet</sprite>
       <sprite>sprites\sprPuppetmaster</sprite>
       <sprite>sprites\sprSecurity_Camera</sprite>
       <sprite>sprites\sprToy_Chica</sprite>
@@ -179,6 +178,28 @@
       <sprite>sprites\sprStatic</sprite>
       <sprite>sprites\sprPowerBar</sprite>
       <sprite>sprites\sprDialouge</sprite>
+    </sprites>
+    <sprites name="Characters">
+      <sprite>sprites\sprFreddy</sprite>
+      <sprite>sprites\sprBonnie</sprite>
+      <sprite>sprites\sprChica</sprite>
+      <sprite>sprites\sprFoxy</sprite>
+      <sprite>sprites\sprBB</sprite>
+      <sprite>sprites\sprToyFreddy</sprite>
+      <sprite>sprites\sprToyBonnie</sprite>
+      <sprite>sprites\sprToyChica</sprite>
+      <sprite>sprites\sprMangle</sprite>
+      <sprite>sprites\sprCamera</sprite>
+      <sprite>sprites\sprMyCollection</sprite>
+      <sprite>sprites\sprHeadlessbb</sprite>
+      <sprite>sprites\sprHeadlessBonnie</sprite>
+      <sprite>sprites\sprMegaPuppet</sprite>
+      <sprite>sprites\sprPuppet</sprite>
+      <sprite>sprites\sprMinigameFreddy</sprite>
+    </sprites>
+    <sprites name="Objects">
+      <sprite>sprites\sprWall</sprite>
+      <sprite>sprites\sprEdge</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background">
@@ -207,6 +228,7 @@
       <background>background\bgPizza1</background>
       <background>background\bgPizza2</background>
       <background>background\bgPizza3</background>
+      <background>background\bgHeads</background>
     </backgrounds>
     <backgrounds name="Overlays">
       <background>background\bgScanlines</background>
@@ -219,6 +241,7 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\dialouge.gml</script>
+    <script>scripts\animatePlayer.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntMain</font>
@@ -232,10 +255,18 @@
       <object>objects\ctrlNewGame</object>
       <object>objects\ctrlGame</object>
     </objects>
+    <objects name="In-Game">
+      <object>objects\objWall</object>
+      <object>objects\objEdge</object>
+      <objects name="Characters">
+        <object>objects\objFreddy</object>
+      </objects>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rmInit</room>
     <room>rooms\rmIntro</room>
+    <room>rooms\rmInitGame</room>
     <room>rooms\rmStage</room>
   </rooms>
   <help>

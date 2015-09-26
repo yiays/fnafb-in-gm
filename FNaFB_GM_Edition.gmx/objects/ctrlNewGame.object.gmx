@@ -64,7 +64,7 @@ audio_stop_sound(bgmFNAFtitle);
    if step==2 {
       global.gamemode=global.input;
       global.input=-1;
-      instance_create(ctrlGame,0,0);
+      room_goto(rmInitGame);
       instance_destroy();
    }
    step++;
