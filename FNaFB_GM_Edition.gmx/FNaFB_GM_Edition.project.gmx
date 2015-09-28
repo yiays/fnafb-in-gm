@@ -3,6 +3,42 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
+  <datafiles number="2" name="datafiles">
+    <datafile>
+      <name>notslot1.meta</name>
+      <exists>-1</exists>
+      <size>192</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>17593040736494</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>notslot1.meta</filename>
+    </datafile>
+    <datafile>
+      <name>en.ini</name>
+      <exists>-1</exists>
+      <size>1728</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>en.ini</filename>
+    </datafile>
+  </datafiles>
   <NewExtensions/>
   <sounds name="sound">
     <sounds name="BGM">
@@ -45,7 +81,6 @@
       <sound>sound\sndcasseteclick</sound>
       <sound>sound\sndcasseteclick2</sound>
       <sound>sound\sndChica1</sound>
-      <sound>sound\sndfreddy1</sound>
       <sound>sound\sndwalk1</sound>
       <sound>sound\sndwalk2</sound>
       <sound>sound\sndwalk3</sound>
@@ -93,6 +128,7 @@
       <sound>sound\sndfoxy2</sound>
       <sound>sound\sndfoxy3</sound>
       <sound>sound\sndfoxy4</sound>
+      <sound>sound\sndfreddy1</sound>
       <sound>sound\sndfreddy2</sound>
       <sound>sound\sndfreddy3</sound>
       <sound>sound\sndfreddy4</sound>
@@ -199,7 +235,7 @@
     </sprites>
     <sprites name="Objects">
       <sprite>sprites\sprWall</sprite>
-      <sprite>sprites\sprEdge</sprite>
+      <sprite>sprites\sprStairs</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background">
@@ -228,7 +264,8 @@
       <background>background\bgPizza1</background>
       <background>background\bgPizza2</background>
       <background>background\bgPizza3</background>
-      <background>background\bgHeads</background>
+      <background>background\tileHeads</background>
+      <background>background\tileGame</background>
     </backgrounds>
     <backgrounds name="Overlays">
       <background>background\bgScanlines</background>
@@ -242,6 +279,8 @@
   <scripts name="scripts">
     <script>scripts\dialouge.gml</script>
     <script>scripts\animatePlayer.gml</script>
+    <script>scripts\hms.gml</script>
+    <script>scripts\script4.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntMain</font>
@@ -257,12 +296,12 @@
     </objects>
     <objects name="In-Game">
       <object>objects\objWall</object>
-      <object>objects\objEdge</object>
-      <objects name="Characters">
-        <object>objects\objFreddy</object>
-      </objects>
+      <object>objects\objWallLevel1</object>
+      <object>objects\objStairs</object>
+      <object>objects\objFreddy</object>
     </objects>
   </objects>
+  <timelines name="timelines"/>
   <rooms name="rooms">
     <room>rooms\rmInit</room>
     <room>rooms\rmIntro</room>

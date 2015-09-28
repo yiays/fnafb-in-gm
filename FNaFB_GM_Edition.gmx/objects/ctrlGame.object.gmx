@@ -28,6 +28,7 @@
             <string>///Load Game and Go to appropriate room
 show_debug_message("Starting game...");
 newgame=0;
+gametime=0;
 if global.saveslot&gt;0 {
    game_load("slot"+string(global.saveslot)+".fnafb");
    show_debug_message("Loaded game in slot "+string(global.saveslot)+"!");
@@ -59,9 +60,9 @@ if global.saveslot&gt;0 {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Destroy Self
+            <string>///Start new game
 room_goto(rmStage);
-instance_destroy();
+audio_play_sound(bgmambience2,100,1);
 </string>
           </argument>
         </arguments>
@@ -98,6 +99,10 @@ instance_destroy();
      fade=fade-0.05;
   }
 }
+if keyboard_check_pressed(vk_alt) {
+    instance_create(256,96,objFreddy);
+}
+
 </string>
           </argument>
         </arguments>
@@ -124,6 +129,7 @@ instance_destroy();
 if room&gt;rmInitGame {
     draw_set_alpha(0.3);
     draw_sprite_stretched(sprStatic,-1,0,0,2.27,3.09);
+    draw_set_alpha(1);
 }
 </string>
           </argument>
@@ -154,6 +160,7 @@ if fade&gt;0 {
     draw_rectangle(0,0,544,416,0);
     draw_set_alpha(fade);
     draw_sprite(seqNews,0,0,0);
+    draw_set_alpha(1);
 }
 </string>
           </argument>

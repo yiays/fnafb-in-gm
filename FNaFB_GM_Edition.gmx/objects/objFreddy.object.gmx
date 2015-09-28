@@ -29,6 +29,77 @@
 udlri=4;
 move=1;
 dspeed=2;
+onstage=1;
+
+//Say arr you ready for freddy.
+talking=1;
+say="1";
+saydelay=20;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Ridiculous script to map sounds to an array
+sndfreddy[1]=sndfreddy1;
+sndfreddy[2]=sndfreddy2;
+sndfreddy[3]=sndfreddy3;
+sndfreddy[4]=sndfreddy4;
+sndfreddy[5]=sndfreddy5;
+sndfreddy[6]=sndfreddy6;
+sndfreddy[7]=sndfreddy7;
+sndfreddy[8]=sndfreddy8;
+sndfreddy[9]=sndfreddy9;
+sndfreddy[10]=sndfreddy10;
+sndfreddy[11]=sndfreddy11;
+sndfreddy[12]=sndfreddy12;
+sndfreddy[13]=sndfreddy13;
+sndfreddy[14]=sndfreddy14;
+sndfreddy[15]=sndfreddy15;
+sndfreddy[16]=sndfreddy16;
+sndfreddy[17]=sndfreddy17;
+sndfreddy[18]=sndfreddy18;
+sndfreddy[19]=sndfreddy19;
+sndfreddy[20]=sndfreddy20;
+sndfreddy[21]=sndfreddy21;
+sndfreddy[22]=sndfreddy22;
+sndfreddy[23]=sndfreddy23;
+sndfreddy[24]=sndfreddy24;
+sndfreddy[25]=sndfreddy25;
+sndfreddy[26]=sndfreddy26;
+sndfreddy[27]=sndfreddy27;
+sndfreddy[28]=sndfreddy28;
+sndfreddy[29]=sndfreddy29;
+sndfreddy[31]=sndfreddy31;
+sndfreddy[32]=sndfreddy32;
+sndfreddy[33]=sndfreddy33;
+sndfreddy[34]=sndfreddy34;
+sndfreddy[35]=sndfreddy35;
+sndfreddy[36]=sndfreddy36;
+sndfreddy[37]=sndfreddy37;
+sndfreddy[38]=sndfreddy38;
+sndfreddy[39]=sndfreddy39;
+sndfreddy[40]=sndfreddy40;
+sndfreddy[41]=sndfreddy41;
+sndfreddy[42]=sndfreddy42;
+sndfreddy[43]=sndfreddy43;
+sndfreddy[44]=sndfreddy44;
+sndfreddy[45]=sndfreddy45;
 </string>
           </argument>
         </arguments>
@@ -57,30 +128,68 @@ if keyboard_check(vk_shift) {
 } else {
     mspeed=dspeed;
 }
-if move or udlri==4 {
+if instance_position(x,y,objStairs) {
+    if instance_nearest(x,y,objStairs).ud {
+        if udlri==1 {
+            onstage=0;
+        } else {
+            onstage=1;
+        }
+    } else {
+        if udlri==1 {
+            onstage=1;
+        } else {
+            onstage=0;
+        }
+    }
+}
+if talking {
+    udlr=4;
+}
+if (move or udlri==4) &amp;&amp; !talking {
     udlr=4;
     if keyboard_check(vk_up) {
         if place_free(x,y-32) {
-            udlri=0;
-            move=0;
+            if onstage &amp;&amp; !instance_position(x,y-32,objWallLevel1) {
+                udlri=0;
+                move=0;
+            } else {
+                udlri=0;
+                move=0;
+            }
         }
     }
     if keyboard_check(vk_down) {
         if place_free(x,y+32) {
-            udlri=1;
-            move=0;
+            if onstage &amp;&amp; !instance_position(x,y+32,objWallLevel1) {
+                udlri=1;
+                move=0;
+            } else {
+                udlri=1;
+                move=0;
+            }
         }
     }
     if keyboard_check(vk_left) {
         if place_free(x-32,y) {
-            udlri=2;
-            move=0;
+            if onstage &amp;&amp; !instance_position(x-32,y,objWallLevel1) {
+                udlri=2;
+                move=0;
+            } else {
+                udlri=2;
+                move=0;
+            }
         }
     }
     if keyboard_check(vk_right) {
         if place_free(x+32,y) {
-            udlri=3;
-            move=0;
+            if onstage &amp;&amp; !instance_position(x+32,y,objWallLevel1) {
+                udlri=3;
+                move=0;
+            } else {
+                udlri=3;
+                move=0;
+            }
         }
     }
 } else {
@@ -104,6 +213,72 @@ if move or udlri==4 {
 }
 
 animatePlayer(udlri,mspeed);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Overcomplicated dialouge script
+if say!="0" {
+    if saydelay&gt;0 {
+        saydelay--;
+    } else {
+        audio_play_sound(sndfreddy[real(say)],99,0);
+        ini_open(working_directory+"en.ini");
+        if !ini_read_string("freddy",say,"ERR: STRING UNDEFINED!")=="-1" {
+            dialouge(ini_read_string("freddy",say,"ERR: STRING UNDEFINED!"),0,0);
+        }
+        ini_close();
+        say="0";
+    }
+}
+//Test speech
+if keyboard_check_pressed(vk_f2) {
+    say=string(real(say)+1);
+    saydelay=20;
+    talking=1;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="13">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Stop talking
+if talking &amp;&amp; saydelay==0 {
+    talking=0;
+}
 </string>
           </argument>
         </arguments>
