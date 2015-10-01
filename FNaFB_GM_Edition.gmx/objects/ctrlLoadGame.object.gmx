@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>///Init
+audio_stop_all();
 option=0;
 options=4;
 otext[0]="File 1";
@@ -138,7 +139,8 @@ repeat(4) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if background_alpha[1]&lt;1 &amp;&amp; transition == 1 {
+            <string>///Transition into page
+if background_alpha[1]&lt;1 &amp;&amp; transition == 1 {
     background_alpha[1]=background_alpha[1]+0.05;
 }
 if transition == 0 {
@@ -147,6 +149,43 @@ if transition == 0 {
 if background_alpha[1]==0 {
     instance_create(0,288,ctrlIntro);
     instance_destroy();
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Mouse controls
+if os_windows||os_linux||os_macosx||os_unknown {
+    //Do mouse related stuff
+    var i=0;
+    repeat(options) {
+        if mouse_y&gt;64+(i*80)&amp;&amp;mouse_y&lt;64+((i+1)*80) {
+            if option!=i {
+                option=i;
+                audio_play_sound(sndblip3,90,0);
+            }
+        }
+        i++;
+    }
+    if mouse_check_button_pressed(mb_left)&amp;&amp;mouse_y&gt;y&amp;&amp;mouse_y&lt;64+options*80 {
+        event_perform(ev_keypress,vk_enter);
+    }
 }
 </string>
           </argument>

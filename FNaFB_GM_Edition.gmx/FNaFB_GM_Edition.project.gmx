@@ -3,7 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="2" name="datafiles">
+  <datafiles number="3" name="datafiles">
     <datafile>
       <name>notslot1.meta</name>
       <exists>-1</exists>
@@ -37,6 +37,23 @@
         </Config>
       </ConfigOptions>
       <filename>en.ini</filename>
+    </datafile>
+    <datafile>
+      <name>settings.ini</name>
+      <exists>-1</exists>
+      <size>0</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>settings.ini</filename>
     </datafile>
   </datafiles>
   <NewExtensions/>
@@ -202,7 +219,6 @@
       <sprite>sprites\sprFaces</sprite>
     </sprites>
     <sprites name="System">
-      <sprite>sprites\sprWindow</sprite>
       <sprite>sprites\sprGameOver</sprite>
     </sprites>
     <sprites name="Sequences">
@@ -213,7 +229,9 @@
       <sprite>sprites\sprMap</sprite>
       <sprite>sprites\sprStatic</sprite>
       <sprite>sprites\sprPowerBar</sprite>
+      <sprite>sprites\sprRec</sprite>
       <sprite>sprites\sprDialouge</sprite>
+      <sprite>sprites\sprBar</sprite>
     </sprites>
     <sprites name="Characters">
       <sprite>sprites\sprFreddy</sprite>
@@ -232,10 +250,16 @@
       <sprite>sprites\sprMegaPuppet</sprite>
       <sprite>sprites\sprPuppet</sprite>
       <sprite>sprites\sprMinigameFreddy</sprite>
+      <sprite>sprites\sprHats</sprite>
     </sprites>
     <sprites name="Objects">
       <sprite>sprites\sprWall</sprite>
       <sprite>sprites\sprStairs</sprite>
+      <sprite>sprites\sprDoor</sprite>
+      <sprite>sprites\sprSign</sprite>
+      <sprite>sprites\sprSatanDesk</sprite>
+      <sprite>sprites\sprTable</sprite>
+      <sprite>sprites\sprShortTable</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background">
@@ -264,15 +288,12 @@
       <background>background\bgPizza1</background>
       <background>background\bgPizza2</background>
       <background>background\bgPizza3</background>
-      <background>background\tileHeads</background>
       <background>background\tileGame</background>
     </backgrounds>
     <backgrounds name="Overlays">
       <background>background\bgScanlines</background>
-      <background>background\bgBars</background>
       <background>background\bgOverlay</background>
       <background>background\bgPuppetOverlay</background>
-      <background>background\bgNight</background>
     </backgrounds>
   </backgrounds>
   <paths name="paths"/>
@@ -281,7 +302,11 @@
     <script>scripts\animatePlayer.gml</script>
     <script>scripts\hms.gml</script>
     <script>scripts\script4.gml</script>
+    <script>scripts\script5.gml</script>
   </scripts>
+  <shaders name="shaders">
+    <shader type="GLSLES">shaders\shdMosaic.shader</shader>
+  </shaders>
   <fonts name="fonts">
     <font>fonts\fntMain</font>
   </fonts>
@@ -291,23 +316,44 @@
     <objects name="Menus">
       <object>objects\ctrlIntro</object>
       <object>objects\ctrlLoadGame</object>
+      <object>objects\ctrlSettings</object>
       <object>objects\ctrlNewGame</object>
       <object>objects\ctrlGame</object>
+      <object>objects\ctrldev</object>
     </objects>
     <objects name="In-Game">
       <object>objects\objWall</object>
-      <object>objects\objWallLevel1</object>
+      <object>objects\objWall1</object>
+      <object>objects\objWall2</object>
       <object>objects\objStairs</object>
+      <object>objects\objDoor</object>
+      <object>objects\objBathDoor</object>
       <object>objects\objFreddy</object>
+      <object>objects\objMyCollection</object>
+      <object>objects\objSatanDesk</object>
+      <object>objects\objTable</object>
+      <object>objects\objShortTable</object>
     </objects>
   </objects>
-  <timelines name="timelines"/>
   <rooms name="rooms">
     <room>rooms\rmInit</room>
     <room>rooms\rmIntro</room>
-    <room>rooms\rmInitGame</room>
     <room>rooms\rmStage</room>
+    <room>rooms\rmBackroom</room>
+    <room>rooms\rmBathroom</room>
+    <room>rooms\rmPirateCove</room>
+    <room>rooms\rmWestHall</room>
+    <room>rooms\rmWestHallCorner</room>
+    <room>rooms\rmEastHall</room>
+    <room>rooms\rmEastHallCorner</room>
+    <room>rooms\rmCloset</room>
   </rooms>
+  <constants number="4">
+    <constant name="version">0</constant>
+    <constant name="major">0</constant>
+    <constant name="minor">1</constant>
+    <constant name="build">"-alpha2"</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>

@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-10000</depth>
+  <depth>-100</depth>
   <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -29,6 +29,9 @@
 show_debug_message("Starting game...");
 newgame=0;
 gametime=0;
+rmpower=0;
+rmindex=9;
+
 if global.saveslot&gt;0 {
    game_load("slot"+string(global.saveslot)+".fnafb");
    show_debug_message("Loaded game in slot "+string(global.saveslot)+"!");
@@ -38,6 +41,29 @@ if global.saveslot&gt;0 {
   fade=0;
   fadeinout=0;
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>instance_create(256,96,objFreddy);
 </string>
           </argument>
         </arguments>
@@ -63,6 +89,7 @@ if global.saveslot&gt;0 {
             <string>///Start new game
 room_goto(rmStage);
 audio_play_sound(bgmambience2,100,1);
+alarm[1]=1;
 </string>
           </argument>
         </arguments>
@@ -102,7 +129,6 @@ audio_play_sound(bgmambience2,100,1);
 if keyboard_check_pressed(vk_alt) {
     instance_create(256,96,objFreddy);
 }
-
 </string>
           </argument>
         </arguments>
@@ -126,10 +152,18 @@ if keyboard_check_pressed(vk_alt) {
           <argument>
             <kind>1</kind>
             <string>///Draw game gui
-if room&gt;rmInitGame {
+if !newgame {
+    draw_set_alpha(0.2);
+    draw_set_colour(c_black);
+    draw_rectangle(0,0,544,416,0);
     draw_set_alpha(0.3);
-    draw_sprite_stretched(sprStatic,-1,0,0,2.27,3.09);
+    draw_sprite_stretched(sprStatic,-1,0,0,544,416);
     draw_set_alpha(1);
+    draw_background(bgOverlay,0,0);
+    draw_sprite(sprMap,rmindex,544,416);
+    draw_sprite(sprPowerBar,rmpower,272,384);
+    draw_sprite(sprRec,0,0,416);
+    draw_background_tiled(bgScanlines,0,0);
 }
 </string>
           </argument>

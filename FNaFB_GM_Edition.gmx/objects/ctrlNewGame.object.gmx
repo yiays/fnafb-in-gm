@@ -64,10 +64,37 @@ audio_stop_sound(bgmFNAFtitle);
    if step==2 {
       global.gamemode=global.input;
       global.input=-1;
-      room_goto(rmInitGame);
+      instance_create(0,0,ctrlGame);
       instance_destroy();
    }
    step++;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Mouse controls
+if os_windows||os_linux||os_macosx||os_unknown {
+    //Do mouse related stuff
+    if mouse_check_button_pressed(mb_left) {
+        event_perform(ev_keypress,vk_enter);
+    }
 }
 </string>
           </argument>

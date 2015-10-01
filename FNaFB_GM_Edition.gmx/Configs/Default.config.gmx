@@ -35,7 +35,7 @@
     <option_android_icon_xxhdpi>Configs\Default\android\icons\icon_xxhdpi.png</option_android_icon_xxhdpi>
     <option_android_icon_xxxhdpi>Configs\Default\android\icons\icon_xxxhdpi.png</option_android_icon_xxxhdpi>
     <option_android_install_location>preferExternal</option_android_install_location>
-    <option_android_interpolate>-1</option_android_interpolate>
+    <option_android_interpolate>0</option_android_interpolate>
     <option_android_licensing_enable>0</option_android_licensing_enable>
     <option_android_licensing_key></option_android_licensing_key>
     <option_android_major_version>0</option_android_major_version>
@@ -104,7 +104,7 @@
     <option_html5_google_tracking_id></option_html5_google_tracking_id>
     <option_html5_icon>Configs\Default\html5\fav.ico</option_html5_icon>
     <option_html5_index>-1</option_html5_index>
-    <option_html5_interpolate>-1</option_html5_interpolate>
+    <option_html5_interpolate>0</option_html5_interpolate>
     <option_html5_jsprepend></option_html5_jsprepend>
     <option_html5_loadingbar>-1</option_html5_loadingbar>
     <option_html5_localrunalert>True</option_html5_localrunalert>
@@ -122,7 +122,7 @@
     <option_in_app_purchase_sandbox_mode>0</option_in_app_purchase_sandbox_mode>
     <option_in_app_purchase_server_url></option_in_app_purchase_server_url>
     <option_information>Five Nights at F**boys - GameMaker Edition is a project by Twisted Fork to port the game - Five Nights at F**boys - by Sable Lynn and Joshua Shaw - to GameMaker so that it can be played on mobile devices, and any device other than windows!</option_information>
-    <option_interpolate>True</option_interpolate>
+    <option_interpolate>False</option_interpolate>
     <option_ios_adcolony_enable_V4VC>0</option_ios_adcolony_enable_V4VC>
     <option_ios_advertising_enable>0</option_ios_advertising_enable>
     <option_ios_advertising_key></option_ios_advertising_key>
@@ -332,7 +332,7 @@
     <option_win8_certificate_location>Windows8_TemporaryKey.pfx</option_win8_certificate_location>
     <option_win8_display_name>FNaFB - GM Edition</option_win8_display_name>
     <option_win8_internet_capable>-1</option_win8_internet_capable>
-    <option_win8_interpolate>-1</option_win8_interpolate>
+    <option_win8_interpolate>0</option_win8_interpolate>
     <option_win8_landscape_allowed>-1</option_win8_landscape_allowed>
     <option_win8_landscape_flipped_allowed>-1</option_win8_landscape_flipped_allowed>
     <option_win8_logo>Configs\Default\Windows8\logos\logo150.png</option_win8_logo>
@@ -358,7 +358,7 @@
     <option_win8_texture_page>1024</option_win8_texture_page>
     <option_win8_wide_logo>Configs\Default\Windows8\logos\logo310.png</option_win8_wide_logo>
     <option_windowcolor>clBlack</option_windowcolor>
-    <option_windows_build_version>0</option_windows_build_version>
+    <option_windows_build_version>1</option_windows_build_version>
     <option_windows_company_info>Twisted Fork</option_windows_company_info>
     <option_windows_copyright_info>Creative Commons Attribution 3.0</option_windows_copyright_info>
     <option_windows_description_info>FNAFB for everyone!</option_windows_description_info>

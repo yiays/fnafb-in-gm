@@ -27,13 +27,57 @@
             <kind>1</kind>
             <string>///Init
 option=1;
-options=2;
+options=3;
 otext[0]="New Game";
 otext[1]="Continue";
+otext[2]="Settings";
+if os_windows||os_linux||os_macosx||os_unknown {
+    options++;
+    otext[array_length_1d(otext)]="Exit Game";
+}
 fade=1;
 fadeinout=1;
 
 audio_play_sound(bgmFNAFtitle,100,1);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Mouse controls
+if os_windows||os_linux||os_macosx||os_unknown {
+    //Do mouse related stuff
+    var i=0;
+    repeat(options) {
+        if mouse_y&gt;y+(i*24)&amp;&amp;mouse_y&lt;y+((i+1)*24) {
+            if option!=i {
+                option=i;
+                audio_play_sound(sndblip3,90,0);
+            }
+        }
+        i++;
+    }
+    if mouse_check_button_pressed(mb_left)&amp;&amp;mouse_y&gt;y&amp;&amp;mouse_y&lt;y+options*24 {
+        event_perform(ev_keypress,vk_enter);
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -74,6 +118,7 @@ repeat(options) {
     }
     i++;
 }
+draw_text(4,394,"Game saving not supported");
 </string>
           </argument>
         </arguments>
@@ -96,11 +141,13 @@ repeat(options) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>option++;
-if option&gt;=options {
-    option=0;
+            <string>if global.input==-1 {
+    option++;
+    if option&gt;=options {
+        option=0;
+    }
+    audio_play_sound(sndblip3,90,0);
 }
-audio_play_sound(sndblip3,90,0);
 </string>
           </argument>
         </arguments>
@@ -123,12 +170,14 @@ audio_play_sound(sndblip3,90,0);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if option&gt;=1 {
-    option--;
-} else {
-    option=options-1;
+            <string>if global.input==-1 {
+    if option&gt;=1 {
+        option--;
+    } else {
+        option=options-1;
+    }
+    audio_play_sound(sndblip3,90,0);
 }
-audio_play_sound(sndblip3,90,0);
 </string>
           </argument>
         </arguments>
@@ -137,17 +186,26 @@ audio_play_sound(sndblip3,90,0);
     <event eventtype="9" enumb="27">
       <action>
         <libid>1</libid>
-        <id>332</id>
-        <kind>0</kind>
+        <id>603</id>
+        <kind>7</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_end_game</functionname>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if global.input==-1 {
+    game_end();
+}
+</string>
+          </argument>
+        </arguments>
       </action>
     </event>
     <event eventtype="9" enumb="13">
@@ -168,16 +226,25 @@ audio_play_sound(sndblip3,90,0);
           <argument>
             <kind>1</kind>
             <string>///Do a thing
-audio_play_sound(sndpop,90,0);
-switch option {
-    case 0:
-        instance_create(0,0,ctrlNewGame);
-        instance_destroy();
-    break;
-    case 1:
-        instance_create(0,0,ctrlLoadGame);
-        instance_destroy();
-    break;
+if global.input==-1 {
+    audio_play_sound(sndpop,90,0);
+    switch option {
+        case 0:
+            instance_create(0,0,ctrlNewGame);
+            instance_destroy();
+        break;
+        case 1:
+            instance_create(0,0,ctrlLoadGame);
+            instance_destroy();
+        break;
+        case 2:
+            instance_create(0,0,ctrlSettings);
+            instance_destroy();
+        break;
+        case 3:
+            game_end();
+        break;
+    }
 }
 </string>
           </argument>

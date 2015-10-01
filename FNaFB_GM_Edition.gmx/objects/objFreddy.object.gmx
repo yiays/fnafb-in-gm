@@ -3,8 +3,8 @@
   <spriteName>sprFreddy</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
-  <persistent>0</persistent>
+  <depth>-1</depth>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -29,7 +29,9 @@
 udlri=4;
 move=1;
 dspeed=2;
+mspeed=2;
 onstage=1;
+tped=0;
 
 //Say arr you ready for freddy.
 talking=1;
@@ -123,72 +125,91 @@ sndfreddy[45]=sndfreddy45;
           <argument>
             <kind>1</kind>
             <string>///Player Controls
-if keyboard_check(vk_shift) {
-    mspeed=dspeed*2;
-} else {
-    mspeed=dspeed;
-}
-if instance_position(x,y,objStairs) {
-    if instance_nearest(x,y,objStairs).ud {
-        if udlri==1 {
-            onstage=0;
-        } else {
-            onstage=1;
-        }
-    } else {
-        if udlri==1 {
-            onstage=1;
-        } else {
-            onstage=0;
-        }
-    }
-}
 if talking {
-    udlr=4;
+    move=0;
 }
-if (move or udlri==4) &amp;&amp; !talking {
-    udlr=4;
-    if keyboard_check(vk_up) {
-        if place_free(x,y-32) {
-            if onstage &amp;&amp; !instance_position(x,y-32,objWallLevel1) {
-                udlri=0;
-                move=0;
-            } else {
-                udlri=0;
-                move=0;
+if instance_position(x,y,objDoor) &amp;&amp; !tped &amp;&amp; move {
+    with instance_nearest(x,y,objDoor) {
+        room_goto(rm);
+        objFreddy.x=rmx;
+        objFreddy.y=rmy;
+        ctrlGame.rmpower=rmpower;
+        ctrlGame.rmindex=rmindex;
+    }
+    move=0;
+    tped=1;
+}
+if instance_position(x,y,objBathDoor) &amp;&amp; !tped &amp;&amp; move {
+    with instance_nearest(x,y,objBathDoor) {
+        objFreddy.x=rmx;
+        objFreddy.y=rmy;
+        ctrlGame.rmindex=rmindex;
+    }
+    move=0;
+    tped=1;
+}
+if move {
+    if !talking &amp;&amp; !tped {
+        udlri=4;
+        if keyboard_check(vk_shift) {
+            mspeed=dspeed*2;
+        } else {
+            mspeed=dspeed;
+        }
+        if keyboard_check(vk_up) {
+            udlri=0;
+            if place_free(x,y-32) {
+                if onstage {
+                    if !instance_position(x,y-32,objWall1) {
+                        move=0;
+                    }
+                } else {
+                    if !instance_position(x,y-32,objWall2) {
+                        move=0;
+                    }
+                }
             }
         }
-    }
-    if keyboard_check(vk_down) {
-        if place_free(x,y+32) {
-            if onstage &amp;&amp; !instance_position(x,y+32,objWallLevel1) {
-                udlri=1;
-                move=0;
-            } else {
-                udlri=1;
-                move=0;
+        if keyboard_check(vk_down)&amp;&amp;move {
+            udlri=1;
+            if place_free(x,y+32) {
+                if onstage {
+                    if !instance_position(x,y+32,objWall1) {
+                        move=0;
+                    }
+                } else {
+                    if !instance_position(x,y+32,objWall2) {
+                        move=0;
+                    }
+                }
             }
         }
-    }
-    if keyboard_check(vk_left) {
-        if place_free(x-32,y) {
-            if onstage &amp;&amp; !instance_position(x-32,y,objWallLevel1) {
-                udlri=2;
-                move=0;
-            } else {
-                udlri=2;
-                move=0;
+        if keyboard_check(vk_left)&amp;&amp;move {
+            udlri=2;
+            if place_free(x-32,y) {
+                if onstage {
+                    if !instance_position(x-32,y,objWall1) {
+                        move=0;
+                    }
+                } else {
+                    if !instance_position(x-32,y,objWall2) {
+                        move=0;
+                    }
+                }
             }
         }
-    }
-    if keyboard_check(vk_right) {
-        if place_free(x+32,y) {
-            if onstage &amp;&amp; !instance_position(x+32,y,objWallLevel1) {
-                udlri=3;
-                move=0;
-            } else {
-                udlri=3;
-                move=0;
+        if keyboard_check(vk_right)&amp;&amp;move {
+            udlri=3;
+            if place_free(x+32,y) {
+                if onstage {
+                    if !instance_position(x+32,y,objWall1) {
+                        move=0;
+                    }
+                } else {
+                    if !instance_position(x+32,y,objWall2) {
+                        move=0;
+                    }
+                }
             }
         }
     }
@@ -209,7 +230,18 @@ if (move or udlri==4) &amp;&amp; !talking {
     }
     if place_snapped(32,32) {
         move=1;
+        if instance_position(x,y,objStairs) {
+            onstage=!onstage;
+            if onstage {
+                global.rmindex=9;
+            } else {
+                global.rmindex=4;
+            }
+        }
     }
+}
+if tped &amp;&amp; udlri!=4 {
+    tped=0;
 }
 
 animatePlayer(udlri,mspeed);
