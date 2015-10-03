@@ -107,21 +107,22 @@ if room==rmInit&amp;&amp;input!=-1 {
             <kind>1</kind>
             <string>///Initialize globalvars and load settings
 randomize();
-globalvar input, gamemode, copyright, saveslot, shaders, touch;
+globalvar input, gamemode, copyright, saveslot, graphics, touch;
 input=-1;
 copyright=0;
 gamemode=0;
 saveslot=-1;
-shaders=0;
+graphics=1;
+touch=-1;
 
 //Load settings
 ini_open(working_directory+"settings.ini") {
     i=ini_read_real("main","windowsize",1);
     window_set_size(544*i,416*i);
     display_set_gui_maximise(i,i,0,0);
-    shaders=ini_read_real("main","shaders",0);
+    graphics=ini_read_real("main","graphics",0);
     window_set_fullscreen(ini_read_real("main","fullscreen",0));
-    touch=ini_read_real("main","touchscreen",-1);
+    touch=ini_read_real("main","touch",-1);
     alarm[0]=1;
     ini_close();
 }
@@ -129,8 +130,9 @@ alarm[1]=1;
 
 //Check if player is using a touchscreen
 if touch==-1 {
-    touch=os_android || os_ios || os_tizen || os_winphone;
-    if os_win8native || os_unknown || os_browser {
+    if os_android || os_ios || os_tizen || os_winphone {
+        touch=1;
+    } else if os_win8native || os_unknown || os_browser {
         alarm[1]=-1;
         touch=1;
         dialouge("Is this device a touchscreen?",1,2,"yes","no");

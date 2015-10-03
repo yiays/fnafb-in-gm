@@ -48,6 +48,37 @@ if global.saveslot&gt;0 {
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>
+tutorial=0.5;
+virtual_key_add(0,0,136,104,vk_escape);
+virtual_key_add(136,0,272,104,vk_up);
+virtual_key_add(136,312,272,104,vk_down);
+virtual_key_add(0,104,181,208,vk_left);
+virtual_key_add(363,104,181,208,vk_right);
+virtual_key_add(181,104,182,208,vk_enter);
+show_debug_message("Virtual keys created!");
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -77,13 +108,7 @@ if global.saveslot&gt;0 {
             newgame=0;
             //Add touch controls if neccesary
             if global.touch {
-                tutorial=0.5;
-                virtual_key_add(136,0,272,104,vk_up);
-                virtual_key_add(136,312,272,104,vk_down);
-                virtual_key_add(0,104,181,208,vk_left);
-                virtual_key_add(363,104,181,208,vk_right);
-                virtual_key_add(181,104,182,208,vk_enter);
-                show_debug_message("Virtual keys created!");
+                alarm[0]=1;
             }
         }
     } else {
@@ -131,13 +156,13 @@ if !newgame {
     draw_set_colour(c_black);
     draw_set_halign(fa_left);
     draw_rectangle(0,0,544,416,0);
-    draw_sprite_stretched(sprStatic,-1,0,0,544,416);
+    if global.graphics&gt;0 { draw_sprite_stretched(sprStatic,-1,0,0,544,416); }
     draw_background_tiled(bgScanlines,0,0);
     draw_set_alpha(1);
     draw_sprite_ext(sprOverlay,0,6,6,1,1,0,c_white,1);
-    draw_sprite_ext(sprOverlay,0,538,6,1,1,-270,c_white,1);
+    draw_sprite_ext(sprOverlay,0,538,6,1,1,270,c_white,1);
     draw_sprite_ext(sprOverlay,0,538,410,1,1,180,c_white,1);
-    draw_sprite_ext(sprOverlay,0,6,410,1,1,-90,c_white,1);
+    draw_sprite_ext(sprOverlay,0,6,410,1,1,90,c_white,1);
     draw_set_colour(c_white);
     draw_set_halign(fa_center);
     draw_text(272,400,"Power");

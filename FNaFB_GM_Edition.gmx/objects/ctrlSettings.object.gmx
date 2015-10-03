@@ -27,36 +27,42 @@
             <kind>1</kind>
             <string>///Init
 option=0;
-options=5;
+options=6;
 soptions[0]=4;
-soptions[1]=2;
+soptions[1]=3;
 soptions[2]=2;
-soptions[3]=0;
+soptions[3]=2;
 soptions[4]=0;
-ini_open(working_directory+"settings.ini") {
-    soption[0]=ini_read_real("main","windowsize",1);
-    soption[1]=ini_read_real("main","shaders",1)+1;
-    soption[2]=ini_read_real("main","fullscreen",1)+1;
-    ini_close();
-}
+soptions[5]=0;
 soption[0]=1;
 soption[1]=1;
 soption[2]=1;
 soption[3]=0;
 soption[4]=0;
+ini_open(working_directory+"settings.ini") {
+    soption[0]=ini_read_real("main","windowsize",0);
+    soption[1]=ini_read_real("main","graphics",0)+1;
+    soption[2]=ini_read_real("main","fullscreen",0)+1;
+    soption[3]=ini_read_real("main","touch",0)+1;
+    ini_close();
+}
 otext[0,0]="Window Size";
     otext[0,1]="1x";
     otext[0,2]="2x";
     otext[0,3]="3x";
     otext[0,4]="4x";
-otext[1,0]="Shaders";
-    otext[1,1]="off";
-    otext[1,2]="on";
+otext[1,0]="Graphics";
+    otext[1,1]="fast";
+    otext[1,2]="decent";
+    otext[1,3]="fancy";
 otext[2,0]="Fullscreen";
     otext[2,1]="off";
     otext[2,2]="on";
-otext[3,0]="Delete save data";
-otext[4,0]="Save and return";
+otext[3,0]="Touchscreen";
+    otext[3,1]="off";
+    otext[3,2]="on";
+otext[4,0]="Delete save data";
+otext[5,0]="Save and return";
 fade=1;
 fadeinout=1;
 
@@ -169,8 +175,11 @@ if save {
     if global.input==0 {
         ini_open(working_directory+"settings.ini") {
             ini_write_real("main","windowsize",soption[0]);
-            ini_write_real("main","shaders",soption[1]-1);
+            ini_write_real("main","graphics",soption[1]-1);
+            global.graphics=soption[1]-1;
             ini_write_real("main","fullscreen",soption[2]-1);
+            ini_write_real("main","touch",soption[3]-1);
+            global.touch=soption[3]-1;
             ini_close();
         }
         global.input=-1;
@@ -267,15 +276,17 @@ if !del&amp;&amp;!save {
           <argument>
             <kind>1</kind>
             <string>///Draw menu
-if shader_is_compiled(shdMosaic) &amp;&amp; pixelate&gt;0 {
-    var texture = sprite_get_texture(sprGolden_Freddy,0);
-    texel_width = texture_get_texel_width(texture);
-    texel_height = texture_get_texel_height(texture);
-    shader_set(shdMosaic);
-    shader_set_uniform_f(tex_pixel_size, texel_width, texel_height, abs(pixelate-10));
+if pixelate&gt;0 {
+    if global.graphics=2&amp;&amp;shader_is_compiled(shdMosaic) {
+        var texture = sprite_get_texture(sprGolden_Freddy,0);
+        texel_width = texture_get_texel_width(texture);
+        texel_height = texture_get_texel_height(texture);
+        shader_set(shdMosaic);
+        shader_set_uniform_f(tex_pixel_size, texel_width, texel_height, abs(pixelate-10));
+    }
     draw_set_alpha(pixelate/10);
     draw_sprite(sprGolden_Freddy,0,200,200);
-    shader_reset();
+    if global.graphics=2 { shader_reset(); }
 }
 
 var i=0;
@@ -481,14 +492,14 @@ if del {
     del=0;
     deli=0;
 } else if !save&amp;&amp;!del {
-    if option&lt;3 {
+    if option&lt;4 {
         event_perform(ev_keypress,vk_right);
     }
-    if option==3 {
+    if option==4 {
         del=1;
         dialouge("To delete all saved data, hold down delete for 3 seconds.",0,0);
     }
-    if option==4 {
+    if option==5 {
         save=1;
         window_set_size(544*soption[0],416*soption[0]);
         display_set_gui_maximise(soption[0],soption[0],0,0);

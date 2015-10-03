@@ -240,9 +240,9 @@ if move {
         if instance_position(x,y,objStairs) {
             onstage=!onstage;
             if onstage {
-                global.rmindex=9;
+                ctrlGame.rmindex=9;
             } else {
-                global.rmindex=4;
+                ctrlGame.rmindex=4;
             }
         }
     }
@@ -313,9 +313,11 @@ if talking {
     if instance_exists(objDialouge) {
         if !objDialouge.printed {
             talking=0;
+            audio_stop_sound(sndfreddy[real(say)]);
         }
     } else {
         talking=0;
+        audio_stop_sound(sndfreddy[real(say)]);
     }
 } else if move {
     switch pudlr {

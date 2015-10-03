@@ -61,7 +61,10 @@ option=0;
           <argument>
             <kind>1</kind>
             <string>if inout==0 {
-    if image_yscale&lt;1 { image_yscale=image_yscale+0.05; }
+    if image_yscale&lt;1 { image_yscale+=0.05; }
+} else {
+    if image_yscale&lt;0 { image_yscale-=0.05; }
+    else { instance_destroy(); }
 }
 if !printed {
     dtext=dtext+string_char_at(text,string_length(dtext)+1);
@@ -70,7 +73,7 @@ if !printed {
     }
 } else {
     if yn {
-        //Worry about yn dialouge
+        //Animate yn dialouge
     }
 }
 </string>
@@ -96,29 +99,19 @@ if !printed {
             <string>///Mouse controls
 //Do mouse related stuff
 if mouse_check_button_pressed(mb_left) {
-    if yn&amp;&amp;mouse_y&gt;y-60-(options*20)+(option*24)&amp;&amp;mouse_y&lt;y-60-(options*20)+((option+1)*24) {
+    if !keyboard_check(vk_enter) {
         event_perform(ev_keypress,vk_enter);
-    } else {
-        if instance_exists(ctrlGame) {
-            if room==rmIntro {
-                event_perform(ev_keypress,vk_enter);
-            }
-        } else {
-            event_perform(ev_keypress,vk_enter);
-        }
     }
 }
-if yn {
-    var i=0;
-    repeat(options) {
-        if mouse_y&gt;y-60-(options*20)+(i*24)&amp;&amp;mouse_y&lt;y-60-(options*20)+((i+1)*24) {
-            if option!=i {
-                option=i;
-                audio_play_sound(sndblip3,90,0);
-            }
+var i=0;
+repeat(options) {
+    if mouse_y&gt;y-60-(options*20)+(i*24)&amp;&amp;mouse_y&lt;y-60-(options*20)+((i+1)*24) {
+        if option!=i {
+            option=i;
+            audio_play_sound(sndblip3,90,0);
         }
-        i++;
     }
+    i++;
 }
 </string>
           </argument>
@@ -158,8 +151,8 @@ if yn&amp;&amp;printed {
     var i=0;
     if fade==0.5 { fadeinout=0; }
     if fade==1 {fadeinout=1; }
-    if fadeinout==1 { fade=fade-0.05; }
-    if fadeinout==0 { fade=fade+0.05; }
+    if fadeinout==1 { fade-=0.05; }
+    if fadeinout==0 { fade+=0.05; }
     repeat(options) {
         draw_text(280,y-60-(options*20)+(i*24),otext[i]);
         if option == i {
@@ -262,7 +255,7 @@ if !printed {
     } else {
         global.input=0;
     }
-    instance_destroy();
+    inout=1;
 }
 </string>
           </argument>
