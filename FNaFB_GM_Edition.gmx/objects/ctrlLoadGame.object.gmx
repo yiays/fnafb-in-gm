@@ -28,11 +28,12 @@
             <string>///Init
 audio_stop_all();
 option=0;
-options=4;
+options=5;
 otext[0]="File 1";
 otext[1]="File 2";
 otext[2]="File 3";
 otext[3]="File 4";
+otext[4]="Return";
 fade=1;
 fadeinout=1;
 
@@ -171,19 +172,19 @@ if background_alpha[1]==0 {
           <argument>
             <kind>1</kind>
             <string>///Mouse controls
-if os_windows||os_linux||os_macosx||os_unknown {
-    //Do mouse related stuff
-    var i=0;
-    repeat(options) {
-        if mouse_y&gt;64+(i*80)&amp;&amp;mouse_y&lt;64+((i+1)*80) {
-            if option!=i {
-                option=i;
-                audio_play_sound(sndblip3,90,0);
-            }
+//Do mouse related stuff
+var i=0;
+repeat(options) {
+    if mouse_y&gt;64+(i*80)&amp;&amp;mouse_y&lt;64+((i+1)*80) {
+        if option!=i {
+            option=i;
+            audio_play_sound(sndblip3,90,0);
         }
-        i++;
     }
-    if mouse_check_button_pressed(mb_left)&amp;&amp;mouse_y&gt;y&amp;&amp;mouse_y&lt;64+options*80 {
+    i++;
+}
+if mouse_check_button_pressed(mb_left)&amp;&amp;mouse_y&gt;y&amp;&amp;mouse_y&lt;64+options*80 {
+    if mouse_y&gt;64+(option*80)&amp;&amp;mouse_y&lt;64+((option+1)*80) {
         event_perform(ev_keypress,vk_enter);
     }
 }
@@ -352,19 +353,24 @@ transition=0;
           <argument>
             <kind>1</kind>
             <string>///Do a thing
-if !set[option+1] {
-    audio_play_sound(snderror,90,0);
-} else {
-    if file_exists(working_directory+"slot"+string(option+1)+".fnafb") {
-        global.copyright=copyright[option+1];
-        global.saveslot=saveslot[option+1];
-        global.gamemode=gamemode[option+1];
-        instance_create(0,0,ctrlGame);
-        audio_play_sound(sndhonk,90,0);
-        instance_destroy();
-    } else {
+if option&lt;4 {
+    if !set[option+1] {
         audio_play_sound(snderror,90,0);
+    } else {
+        if file_exists(working_directory+"slot"+string(option+1)+".fnafb") {
+            global.copyright=copyright[option+1];
+            global.saveslot=saveslot[option+1];
+            global.gamemode=gamemode[option+1];
+            instance_create(0,0,ctrlGame);
+            audio_play_sound(sndhonk,90,0);
+            instance_destroy();
+        } else {
+            audio_play_sound(snderror,90,0);
+        }
     }
+} else {
+    audio_play_sound(sndwindup2,90,0);
+    transition=0;
 }
 </string>
           </argument>

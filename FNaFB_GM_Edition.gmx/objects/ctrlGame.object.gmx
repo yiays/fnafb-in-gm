@@ -31,65 +31,18 @@ newgame=0;
 gametime=0;
 rmpower=0;
 rmindex=9;
+tutorial=0;
+tutorialdelay=room_speed*2;
 
 if global.saveslot&gt;0 {
-   game_load("slot"+string(global.saveslot)+".fnafb");
-   show_debug_message("Loaded game in slot "+string(global.saveslot)+"!");
+    game_load("slot"+string(global.saveslot)+".fnafb");
+    show_debug_message("Loaded game in slot "+string(global.saveslot)+"!");
 } else {
-  //Start game from start.
-  newgame=1;
-  fade=0;
-  fadeinout=0;
+    //Start game from start.
+    newgame=1;
+    fade=0;
+    fadeinout=0;
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="2" enumb="1">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>instance_create(256,96,objFreddy);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="2" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Start new game
-room_goto(rmStage);
-audio_play_sound(bgmambience2,100,1);
-alarm[1]=1;
 </string>
           </argument>
         </arguments>
@@ -113,21 +66,42 @@ alarm[1]=1;
           <argument>
             <kind>1</kind>
             <string>if newgame {
-    if fade&lt;1 {
-       fade=fade+0.05;
+    if fadeinout {
+        if fade&gt;0 {
+            fade-=0.05;
+        } else {
+            //Start new game
+            room_goto(rmStage);
+            audio_play_sound(bgmambience2,100,1);
+            instance_create(256,96,objFreddy);
+            newgame=0;
+            //Add touch controls if neccesary
+            if global.touch {
+                tutorial=0.5;
+                virtual_key_add(136,0,272,104,vk_up);
+                virtual_key_add(136,312,272,104,vk_down);
+                virtual_key_add(0,104,181,208,vk_left);
+                virtual_key_add(363,104,181,208,vk_right);
+                virtual_key_add(181,104,182,208,vk_enter);
+                show_debug_message("Virtual keys created!");
+            }
+        }
+    } else {
+        if fade&lt;1 {
+           fade=fade+0.05;
+        }
+        if (keyboard_check_pressed(vk_enter)&amp;&amp;fade)||(mouse_check_button(mb_left)&amp;&amp;fade) {
+           audio_play_sound(sndpop,90,0);
+           fadeinout=1;
+        }
     }
-    if keyboard_check_pressed(vk_enter)&amp;&amp;fade==1 {
-       audio_play_sound(sndpop,90,0);
-       alarm[0]=20;
-       newgame=0;
-    }
-} else {
-  if fade&gt;0 {
-     fade=fade-0.05;
-  }
 }
-if keyboard_check_pressed(vk_alt) {
-    instance_create(256,96,objFreddy);
+if tutorial&gt;0 {
+    if tutorialdelay&gt;0 {
+        tutorialdelay--;
+    } else {
+        tutorial-=0.05;
+    }
 }
 </string>
           </argument>
@@ -155,15 +129,46 @@ if keyboard_check_pressed(vk_alt) {
 if !newgame {
     draw_set_alpha(0.2);
     draw_set_colour(c_black);
+    draw_set_halign(fa_left);
     draw_rectangle(0,0,544,416,0);
-    draw_set_alpha(0.3);
     draw_sprite_stretched(sprStatic,-1,0,0,544,416);
+    draw_background_tiled(bgScanlines,0,0);
     draw_set_alpha(1);
-    draw_background(bgOverlay,0,0);
+    draw_sprite_ext(sprOverlay,0,6,6,1,1,0,c_white,1);
+    draw_sprite_ext(sprOverlay,0,538,6,1,1,-270,c_white,1);
+    draw_sprite_ext(sprOverlay,0,538,410,1,1,180,c_white,1);
+    draw_sprite_ext(sprOverlay,0,6,410,1,1,-90,c_white,1);
+    draw_set_colour(c_white);
+    draw_set_halign(fa_center);
+    draw_text(272,400,"Power");
+    draw_set_halign(fa_left);
     draw_sprite(sprMap,rmindex,544,416);
     draw_sprite(sprPowerBar,rmpower,272,384);
     draw_sprite(sprRec,0,0,416);
-    draw_background_tiled(bgScanlines,0,0);
+    if global.touch {
+        if tutorial&gt;0 {
+            draw_set_alpha(tutorial);
+        } else {
+            draw_set_alpha(0.5);
+        }
+        draw_set_colour(c_green);
+        if keyboard_check(vk_up)||tutorial&gt;0 {
+            draw_rectangle(136,0,408,104,0);
+        }
+        if keyboard_check(vk_down)||tutorial&gt;0 {
+            draw_rectangle(136,312,408,416,0);
+        }
+        if keyboard_check(vk_left)||tutorial&gt;0 {
+            draw_rectangle(0,104,181,312,0);
+        }
+        if keyboard_check(vk_right)||tutorial&gt;0 {
+            draw_rectangle(363,104,544,312,0);
+        }
+        if keyboard_check(vk_enter)||tutorial&gt;0 {
+            draw_rectangle(181,104,363,312,0);
+        }
+        draw_set_alpha(1);
+    }
 }
 </string>
           </argument>

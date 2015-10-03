@@ -55,7 +55,6 @@
     <instance objName="objWall" x="32" y="64" name="inst_62766AFC" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objWall" x="64" y="64" name="inst_FBC5DB60" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objWall" x="96" y="64" name="inst_1363CD96" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objWall" x="128" y="64" name="inst_EF066CB8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objWall" x="160" y="32" name="inst_F88C0624" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objWall" x="192" y="32" name="inst_4EEC776E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objWall" x="224" y="32" name="inst_4A4C02A6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
@@ -131,6 +130,11 @@
     <instance objName="objShortTable" x="256" y="320" name="inst_307756E2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objShortTable" x="320" y="320" name="inst_1CBA19DE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objWall" x="384" y="64" name="inst_56B5AD21" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objtalk" x="128" y="64" name="inst_D0F54A28" locked="0" code="say=&quot;5&quot;;&#xA;saydelay=0;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objtalk" x="416" y="224" name="inst_C96DEDCC" locked="0" code="say=&quot;3&quot;;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objtalk" x="384" y="96" name="inst_008F7270" locked="0" code="say=&quot;4&quot;;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objtalk" x="416" y="96" name="inst_9BB44245" locked="0" code="say=&quot;4&quot;;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objtalk" x="448" y="96" name="inst_C98840AC" locked="0" code="say=&quot;4&quot;;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="tileGame" x="32" y="96" w="32" h="32" xo="128" yo="64" id="10000233" name="inst_1F73EF0F" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
@@ -354,6 +358,9 @@
     <tile bgName="tileGame" x="320" y="256" w="32" h="32" xo="128" yo="64" id="10001215" name="inst_7E032AB5" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="tileGame" x="320" y="320" w="32" h="32" xo="128" yo="64" id="10001216" name="inst_1B706B26" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="tileGame" x="320" y="352" w="32" h="32" xo="128" yo="64" id="10001217" name="inst_AF5B504D" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="tileGame" x="128" y="32" w="32" h="32" xo="0" yo="64" id="10001218" name="inst_B3CC1B50" depth="900000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="tileGame" x="32" y="32" w="32" h="32" xo="0" yo="32" id="10001219" name="inst_19D96601" depth="900000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="tileGame" x="448" y="32" w="32" h="32" xo="0" yo="32" id="10001220" name="inst_E82E6C92" depth="900000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
   </tiles>
   <PhysicsWorld>0</PhysicsWorld>
   <PhysicsWorldTop>0</PhysicsWorldTop>

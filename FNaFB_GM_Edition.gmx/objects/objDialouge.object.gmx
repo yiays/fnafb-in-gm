@@ -77,6 +77,53 @@ if !printed {
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Mouse controls
+//Do mouse related stuff
+if mouse_check_button_pressed(mb_left) {
+    if yn&amp;&amp;mouse_y&gt;y-60-(options*20)+(option*24)&amp;&amp;mouse_y&lt;y-60-(options*20)+((option+1)*24) {
+        event_perform(ev_keypress,vk_enter);
+    } else {
+        if instance_exists(ctrlGame) {
+            if room==rmIntro {
+                event_perform(ev_keypress,vk_enter);
+            }
+        } else {
+            event_perform(ev_keypress,vk_enter);
+        }
+    }
+}
+if yn {
+    var i=0;
+    repeat(options) {
+        if mouse_y&gt;y-60-(options*20)+(i*24)&amp;&amp;mouse_y&lt;y-60-(options*20)+((i+1)*24) {
+            if option!=i {
+                option=i;
+                audio_play_sound(sndblip3,90,0);
+            }
+        }
+        i++;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="8" enumb="64">
       <action>
@@ -117,7 +164,7 @@ if yn&amp;&amp;printed {
         draw_text(280,y-60-(options*20)+(i*24),otext[i]);
         if option == i {
             draw_set_alpha(fade);
-            draw_line(280,y-60-(options*20)+(i*24)+20,540,y-60-(options*20)+(i*24)+20);
+            draw_line(280,y-40-(options*20)+(i*24),540,y-40-(options*20)+(i*24));
             draw_set_alpha(1);
         }
         i++;

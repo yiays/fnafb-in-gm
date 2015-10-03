@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>///Init
 udlri=4;
+pudlr=1;
 move=1;
 dspeed=2;
 mspeed=2;
@@ -144,6 +145,9 @@ if instance_position(x,y,objBathDoor) &amp;&amp; !tped &amp;&amp; move {
         objFreddy.x=rmx;
         objFreddy.y=rmy;
         ctrlGame.rmindex=rmindex;
+        //audio_play_sound(snddooropen
+        instance_deactivate_object(objFreddy);
+        alarm[0]=room_speed/2;
     }
     move=0;
     tped=1;
@@ -212,6 +216,9 @@ if move {
                 }
             }
         }
+        if udlri!=4 {
+            pudlr=udlri;
+        }
     }
 } else {
     switch udlri {
@@ -272,18 +279,12 @@ if say!="0" {
     } else {
         audio_play_sound(sndfreddy[real(say)],99,0);
         ini_open(working_directory+"en.ini");
-        if !ini_read_string("freddy",say,"ERR: STRING UNDEFINED!")=="-1" {
+        if ini_read_string("freddy",say,"ERR: STRING UNDEFINED!")!="-1" {
             dialouge(ini_read_string("freddy",say,"ERR: STRING UNDEFINED!"),0,0);
         }
         ini_close();
         say="0";
     }
-}
-//Test speech
-if keyboard_check_pressed(vk_f2) {
-    say=string(real(say)+1);
-    saydelay=20;
-    talking=1;
 }
 </string>
           </argument>
@@ -307,9 +308,55 @@ if keyboard_check_pressed(vk_f2) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Stop talking
-if talking &amp;&amp; saydelay==0 {
-    talking=0;
+            <string>///Ridiculous talking script
+if talking {
+    if instance_exists(objDialouge) {
+        if !objDialouge.printed {
+            talking=0;
+        }
+    } else {
+        talking=0;
+    }
+} else if move {
+    switch pudlr {
+        //Check for any objects to talk about in direction freddy is facing.
+        case 0:
+            if instance_position(x,y-32,objtalk)!=noone {
+                with instance_position(x,y-32,objtalk) {
+                    objFreddy.say=say;
+                    objFreddy.saydelay=saydelay;
+                }
+                talking=1;
+            }
+        break;
+        case 1:
+            if instance_position(x,y+32,objtalk)!=noone {
+                with instance_position(x,y+32,objtalk) {
+                    objFreddy.say=say;
+                    objFreddy.saydelay=saydelay;
+                }
+                talking=1;
+            }
+        break;
+        case 2:
+            if instance_position(x-32,y,objtalk)!=noone {
+                with instance_position(x-32,y,objtalk) {
+                    objFreddy.say=say;
+                    objFreddy.saydelay=saydelay;
+                }
+                talking=1;
+            }
+        break;
+        case 3:
+            if instance_position(x+32,y,objtalk)!=noone {
+                with instance_position(x+32,y,objtalk) {
+                    objFreddy.say=say;
+                    objFreddy.saydelay=saydelay;
+                }
+                talking=1;
+            }
+        break;
+    }
 }
 </string>
           </argument>

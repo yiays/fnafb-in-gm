@@ -8,6 +8,34 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Go to rmintro
+ini_open(working_directory+"settings.ini") {
+    ini_write_real("main","touch",touch);
+    ini_close();
+}
+room_goto(1);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
@@ -25,7 +53,36 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>window_center();
+            <string>//Center the window in screen if nessecary
+window_center();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Respond to dialouge change
+if room==rmInit&amp;&amp;input!=-1 {
+    touch=!input;
+    input=-1;
+    alarm[1]=1;
+}
 </string>
           </argument>
         </arguments>
@@ -48,9 +105,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Initialize
-room_goto(1);
-globalvar input, gamemode, copyright, saveslot, shaders;
+            <string>///Initialize globalvars and load settings
+randomize();
+globalvar input, gamemode, copyright, saveslot, shaders, touch;
 input=-1;
 copyright=0;
 gamemode=0;
@@ -64,8 +121,20 @@ ini_open(working_directory+"settings.ini") {
     display_set_gui_maximise(i,i,0,0);
     shaders=ini_read_real("main","shaders",0);
     window_set_fullscreen(ini_read_real("main","fullscreen",0));
+    touch=ini_read_real("main","touchscreen",-1);
     alarm[0]=1;
     ini_close();
+}
+alarm[1]=1;
+
+//Check if player is using a touchscreen
+if touch==-1 {
+    touch=os_android || os_ios || os_tizen || os_winphone;
+    if os_win8native || os_unknown || os_browser {
+        alarm[1]=-1;
+        touch=1;
+        dialouge("Is this device a touchscreen?",1,2,"yes","no");
+    }
 }
 </string>
           </argument>

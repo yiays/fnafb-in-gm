@@ -232,6 +232,7 @@
       <sprite>sprites\sprRec</sprite>
       <sprite>sprites\sprDialouge</sprite>
       <sprite>sprites\sprBar</sprite>
+      <sprite>sprites\sprOverlay</sprite>
     </sprites>
     <sprites name="Characters">
       <sprite>sprites\sprFreddy</sprite>
@@ -256,6 +257,7 @@
       <sprite>sprites\sprWall</sprite>
       <sprite>sprites\sprStairs</sprite>
       <sprite>sprites\sprDoor</sprite>
+      <sprite>sprites\sprtalk</sprite>
       <sprite>sprites\sprSign</sprite>
       <sprite>sprites\sprSatanDesk</sprite>
       <sprite>sprites\sprTable</sprite>
@@ -270,13 +272,11 @@
       <background>background\MainHall</background>
       <background>background\PirateCove</background>
       <background>background\OfficeOn</background>
-      <background>background\PirateCove2</background>
       <background>background\Office</background>
       <background>background\WestCorner2</background>
       <background>background\WestHall</background>
       <background>background\Stage</background>
       <background>background\Backroom</background>
-      <background>background\Static</background>
       <background>background\WestCorner</background>
       <background>background\Closet</background>
     </backgrounds>
@@ -285,15 +285,10 @@
       <background>background\bgSpots</background>
     </backgrounds>
     <backgrounds name="Tileset">
-      <background>background\bgPizza1</background>
-      <background>background\bgPizza2</background>
-      <background>background\bgPizza3</background>
       <background>background\tileGame</background>
     </backgrounds>
     <backgrounds name="Overlays">
       <background>background\bgScanlines</background>
-      <background>background\bgOverlay</background>
-      <background>background\bgPuppetOverlay</background>
     </backgrounds>
   </backgrounds>
   <paths name="paths"/>
@@ -301,8 +296,6 @@
     <script>scripts\dialouge.gml</script>
     <script>scripts\animatePlayer.gml</script>
     <script>scripts\hms.gml</script>
-    <script>scripts\script4.gml</script>
-    <script>scripts\script5.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shdMosaic.shader</shader>
@@ -328,6 +321,7 @@
       <object>objects\objStairs</object>
       <object>objects\objDoor</object>
       <object>objects\objBathDoor</object>
+      <object>objects\objtalk</object>
       <object>objects\objFreddy</object>
       <object>objects\objMyCollection</object>
       <object>objects\objSatanDesk</object>
@@ -352,15 +346,11 @@
     <constant name="version">0</constant>
     <constant name="major">0</constant>
     <constant name="minor">1</constant>
-    <constant name="build">"-alpha2"</constant>
+    <constant name="build">"-final"</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>
-  <audiogroups name="audiogroups">
-    <audiogroup name="audiogroup_default"/>
-    <audiogroup name="audiogroup_copyrightfree"/>
-  </audiogroups>
   <TutorialState>
     <IsTutorial>0</IsTutorial>
     <TutorialName></TutorialName>

@@ -13,15 +13,15 @@
     <option_android_amazon_gc_whispersync>0</option_android_amazon_gc_whispersync>
     <option_android_amazon_iap>0</option_android_amazon_iap>
     <option_android_apk_expansion>0</option_android_apk_expansion>
-    <option_android_arch_armv5>True</option_android_arch_armv5>
+    <option_android_arch_armv5>False</option_android_arch_armv5>
     <option_android_arch_armv7>True</option_android_arch_armv7>
-    <option_android_arch_mips>True</option_android_arch_mips>
+    <option_android_arch_mips>False</option_android_arch_mips>
     <option_android_arch_mipsr2>false</option_android_arch_mipsr2>
     <option_android_arch_mipsr2sf>false</option_android_arch_mipsr2sf>
-    <option_android_arch_x86>True</option_android_arch_x86>
-    <option_android_build_version>1</option_android_build_version>
+    <option_android_arch_x86>False</option_android_arch_x86>
+    <option_android_build_version>2</option_android_build_version>
     <option_android_color_depth>0</option_android_color_depth>
-    <option_android_display_name>FNaFB - GM Edition</option_android_display_name>
+    <option_android_display_name>FNaFB</option_android_display_name>
     <option_android_google_analytics_enable>false</option_android_google_analytics_enable>
     <option_android_google_play>0</option_android_google_play>
     <option_android_google_play_id></option_android_google_play_id>
@@ -61,11 +61,10 @@
     <option_android_set_device_id></option_android_set_device_id>
     <option_android_splash_png>Configs\Default\android\splash.png</option_android_splash_png>
     <option_android_target_sdk_version>16</option_android_target_sdk_version>
-    <option_android_texture_page>1024</option_android_texture_page>
+    <option_android_texture_page>2048</option_android_texture_page>
     <option_android_use_test_ads>0</option_android_use_test_ads>
     <option_argumenterrors>True</option_argumenterrors>
-    <option_audioGroup1_targets>9223372036854775807</option_audioGroup1_targets>
-    <option_audioGroupCount>2</option_audioGroupCount>
+    <option_audioGroupCount>1</option_audioGroupCount>
     <option_author>Twisted Fork</option_author>
     <option_backimage>nil</option_backimage>
     <option_borderless>False</option_borderless>
@@ -73,7 +72,7 @@
     <option_changeresolution>false</option_changeresolution>
     <option_closeesc>true</option_closeesc>
     <option_colordepth>0</option_colordepth>
-    <option_display_name>GameMaker: Studio</option_display_name>
+    <option_display_name>Five Nights at Fuckboy's</option_display_name>
     <option_displayerrors>True</option_displayerrors>
     <option_facebook_app_display_name></option_facebook_app_display_name>
     <option_facebook_appid></option_facebook_appid>
@@ -94,7 +93,7 @@
     <option_html5_advertising_type>Supersonic Ads</option_html5_advertising_type>
     <option_html5_allow_fullscreen>True</option_html5_allow_fullscreen>
     <option_html5_alwaysreload>False</option_html5_alwaysreload>
-    <option_html5_browser_title>FNaFB - GM Edition</option_html5_browser_title>
+    <option_html5_browser_title>FNaFB Online</option_html5_browser_title>
     <option_html5_centergame>False</option_html5_centergame>
     <option_html5_flurry_enable>0</option_html5_flurry_enable>
     <option_html5_flurry_id></option_html5_flurry_id>
@@ -113,7 +112,7 @@
     <option_html5_scale>-1</option_html5_scale>
     <option_html5_showcursor>True</option_html5_showcursor>
     <option_html5_splash_png>Configs\Default\html5\splash.png</option_html5_splash_png>
-    <option_html5_texture_page>1024</option_html5_texture_page>
+    <option_html5_texture_page>2048</option_html5_texture_page>
     <option_html5_use_test_ads>0</option_html5_use_test_ads>
     <option_html5_usebuiltinparticles>True</option_html5_usebuiltinparticles>
     <option_html5_usesplash>True</option_html5_usesplash>
@@ -282,15 +281,9 @@
     <option_textureGroup0_nocropping>0</option_textureGroup0_nocropping>
     <option_textureGroup0_parent>&lt;none&gt;</option_textureGroup0_parent>
     <option_textureGroup0_scaled>0</option_textureGroup0_scaled>
-    <option_textureGroup0_targets>17592728191170</option_textureGroup0_targets>
-    <option_textureGroup1_border>2</option_textureGroup1_border>
-    <option_textureGroup1_nocropping>0</option_textureGroup1_nocropping>
-    <option_textureGroup1_parent>&lt;none&gt;</option_textureGroup1_parent>
-    <option_textureGroup1_scaled>0</option_textureGroup1_scaled>
-    <option_textureGroup1_targets>312545324</option_textureGroup1_targets>
-    <option_textureGroup_count>2</option_textureGroup_count>
+    <option_textureGroup0_targets>17593040736494</option_textureGroup0_targets>
+    <option_textureGroup_count>1</option_textureGroup_count>
     <option_textureGroups0>Default</option_textureGroups0>
-    <option_textureGroups1>Mobile</option_textureGroups1>
     <option_tizen_app_id>http://yourdomain/FNaFB - GM Edition</option_tizen_app_id>
     <option_tizen_build_version>0</option_tizen_build_version>
     <option_tizen_display_name>FNaFB - GM Edition</option_tizen_display_name>
@@ -313,7 +306,7 @@
     <option_use_new_audio>True</option_use_new_audio>
     <option_variableerrors>False</option_variableerrors>
     <option_version>001</option_version>
-    <option_version_build>1</option_version_build>
+    <option_version_build>0</option_version_build>
     <option_version_company>Twisted Fork</option_version_company>
     <option_version_copyright>Creative Commons Attribution 3.0</option_version_copyright>
     <option_version_description>FNAFB for everyone!</option_version_description>
@@ -330,7 +323,7 @@
     <option_win8_analytics_id></option_win8_analytics_id>
     <option_win8_build_version>1</option_win8_build_version>
     <option_win8_certificate_location>Windows8_TemporaryKey.pfx</option_win8_certificate_location>
-    <option_win8_display_name>FNaFB - GM Edition</option_win8_display_name>
+    <option_win8_display_name>FNaFB</option_win8_display_name>
     <option_win8_internet_capable>-1</option_win8_internet_capable>
     <option_win8_interpolate>0</option_win8_interpolate>
     <option_win8_landscape_allowed>-1</option_win8_landscape_allowed>
@@ -343,7 +336,7 @@
     <option_win8_minor_version>0</option_win8_minor_version>
     <option_win8_native_certificate_location>Win8NativeRunner_TemporaryKey.pfx</option_win8_native_certificate_location>
     <option_win8_native_cpu>x86</option_win8_native_cpu>
-    <option_win8_package_display_name>FNaFB - GM Edition</option_win8_package_display_name>
+    <option_win8_package_display_name>Five Nights at F***boy's</option_win8_package_display_name>
     <option_win8_package_name>fnaf</option_win8_package_name>
     <option_win8_portrait_allowed>0</option_win8_portrait_allowed>
     <option_win8_portrait_flipped_allowed>0</option_win8_portrait_flipped_allowed>
@@ -355,10 +348,10 @@
     <option_win8_splash_background_colour>#000000</option_win8_splash_background_colour>
     <option_win8_splash_png>Configs\Default\Windows8\splashscreen.png</option_win8_splash_png>
     <option_win8_store_logo>Configs\Default\Windows8\logos\logo50.png</option_win8_store_logo>
-    <option_win8_texture_page>1024</option_win8_texture_page>
+    <option_win8_texture_page>2048</option_win8_texture_page>
     <option_win8_wide_logo>Configs\Default\Windows8\logos\logo310.png</option_win8_wide_logo>
     <option_windowcolor>clBlack</option_windowcolor>
-    <option_windows_build_version>1</option_windows_build_version>
+    <option_windows_build_version>0</option_windows_build_version>
     <option_windows_company_info>Twisted Fork</option_windows_company_info>
     <option_windows_copyright_info>Creative Commons Attribution 3.0</option_windows_copyright_info>
     <option_windows_description_info>FNAFB for everyone!</option_windows_description_info>

@@ -62,21 +62,21 @@ audio_play_sound(bgmFNAFtitle,100,1);
           <argument>
             <kind>1</kind>
             <string>///Mouse controls
-if os_windows||os_linux||os_macosx||os_unknown {
-    //Do mouse related stuff
-    var i=0;
-    repeat(options) {
-        if mouse_y&gt;y+(i*24)&amp;&amp;mouse_y&lt;y+((i+1)*24) {
-            if option!=i {
-                option=i;
-                audio_play_sound(sndblip3,90,0);
-            }
-        }
-        i++;
-    }
-    if mouse_check_button_pressed(mb_left)&amp;&amp;mouse_y&gt;y&amp;&amp;mouse_y&lt;y+options*24 {
+//Do mouse related stuff
+if mouse_check_button_pressed(mb_left) {
+    if mouse_y&gt;y+(option*24)&amp;&amp;mouse_y&lt;y+((option+1)*24) {
         event_perform(ev_keypress,vk_enter);
     }
+}
+var i=0;
+repeat(options) {
+    if mouse_y&gt;y+(i*24)&amp;&amp;mouse_y&lt;y+((i+1)*24) {
+        if option!=i {
+            option=i;
+            audio_play_sound(sndblip3,90,0);
+        }
+    }
+    i++;
 }
 </string>
           </argument>
@@ -141,13 +141,11 @@ draw_text(4,394,"Game saving not supported");
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if global.input==-1 {
-    option++;
-    if option&gt;=options {
-        option=0;
-    }
-    audio_play_sound(sndblip3,90,0);
+            <string>option++;
+if option&gt;=options {
+    option=0;
 }
+audio_play_sound(sndblip3,90,0);
 </string>
           </argument>
         </arguments>
@@ -170,14 +168,12 @@ draw_text(4,394,"Game saving not supported");
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if global.input==-1 {
-    if option&gt;=1 {
-        option--;
-    } else {
-        option=options-1;
-    }
-    audio_play_sound(sndblip3,90,0);
+            <string>if option&gt;=1 {
+    option--;
+} else {
+    option=options-1;
 }
+audio_play_sound(sndblip3,90,0);
 </string>
           </argument>
         </arguments>
@@ -200,9 +196,7 @@ draw_text(4,394,"Game saving not supported");
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if global.input==-1 {
-    game_end();
-}
+            <string>game_end();
 </string>
           </argument>
         </arguments>
@@ -226,25 +220,23 @@ draw_text(4,394,"Game saving not supported");
           <argument>
             <kind>1</kind>
             <string>///Do a thing
-if global.input==-1 {
-    audio_play_sound(sndpop,90,0);
-    switch option {
-        case 0:
-            instance_create(0,0,ctrlNewGame);
-            instance_destroy();
-        break;
-        case 1:
-            instance_create(0,0,ctrlLoadGame);
-            instance_destroy();
-        break;
-        case 2:
-            instance_create(0,0,ctrlSettings);
-            instance_destroy();
-        break;
-        case 3:
-            game_end();
-        break;
-    }
+audio_play_sound(sndpop,90,0);
+switch option {
+    case 0:
+        instance_create(0,0,ctrlNewGame);
+        instance_destroy();
+    break;
+    case 1:
+        instance_create(0,0,ctrlLoadGame);
+        instance_destroy();
+    break;
+    case 2:
+        instance_create(0,0,ctrlSettings);
+        instance_destroy();
+    break;
+    case 3:
+        game_end();
+    break;
 }
 </string>
           </argument>

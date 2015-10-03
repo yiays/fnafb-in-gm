@@ -226,8 +226,8 @@ if pixelate&gt;0 {
           <argument>
             <kind>1</kind>
             <string>///Mouse controls
-if os_windows||os_linux||os_macosx||os_unknown {
-    //Do mouse related stuff
+//Do mouse related stuff
+if !del&amp;&amp;!save {
     var i=0;
     repeat(options) {
         if mouse_y&gt;128+(i*24)&amp;&amp;mouse_y&lt;128+((i+1)*24) {
@@ -239,7 +239,9 @@ if os_windows||os_linux||os_macosx||os_unknown {
         i++;
     }
     if mouse_check_button_pressed(mb_left)&amp;&amp;mouse_y&gt;y&amp;&amp;mouse_y&lt;128+options*24 {
-        event_perform(ev_keypress,vk_enter);
+        if mouse_y&gt;128+(option*24)&amp;&amp;mouse_y&lt;128+((option+1)*24) {
+            event_perform(ev_keypress,vk_enter);
+        }
     }
 }
 </string>
