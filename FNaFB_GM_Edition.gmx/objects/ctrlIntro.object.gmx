@@ -31,7 +31,7 @@ options=3;
 otext[0]="New Game";
 otext[1]="Continue";
 otext[2]="Settings";
-if os_windows||os_linux||os_macosx||os_unknown {
+if os_type==os_windows||os_type==os_linux||os_type==os_macosx||os_type==os_unknown {
     options++;
     otext[array_length_1d(otext)]="Exit Game";
 }
@@ -82,6 +82,45 @@ repeat(options) {
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Keyboard controls
+if keyboard_check_pressed(vk_escape)||keyboard_check_pressed(vk_backspace) {
+    game_end();
+}
+if keyboard_check_pressed(vk_up) {
+    if option&gt;=1 {
+        option--;
+    } else {
+        option=options-1;
+    }
+    audio_play_sound(sndblip3,90,0);
+}
+if keyboard_check_pressed(vk_down) {
+    option++;
+    if option&gt;=options {
+        option=0;
+    }
+    audio_play_sound(sndblip3,90,0);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="8" enumb="0">
       <action>
@@ -119,84 +158,6 @@ repeat(options) {
     i++;
 }
 draw_text(4,394,"Game saving not supported");
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="40">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>option++;
-if option&gt;=options {
-    option=0;
-}
-audio_play_sound(sndblip3,90,0);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="38">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if option&gt;=1 {
-    option--;
-} else {
-    option=options-1;
-}
-audio_play_sound(sndblip3,90,0);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="27">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>game_end();
 </string>
           </argument>
         </arguments>

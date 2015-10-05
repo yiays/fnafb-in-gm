@@ -129,8 +129,10 @@ audio_stop_sound(bgsOfficeFan);
             <kind>1</kind>
             <string>///Revert to failsafe
 with objDialouge { instance_destroy(); }
-window_set_size(544,416);
-display_set_gui_maximise(1,1,0,0);
+if !touch {
+    window_set_size(544,416);
+    global.scale=1;
+}
 soption[0]=1;
 global.shaders=0;
 soption[1]=1;
@@ -138,6 +140,15 @@ window_set_fullscreen(0);
 soption[2]=1;
 window_center();
 audio_play_sound(snddoorclose,90,0);
+
+//Make game fit in screen
+if 544*global.scale&lt;display_get_width()&amp;&amp;416*global.scale&lt;display_get_height() {
+    window_set_size(544*global.scale,416*global.scale);
+} else if global.scale&gt;=2 {
+    global.scale--;
+    window_set_size(544*global.scale,416*global.scale);
+}
+display_set_gui_size(544*global.scale,416*global.scale);
 </string>
           </argument>
         </arguments>
@@ -257,6 +268,60 @@ if !del&amp;&amp;!save {
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Keyboard controls
+if keyboard_check_pressed(vk_escape)||keyboard_check_pressed(vk_backspace)&amp;&amp;!save&amp;&amp;!del {
+    audio_play_sound(sndwindup2,90,0);
+    transition=0;
+}
+if keyboard_check_pressed(vk_up)&amp;&amp;!save&amp;&amp;!del {
+    if option&gt;=1 {
+        option--;
+    } else {
+        option=options-1;
+    }
+    audio_play_sound(sndblip3,90,0);
+}
+if keyboard_check_pressed(vk_down)&amp;&amp;!save&amp;&amp;!del {
+    option++;
+    if option&gt;=options {
+        option=0;
+    }
+    audio_play_sound(sndblip3,90,0);
+}
+if keyboard_check_pressed(vk_left)&amp;&amp;!save&amp;&amp;!del {
+    soption[option]--;
+    if soption[option]&lt;1 {
+        soption[option]=soptions[option];
+    }
+    audio_play_sound(sndblip3,90,0);
+}
+if keyboard_check_pressed(vk_right)&amp;&amp;!save&amp;&amp;!del {
+    soption[option]++;
+    if soption[option]&gt;soptions[option] {
+        soption[option]=1;
+    }
+    audio_play_sound(sndblip3,90,0);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="8" enumb="0">
       <action>
@@ -324,149 +389,6 @@ repeat(options) {
         </arguments>
       </action>
     </event>
-    <event eventtype="9" enumb="40">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if !save&amp;&amp;!del {
-    option++;
-    if option&gt;=options {
-        option=0;
-    }
-    audio_play_sound(sndblip3,90,0);
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="39">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if !save&amp;&amp;!del {
-    soption[option]++;
-    if soption[option]&gt;soptions[option] {
-        soption[option]=1;
-    }
-    audio_play_sound(sndblip3,90,0);
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="38">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if !save&amp;&amp;!del {
-    if option&gt;=1 {
-        option--;
-    } else {
-        option=options-1;
-    }
-    audio_play_sound(sndblip3,90,0);
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="37">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if !save&amp;&amp;!del {
-    soption[option]--;
-    if soption[option]&lt;1 {
-        soption[option]=soptions[option];
-    }
-    audio_play_sound(sndblip3,90,0);
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="27">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if !save&amp;&amp;!del {
-    audio_play_sound(sndwindup2,90,0);
-    transition=0;
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="9" enumb="13">
       <action>
         <libid>1</libid>
@@ -491,9 +413,13 @@ if del {
     }
     del=0;
     deli=0;
-} else if !save&amp;&amp;!del {
+} else if !save {
     if option&lt;4 {
-        event_perform(ev_keypress,vk_right);
+        soption[option]++;
+        if soption[option]&gt;soptions[option] {
+            soption[option]=1;
+        }
+        audio_play_sound(sndblip3,90,0);
     }
     if option==4 {
         del=1;
@@ -501,8 +427,15 @@ if del {
     }
     if option==5 {
         save=1;
-        window_set_size(544*soption[0],416*soption[0]);
-        display_set_gui_maximise(soption[0],soption[0],0,0);
+        global.scale=soption[0];
+        //Make game fit in screen
+        if 544*global.scale&lt;display_get_width()&amp;&amp;416*global.scale&lt;display_get_height() {
+            window_set_size(544*global.scale,416*global.scale);
+        } else if global.scale&gt;=2 {
+            global.scale--;
+            window_set_size(544*global.scale,416*global.scale);
+        }
+        display_set_gui_size(544*global.scale,416*global.scale);
         global.shaders=soption[1]-1;
         window_set_fullscreen(soption[2]-1);
         ctrlMaster.alarm[0]=1;

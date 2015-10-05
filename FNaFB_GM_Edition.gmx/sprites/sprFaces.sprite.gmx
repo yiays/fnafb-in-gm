@@ -11,8 +11,8 @@
   <bbox_right>95</bbox_right>
   <bbox_top>0</bbox_top>
   <bbox_bottom>95</bbox_bottom>
-  <HTile>-1</HTile>
-  <VTile>-1</VTile>
+  <HTile>0</HTile>
+  <VTile>0</VTile>
   <TextureGroups>
     <TextureGroup0>0</TextureGroup0>
   </TextureGroups>
@@ -31,7 +31,5 @@
     <frame index="8">images\sprFaces_8.png</frame>
     <frame index="9">images\sprFaces_9.png</frame>
     <frame index="10">images\sprFaces_10.png</frame>
-    <frame index="11">images\sprFaces_11.png</frame>
-    <frame index="12">images\sprFaces_12.png</frame>
   </frames>
 </sprite>

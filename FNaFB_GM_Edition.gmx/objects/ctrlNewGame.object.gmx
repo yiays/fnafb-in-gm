@@ -51,7 +51,8 @@ audio_stop_sound(bgmFNAFtitle);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if global.input!=-1 {
+            <string>///Setup game with dialouges
+if global.input!=-1 {
    if step==0 {
       global.copyright=!global.input;
       dialouge("This version of the game doesn't yet support gamejolt achievements.#Visit github.com/yesiateyoursheep/fnafb-in-gm to get involved in initializing that feature.",0,0);

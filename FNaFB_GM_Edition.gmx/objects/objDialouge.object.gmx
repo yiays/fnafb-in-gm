@@ -38,6 +38,7 @@ global.input=-1;
 fade=1;
 fadeinout=1;
 option=0;
+avatar=-1;
 </string>
           </argument>
         </arguments>
@@ -145,8 +146,12 @@ draw_self();
 draw_set_colour(c_white);
 draw_set_halign(fa_left);
 draw_set_font(fntMain);
-
-draw_text_ext(x+8,y-40,dtext,20,544);
+if avatar==-1 {
+    draw_text_ext(x+8,y-40,dtext,20,528);
+} else {
+    draw_sprite(sprFaces,avatar,x,y-48);
+    draw_text_ext(x+104,y-40,dtext,20,432);
+}
 if yn&amp;&amp;printed {
     var i=0;
     if fade==0.5 { fadeinout=0; }

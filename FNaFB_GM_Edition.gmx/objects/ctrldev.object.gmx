@@ -121,14 +121,17 @@ if ds_map_find_value(async_load, "id")==gnews {
 if ds_map_find_value(async_load, "id")==gupdate {
     if ds_map_find_value(async_load, "status") == 0 {
        ini_open_from_string(ds_map_find_value(async_load, "result"));
-       if ini_read_real("version","version",0)+(ini_read_real("version","major",0)/10)+(ini_read_real("version","minor",0)/100) &gt; version+(major/10)+(minor/100) {
+       if (ini_read_real("version","version",0)*100)+(ini_read_real("version","major",0)*10)+ini_read_real("version","minor",0) &gt; (version*100)+(major*10)+minor {
             update=1;
+            show_debug_message("FNaFB is out of date (Compared local version "+string((version*100)+(major*10)+minor)+" to serverside version "+string((ini_read_real("version","version",0)*100)+(ini_read_real("version","major",0)*10)+ini_read_real("version","minor",0))+")");
        } else {
             update=0;
+            show_debug_message("FNaFB is up to date (Compared local version "+string(version)+"."+string(major)+"."+string(minor)+" to serverside version "+string(ini_read_real("version","version",0))+"."+string(ini_read_real("version","major",0))+"."+string(ini_read_real("version","minor",0))+")");
        }
     }
     else {
-       update=0;
+        show_debug_message("update.ini invalid or missing!");
+        update=0;
     }
 }
 </string>
@@ -163,7 +166,7 @@ draw_set_halign(fa_left);
 switch step {
     case 0:
         draw_set_alpha(tran/room_speed);
-        if update { draw_text(4,1-tran,"There's an update available. Click here to visit builds page."); }
+        if update { draw_text(4,1-tran,"There's an update available! Click here download."); }
         else { draw_text(4,1-tran,"No updates available right now."); }
         draw_text(4,1,"DEVELOPMENT BUILD: "+string(version)+"."+string(major)+"."+string(minor)+string(build));
     break;

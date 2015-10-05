@@ -31,8 +31,6 @@ newgame=0;
 gametime=0;
 rmpower=0;
 rmindex=9;
-tutorial=0;
-tutorialdelay=room_speed*2;
 
 if global.saveslot&gt;0 {
     game_load("slot"+string(global.saveslot)+".fnafb");
@@ -48,7 +46,7 @@ if global.saveslot&gt;0 {
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="0">
+    <event eventtype="1" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -65,15 +63,9 @@ if global.saveslot&gt;0 {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-tutorial=0.5;
-virtual_key_add(0,0,136,104,vk_escape);
-virtual_key_add(136,0,272,104,vk_up);
-virtual_key_add(136,312,272,104,vk_down);
-virtual_key_add(0,104,181,208,vk_left);
-virtual_key_add(363,104,181,208,vk_right);
-virtual_key_add(181,104,182,208,vk_enter);
-show_debug_message("Virtual keys created!");
+            <string>///End Game and Clean up
+global.ingame=0;
+global.saveslot=-1;
 </string>
           </argument>
         </arguments>
@@ -105,10 +97,11 @@ show_debug_message("Virtual keys created!");
             room_goto(rmStage);
             audio_play_sound(bgmambience2,100,1);
             instance_create(256,96,objFreddy);
+            global.ingame=1;
             newgame=0;
             //Add touch controls if neccesary
             if global.touch {
-                alarm[0]=1;
+                instance_create(0,0,ctrlTouch);
             }
         }
     } else {
@@ -121,11 +114,20 @@ show_debug_message("Virtual keys created!");
         }
     }
 }
-if tutorial&gt;0 {
-    if tutorialdelay&gt;0 {
-        tutorialdelay--;
-    } else {
-        tutorial-=0.05;
+if global.ingame {
+    if keyboard_check_pressed(vk_escape)||keyboard_check_pressed(vk_backspace) {
+        //Pause game and open pause menu
+        //screen_save(temp_directory+"\pause.png");
+        with (instance_create(0,0,ctrlPause)) {
+            //sprpause=sprite_add(temp_directory+"\pause.png",1,0,0,0,0);
+        }
+        if global.touch {
+            with(ctrlTouch) {
+                instance_deactivate_all(1);
+            }
+        } else {
+            instance_deactivate_all(0);
+        }
     }
 }
 </string>
@@ -170,30 +172,6 @@ if !newgame {
     draw_sprite(sprMap,rmindex,544,416);
     draw_sprite(sprPowerBar,rmpower,272,384);
     draw_sprite(sprRec,0,0,416);
-    if global.touch {
-        if tutorial&gt;0 {
-            draw_set_alpha(tutorial);
-        } else {
-            draw_set_alpha(0.5);
-        }
-        draw_set_colour(c_green);
-        if keyboard_check(vk_up)||tutorial&gt;0 {
-            draw_rectangle(136,0,408,104,0);
-        }
-        if keyboard_check(vk_down)||tutorial&gt;0 {
-            draw_rectangle(136,312,408,416,0);
-        }
-        if keyboard_check(vk_left)||tutorial&gt;0 {
-            draw_rectangle(0,104,181,312,0);
-        }
-        if keyboard_check(vk_right)||tutorial&gt;0 {
-            draw_rectangle(363,104,544,312,0);
-        }
-        if keyboard_check(vk_enter)||tutorial&gt;0 {
-            draw_rectangle(181,104,363,312,0);
-        }
-        draw_set_alpha(1);
-    }
 }
 </string>
           </argument>

@@ -313,7 +313,7 @@
     <option_version_major>0</option_version_major>
     <option_version_minor>0</option_version_minor>
     <option_version_product>FNAFB - GM Edition</option_version_product>
-    <option_version_release>1</option_version_release>
+    <option_version_release>2</option_version_release>
     <option_win8_advertising_appid></option_win8_advertising_appid>
     <option_win8_advertising_enable>0</option_win8_advertising_enable>
     <option_win8_advertising_key></option_win8_advertising_key>
@@ -321,7 +321,7 @@
     <option_win8_advertising_type></option_win8_advertising_type>
     <option_win8_analytics_enable>0</option_win8_analytics_enable>
     <option_win8_analytics_id></option_win8_analytics_id>
-    <option_win8_build_version>1</option_win8_build_version>
+    <option_win8_build_version>2</option_win8_build_version>
     <option_win8_certificate_location>Windows8_TemporaryKey.pfx</option_win8_certificate_location>
     <option_win8_display_name>FNaFB</option_win8_display_name>
     <option_win8_internet_capable>-1</option_win8_internet_capable>
@@ -351,7 +351,7 @@
     <option_win8_texture_page>2048</option_win8_texture_page>
     <option_win8_wide_logo>Configs\Default\Windows8\logos\logo310.png</option_win8_wide_logo>
     <option_windowcolor>clBlack</option_windowcolor>
-    <option_windows_build_version>0</option_windows_build_version>
+    <option_windows_build_version>1</option_windows_build_version>
     <option_windows_company_info>Twisted Fork</option_windows_company_info>
     <option_windows_copyright_info>Creative Commons Attribution 3.0</option_windows_copyright_info>
     <option_windows_description_info>FNAFB for everyone!</option_windows_description_info>
@@ -362,7 +362,7 @@
     <option_windows_major_version>0</option_windows_major_version>
     <option_windows_nsis_file>Configs\Default\windows\RunnerInstaller.nsi</option_windows_nsis_file>
     <option_windows_product_info>FNAFB - GM Edition</option_windows_product_info>
-    <option_windows_release_version>1</option_windows_release_version>
+    <option_windows_release_version>2</option_windows_release_version>
     <option_windows_runner_finished>Configs\Default\windows\Runner_finish.bmp</option_windows_runner_finished>
     <option_windows_runner_header>Configs\Default\windows\Runner_header.bmp</option_windows_runner_header>
     <option_windows_save_location>0</option_windows_save_location>

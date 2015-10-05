@@ -33,6 +33,7 @@ dspeed=2;
 mspeed=2;
 onstage=1;
 tped=0;
+avatar=0;
 
 //Say arr you ready for freddy.
 talking=1;
@@ -311,13 +312,17 @@ if say!="0" {
             <string>///Ridiculous talking script
 if talking {
     if instance_exists(objDialouge) {
-        if !objDialouge.printed {
+        if objDialouge.printed {
             talking=0;
-            audio_stop_sound(sndfreddy[real(say)]);
+            /*if audio_is_playing(sndfreddy[real(say)]) {
+                audio_stop_sound(sndfreddy[real(say)]);
+            }*/
         }
     } else {
         talking=0;
-        audio_stop_sound(sndfreddy[real(say)]);
+        /*if audio_is_playing(sndfreddy[real(say)]) {
+            audio_stop_sound(sndfreddy[real(say)]);
+        }*/
     }
 } else if move {
     switch pudlr {

@@ -3,6 +3,11 @@
 with instance_create(0,368,objDialouge) {
     text=argument[0];
     yn=argument[1];
+    if global.ingame {
+        avatar=other.avatar;
+    } else {
+        avatar=-1;
+    }
     var i=0;
     options=argument[2];
     repeat(argument[2]) {
