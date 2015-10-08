@@ -27,48 +27,58 @@
             <kind>1</kind>
             <string>///Init
 option=0;
-options=6;
-soptions[0]=4;
-soptions[1]=3;
-soptions[2]=2;
-soptions[3]=2;
-soptions[4]=0;
-soptions[5]=0;
+options=4;
+soptions[0]=3;
+soptions[1]=2;
+soptions[2]=0;
+soptions[3]=0;
 soption[0]=1;
 soption[1]=1;
-soption[2]=1;
-soption[3]=0;
-soption[4]=0;
 ini_open(working_directory+"settings.ini") {
-    soption[0]=ini_read_real("main","windowsize",0);
-    soption[1]=ini_read_real("main","graphics",0)+1;
-    soption[2]=ini_read_real("main","fullscreen",0)+1;
-    soption[3]=ini_read_real("main","touch",0)+1;
+    soption[0]=ini_read_real("main","graphics",0)+1;
+    soption[1]=ini_read_real("main","touch",0)+1;
     ini_close();
 }
-otext[0,0]="Window Size";
-    otext[0,1]="1x";
-    otext[0,2]="2x";
-    otext[0,3]="3x";
-    otext[0,4]="4x";
-otext[1,0]="Graphics";
-    otext[1,1]="fast";
-    otext[1,2]="decent";
-    otext[1,3]="fancy";
-otext[2,0]="Fullscreen";
-    otext[2,1]="off";
-    otext[2,2]="on";
-otext[3,0]="Touchscreen";
-    otext[3,1]="off";
-    otext[3,2]="on";
-otext[4,0]="Delete save data";
-otext[5,0]="Save and return";
+otext[0,0]="Graphics";
+    otext[0,1]="fast";
+    otext[0,2]="decent";
+    otext[0,3]="fancy";
+otext[1,0]="Touchscreen";
+    otext[1,1]="off";
+    otext[1,2]="on";
+otext[2,0]="Reset game";
+otext[3,0]="Save";
+
+if os_type==os_windows||os_type==os_linux||os_type==os_macosx||os_type==os_unknown {
+    options+=2;
+    soptions[2]=4;
+    soptions[3]=2;
+    soptions[4]=0;
+    soptions[5]=0;
+    soption[2]=1;
+    soption[3]=1;
+    ini_open(working_directory+"settings.ini") {
+        soption[2]=ini_read_real("main","windowsize",0);
+        soption[3]=ini_read_real("main","fullscreen",0)+1;
+        ini_close();
+    }
+    otext[2,0]="Window Size";
+        otext[2,1]="1x";
+        otext[2,2]="2x";
+        otext[2,3]="3x";
+        otext[2,4]="4x";
+    otext[3,0]="Fullscreen";
+        otext[3,1]="off";
+        otext[3,2]="on";
+    otext[4,0]="Reset game";
+    otext[5,0]="Save";
+}
+
 fade=1;
 fadeinout=1;
 
 //Transition
-background_alpha[2]=0;
-background_visible[2]=1;
+bga=0;
 transition=1;
 
 //Sound
@@ -76,79 +86,10 @@ audio_stop_sound(bgmFNAFtitle);
 audio_play_sound(bgsOfficeFan,90,1);
 
 //Dialouge handling
-save=0;
+avatar=-1;
 del=0;
 deli=0;
-pixelate=0;
-tex_pixel_size = shader_get_uniform(shdMosaic, "f_SpritePixelSize");
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="1" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>background_visible[2]=0;
-audio_stop_sound(bgsOfficeFan);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="2" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Revert to failsafe
-with objDialouge { instance_destroy(); }
-if !touch {
-    window_set_size(544,416);
-    global.scale=1;
-}
-soption[0]=1;
-global.shaders=0;
-soption[1]=1;
-window_set_fullscreen(0);
-soption[2]=1;
-window_center();
-audio_play_sound(snddoorclose,90,0);
-
-//Make game fit in screen
-if 544*global.scale&lt;display_get_width()&amp;&amp;416*global.scale&lt;display_get_height() {
-    window_set_size(544*global.scale,416*global.scale);
-} else if global.scale&gt;=2 {
-    global.scale--;
-    window_set_size(544*global.scale,416*global.scale);
-}
-display_set_gui_size(544*global.scale,416*global.scale);
+reset=-1;
 </string>
           </argument>
         </arguments>
@@ -172,40 +113,22 @@ display_set_gui_size(544*global.scale,416*global.scale);
           <argument>
             <kind>1</kind>
             <string>///Transition into room and handle user input
-if background_alpha[2]&lt;1 &amp;&amp; transition == 1 {
-    background_alpha[2]=background_alpha[2]+0.05;
+if bga&lt;1&amp;&amp;transition==1 {
+    bga+=0.05;
 }
 if transition == 0 {
-    background_alpha[2]=background_alpha[2]-0.05;
+    bga-=0.05;
 }
-if background_alpha[2]==0 {
-    instance_create(0,288,ctrlIntro);
+if bga==0 {
+    if global.ingame instance_activate_object(ctrlPause);
+    else instance_create(0,288,ctrlIntro);
+    audio_stop_sound(bgsOfficeFan);
     instance_destroy();
-}
-if save {
-    if global.input==0 {
-        ini_open(working_directory+"settings.ini") {
-            ini_write_real("main","windowsize",soption[0]);
-            ini_write_real("main","graphics",soption[1]-1);
-            global.graphics=soption[1]-1;
-            ini_write_real("main","fullscreen",soption[2]-1);
-            ini_write_real("main","touch",soption[3]-1);
-            global.touch=soption[3]-1;
-            ini_close();
-        }
-        global.input=-1;
-        transition=0;
-    }
-    if global.input==1 {
-        global.input=-1;
-        transition=0;
-        alarm[0]=0;
-    }
 }
 if del&amp;&amp;keyboard_check(vk_delete) {
     if deli&gt;room_speed*3 {
-        audio_play_sound(sndgoldenfreddylaugh,100,0);
-        pixelate=10;
+        audio_play_sound(sndend1,100,0);
+        reset=room_speed;
         file_delete(working_directory+"slot1.fnafb");
         file_delete(working_directory+"slot2.fnafb");
         file_delete(working_directory+"slot3.fnafb");
@@ -215,15 +138,11 @@ if del&amp;&amp;keyboard_check(vk_delete) {
         file_delete(working_directory+"slot3.meta");
         file_delete(working_directory+"slot4.meta");
         deli=-1;
-        del=0;
         if instance_exists(objDialouge) {
             with(objDialouge) { instance_destroy(); }
         }
     }
     deli++
-}
-if pixelate&gt;0 {
-    pixelate-=0.25;
 }
 </string>
           </argument>
@@ -247,7 +166,7 @@ if pixelate&gt;0 {
             <kind>1</kind>
             <string>///Mouse controls
 //Do mouse related stuff
-if !del&amp;&amp;!save {
+if !del {
     var i=0;
     repeat(options) {
         if mouse_y&gt;128+(i*24)&amp;&amp;mouse_y&lt;128+((i+1)*24) {
@@ -285,38 +204,40 @@ if !del&amp;&amp;!save {
           <argument>
             <kind>1</kind>
             <string>///Keyboard controls
-if keyboard_check_pressed(vk_escape)||keyboard_check_pressed(vk_backspace)&amp;&amp;!save&amp;&amp;!del {
-    audio_play_sound(sndwindup2,90,0);
-    transition=0;
-}
-if keyboard_check_pressed(vk_up)&amp;&amp;!save&amp;&amp;!del {
-    if option&gt;=1 {
-        option--;
-    } else {
-        option=options-1;
+if !del {
+    if keyboard_check_pressed(vk_escape)||keyboard_check_pressed(vk_backspace) {
+        audio_play_sound(sndwindup2,90,0);
+        transition=0;
     }
-    audio_play_sound(sndblip3,90,0);
-}
-if keyboard_check_pressed(vk_down)&amp;&amp;!save&amp;&amp;!del {
-    option++;
-    if option&gt;=options {
-        option=0;
+    if keyboard_check_pressed(vk_up) {
+        if option&gt;=1 {
+            option--;
+        } else {
+            option=options-1;
+        }
+        audio_play_sound(sndblip3,90,0);
     }
-    audio_play_sound(sndblip3,90,0);
-}
-if keyboard_check_pressed(vk_left)&amp;&amp;!save&amp;&amp;!del {
-    soption[option]--;
-    if soption[option]&lt;1 {
-        soption[option]=soptions[option];
+    if keyboard_check_pressed(vk_down) {
+        option++;
+        if option&gt;=options {
+            option=0;
+        }
+        audio_play_sound(sndblip3,90,0);
     }
-    audio_play_sound(sndblip3,90,0);
-}
-if keyboard_check_pressed(vk_right)&amp;&amp;!save&amp;&amp;!del {
-    soption[option]++;
-    if soption[option]&gt;soptions[option] {
-        soption[option]=1;
+    if keyboard_check_pressed(vk_left) {
+        soption[option]--;
+        if soption[option]&lt;1 {
+            soption[option]=soptions[option];
+        }
+        audio_play_sound(sndblip3,90,0);
     }
-    audio_play_sound(sndblip3,90,0);
+    if keyboard_check_pressed(vk_right) {
+        soption[option]++;
+        if soption[option]&gt;soptions[option] {
+            soption[option]=1;
+        }
+        audio_play_sound(sndblip3,90,0);
+    }
 }
 </string>
           </argument>
@@ -341,18 +262,8 @@ if keyboard_check_pressed(vk_right)&amp;&amp;!save&amp;&amp;!del {
           <argument>
             <kind>1</kind>
             <string>///Draw menu
-if pixelate&gt;0 {
-    if global.graphics=2&amp;&amp;shader_is_compiled(shdMosaic) {
-        var texture = sprite_get_texture(sprGolden_Freddy,0);
-        texel_width = texture_get_texel_width(texture);
-        texel_height = texture_get_texel_height(texture);
-        shader_set(shdMosaic);
-        shader_set_uniform_f(tex_pixel_size, texel_width, texel_height, abs(pixelate-10));
-    }
-    draw_set_alpha(pixelate/10);
-    draw_sprite(sprGolden_Freddy,0,200,200);
-    if global.graphics=2 { shader_reset(); }
-}
+draw_set_alpha(bga);
+draw_background(OfficeOn,0,0);
 
 var i=0;
 if fade==0.5 { fadeinout=0; }
@@ -362,14 +273,14 @@ if fadeinout==0 { fade=fade+0.05; }
 draw_set_color(c_white);
 draw_set_halign(fa_left);
 draw_set_font(fntMain);
-draw_set_alpha(background_alpha[2]);
+draw_set_alpha(bga);
 draw_text(16,16,"Settings");
 repeat(options) {
     draw_text(16,128+(i*24),otext[i,0]);
     if option == i {
-        draw_set_alpha(background_alpha[2]*fade);
+        draw_set_alpha(bga*fade);
         draw_line(16,144+(i*24),128,144+(i*24));
-        draw_set_alpha(background_alpha[2]);
+        draw_set_alpha(bga);
     }
     ix=140;
     is=1;
@@ -383,6 +294,15 @@ repeat(options) {
         draw_set_colour(c_white);
     }
     i++;
+}
+//Reset the game easter egg
+if reset&gt;0 {
+    reset--;
+    draw_sprite(seqgoldenfreddy,0,0,0);
+    if reset==0 {
+        audio_stop_all();
+        game_restart();
+    }
 }
 </string>
           </argument>
@@ -406,41 +326,53 @@ repeat(options) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Do a thing
+            <string>///Apply settings
 if del {
     if instance_exists(objDialouge) {
         with(objDialouge) { instance_destroy() }
     }
     del=0;
     deli=0;
-} else if !save {
-    if option&lt;4 {
+} else {
+    tgl=options-2;
+    if option&lt;tgl { //Change settings
         soption[option]++;
         if soption[option]&gt;soptions[option] {
             soption[option]=1;
         }
         audio_play_sound(sndblip3,90,0);
     }
-    if option==4 {
+    if option==tgl { //Reset the game
         del=1;
         dialouge("To delete all saved data, hold down delete for 3 seconds.",0,0);
     }
-    if option==5 {
-        save=1;
-        global.scale=soption[0];
-        //Make game fit in screen
-        if 544*global.scale&lt;display_get_width()&amp;&amp;416*global.scale&lt;display_get_height() {
-            window_set_size(544*global.scale,416*global.scale);
-        } else if global.scale&gt;=2 {
-            global.scale--;
-            window_set_size(544*global.scale,416*global.scale);
+    if option==tgl+1 { //Save the game
+        //Save all platform settings first
+        global.graphics=soption[0]-1;
+        global.touch=soption[1]-1;
+        if os_type==os_windows||os_type==os_linux||os_type==os_macosx||os_type==os_unknown {
+            //Save desktop specfic settings
+            global.scale=soption[2];
+            //Make game fit in screen
+            if 544*global.scale&lt;display_get_width()&amp;&amp;416*global.scale&lt;display_get_height() {
+                window_set_size(544*global.scale,416*global.scale);
+            } else {
+                global.scale=1;
+                window_set_size(544*global.scale,416*global.scale);
+            }
+            display_set_gui_size(544*global.scale,416*global.scale);
+            window_set_fullscreen(soption[3]-1);
+            ctrlMaster.alarm[0]=1;
         }
-        display_set_gui_size(544*global.scale,416*global.scale);
-        global.shaders=soption[1]-1;
-        window_set_fullscreen(soption[2]-1);
-        ctrlMaster.alarm[0]=1;
-        dialouge("Do you want to keep these settings? (Settings will revert to failsafe in 10 seconds)",1,2,"Yes","No");
-        alarm[0]=room_speed*10;
+        ini_open(working_directory+"settings.ini") {
+            ini_write_real("main","graphics",global.graphics);
+            ini_write_real("main","touch",global.touch);
+            if os_type==os_windows||os_type==os_linux||os_type==os_macosx||os_type==os_unknown {
+                ini_write_real("main","windowsize",global.scale);
+                ini_write_real("main","fullscreen",soption[3]-1);
+            }
+            ini_close();
+        }
     }
     audio_play_sound(sndhonk,90,0);
 }

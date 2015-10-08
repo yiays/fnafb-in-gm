@@ -222,6 +222,7 @@
     </sprites>
     <sprites name="System">
       <sprite>sprites\sprGameOver</sprite>
+      <sprite>sprites\sprLogo</sprite>
     </sprites>
     <sprites name="Sequences">
       <sprite>sprites\seqNews</sprite>
@@ -354,7 +355,7 @@
     <constant name="version">0</constant>
     <constant name="major">0</constant>
     <constant name="minor">2</constant>
-    <constant name="build">"-alpha1"</constant>
+    <constant name="build">"-alpha2"</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

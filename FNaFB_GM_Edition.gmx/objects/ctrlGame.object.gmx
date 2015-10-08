@@ -31,6 +31,7 @@ newgame=0;
 gametime=0;
 rmpower=0;
 rmindex=9;
+setchk=0;
 
 if global.saveslot&gt;0 {
     game_load("slot"+string(global.saveslot)+".fnafb");
@@ -40,6 +41,7 @@ if global.saveslot&gt;0 {
     newgame=1;
     fade=0;
     fadeinout=0;
+    fadedelay=room_speed*2;
 }
 </string>
           </argument>
@@ -88,7 +90,22 @@ global.saveslot=-1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if newgame {
+            <string>///Transition and pause the game
+if setchk {
+    if global.touch {
+        if !instance_exists(ctrlTouch) {
+            instance_create(0,0,ctrlTouch);
+        }
+    } else {
+        if instance_exists(ctrlTouch) {
+            with(ctrlTouch) {
+                instance_destroy();
+            }
+        }
+    }
+    setchk=0;
+}
+if newgame {
     if fadeinout {
         if fade&gt;0 {
             fade-=0.05;
@@ -106,27 +123,25 @@ global.saveslot=-1;
         }
     } else {
         if fade&lt;1 {
-           fade=fade+0.05;
-        }
-        if (keyboard_check_pressed(vk_enter)&amp;&amp;fade)||(mouse_check_button(mb_left)&amp;&amp;fade) {
-           audio_play_sound(sndpop,90,0);
-           fadeinout=1;
+           fade+=0.05;
+        } else {
+            fadedelay--;
+            if keyboard_check_pressed(vk_enter)||mouse_check_button(mb_left)||fadedelay&lt;1 {
+               audio_play_sound(sndpop,90,0);
+               fadeinout=1;
+            }
         }
     }
 }
 if global.ingame {
     if keyboard_check_pressed(vk_escape)||keyboard_check_pressed(vk_backspace) {
         //Pause game and open pause menu
-        //screen_save(temp_directory+"\pause.png");
+        instance_deactivate_all(0);
+        setchk=1;
+        instance_activate_object(ctrlMaster);
+        //screen_save(temp_directory+"pause.png");
         with (instance_create(0,0,ctrlPause)) {
-            //sprpause=sprite_add(temp_directory+"\pause.png",1,0,0,0,0);
-        }
-        if global.touch {
-            with(ctrlTouch) {
-                instance_deactivate_all(1);
-            }
-        } else {
-            instance_deactivate_all(0);
+            //sprpause=sprite_add(temp_directory+"pause.png",1,0,0,0,0);
         }
     }
 }

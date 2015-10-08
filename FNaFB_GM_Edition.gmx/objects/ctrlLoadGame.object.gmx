@@ -37,8 +37,7 @@ fade=1;
 fadeinout=1;
 
 //Transition
-background_alpha[1]=0;
-background_visible[1]=1;
+bga=0;
 transition=1;
 
 //Load data from ini
@@ -99,29 +98,6 @@ repeat(4) {
         </arguments>
       </action>
     </event>
-    <event eventtype="1" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>background_visible[1]=0;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -140,13 +116,13 @@ repeat(4) {
           <argument>
             <kind>1</kind>
             <string>///Transition into page
-if background_alpha[1]&lt;1 &amp;&amp; transition == 1 {
-    background_alpha[1]=background_alpha[1]+0.05;
+if bga&lt;1&amp;&amp;transition==1 {
+    bga+=0.05;
 }
-if transition == 0 {
-    background_alpha[1]=background_alpha[1]-0.05;
+if transition==0 {
+    bga-=0.05;
 }
-if background_alpha[1]==0 {
+if bga==0 {
     instance_create(0,288,ctrlIntro);
     instance_destroy();
 }
@@ -250,6 +226,9 @@ if keyboard_check_pressed(vk_down) {
           <argument>
             <kind>1</kind>
             <string>///Draw menu
+draw_set_alpha(bga);
+draw_background_tiled(bgSpots,0,0);
+
 var i=0;
 if fade==0.5 { fadeinout=0; }
 if fade==1 {fadeinout=1; }
@@ -263,9 +242,9 @@ draw_text(16,16,"Load which file?");
 repeat(options) {
     draw_text(16,64+(i*80),otext[i]);
     if option == i {
-        draw_set_alpha(background_alpha[1]*fade);
+        draw_set_alpha(bga*fade);
         draw_line(x+16,84+(i*80),x+128,84+(i*80));
-        draw_set_alpha(background_alpha[1]);
+        draw_set_alpha(bga);
     }
     if set[i+1] {
         var dx=0;

@@ -26,7 +26,9 @@
           <argument>
             <kind>1</kind>
             <string>///Init
-option=1;
+
+//Menu
+option=0;
 options=7;
 otext[0]="Items";
 otext[1]="Skills";
@@ -38,17 +40,46 @@ otext[6]="End Game";
 fade=1;
 fadeinout=1;
 
-audio_pause_all();
+//Characters
+char=0;
+chars=4;
+cname[0]="Freddy";
+cname[1]="Bonnie";
+cname[2]="Chica";
+cname[3]="Foxy";
 
-//Do shader stuff
-draw_set_color(c_white);
-uni_time = shader_get_uniform(shd_greyscale,"time");
-var_time_var = 0;
-uni_resolution = shader_get_uniform(shd_greyscale,"resolution");
-var_resolution_x = 544*global.scale;
-var_resolution_y = 416*global.scale;
-uni_greyscale_fade = shader_get_uniform(shd_greyscale,"fade");
-var_greyscale_fade = 0.5;
+//Variables
+gameend=0;
+choosechar=0;
+ask=0;
+avatar=-1;
+
+audio_pause_all();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Resume music
+audio_resume_all();
+instance_activate_all();
 </string>
           </argument>
         </arguments>
@@ -73,20 +104,42 @@ var_greyscale_fade = 0.5;
             <kind>1</kind>
             <string>///Mouse controls
 //Do mouse related stuff
-if mouse_check_button_pressed(mb_left) {
-    if mouse_y&gt;y+16+(option*24)&amp;&amp;mouse_y&lt;y+16+((option+1)*24) {
-        event_perform(ev_keypress,vk_enter);
-    }
-}
-var i=0;
-repeat(options) {
-    if mouse_y&gt;y+16+(i*24)&amp;&amp;mouse_y&lt;y+16+((i+1)*24) {
-        if option!=i {
-            option=i;
-            audio_play_sound(sndblip3,90,0);
+if !ask {
+    if mouse_x&lt;160&amp;&amp;!choosechar {
+        //Selection in menu
+        if mouse_check_button_pressed(mb_left) {
+            if mouse_y&gt;y+16+(option*24)&amp;&amp;mouse_y&lt;y+16+((option+1)*24) {
+                event_perform(ev_keypress,vk_enter);
+            }
+        }
+        var i=0;
+        repeat(options) {
+            if mouse_y&gt;y+16+(i*24)&amp;&amp;mouse_y&lt;y+16+((i+1)*24) {
+                if option!=i {
+                    option=i;
+                    audio_play_sound(sndblip3,90,0);
+                }
+            }
+            i++;
+        }
+    } else if mouse_x&gt;160&amp;&amp;choosechar {
+        //Selection in characters
+        if mouse_check_button_pressed(mb_left) {
+            if mouse_y&gt;y+8+(char*100)&amp;&amp;mouse_y&lt;y+8+((char+1)*100) {
+                event_perform(ev_keypress,vk_enter);
+            }
+        }
+        var i=0;
+        repeat(chars) {
+            if mouse_y&gt;y+8+(i*100)&amp;&amp;mouse_y&lt;y+8+((i+1)*100) {
+                if char!=i {
+                    char=i;
+                    audio_play_sound(sndblip3,90,0);
+                }
+            }
+            i++;
         }
     }
-    i++;
 }
 </string>
           </argument>
@@ -109,25 +162,73 @@ repeat(options) {
           <argument>
             <kind>1</kind>
             <string>///Keyboard controls
-if keyboard_check_pressed(vk_escape)||keyboard_check_pressed(vk_backspace) {
-    //Resume game
-    instance_activate_all();
-    instance_destroy();
-}
-if keyboard_check_pressed(vk_up) {
-    if option&gt;=1 {
-        option--;
+if !ask {
+    if keyboard_check_pressed(vk_escape)||keyboard_check_pressed(vk_backspace) {
+        //Resume game
+        instance_destroy();
+    }
+    if !choosechar {
+        if keyboard_check_pressed(vk_up) {
+            if option&gt;=1 {
+                option--;
+            } else {
+                option=options-1;
+            }
+            audio_play_sound(sndblip3,90,0);
+        }
+        if keyboard_check_pressed(vk_down) {
+            option++;
+            if option&gt;=options {
+                option=0;
+            }
+            audio_play_sound(sndblip3,90,0);
+        }
     } else {
-        option=options-1;
+        if keyboard_check_pressed(vk_up) {
+            if char&gt;=1 {
+                char--;
+            } else {
+                char=chars-1;
+            }
+            audio_play_sound(sndblip3,90,0);
+        }
+        if keyboard_check_pressed(vk_down) {
+            char++;
+            if char&gt;=chars {
+                char=0;
+            }
+            audio_play_sound(sndblip3,90,0);
+        }
     }
-    audio_play_sound(sndblip3,90,0);
 }
-if keyboard_check_pressed(vk_down) {
-    option++;
-    if option&gt;=options {
-        option=0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Dialouges
+if global.input!=-1 {
+    if gameend {
+        ask=0;
+        if global.input==1 {
+            game_restart();
+        }
     }
-    audio_play_sound(sndblip3,90,0);
 }
 </string>
           </argument>
@@ -152,23 +253,25 @@ if keyboard_check_pressed(vk_down) {
           <argument>
             <kind>1</kind>
             <string>///Draw menu
-/*if global.graphics==2 {
-    var_time_var+=0.04;
-    var_mouse_pos_x = mouse_x - view_xview;
-    var_mouse_pos_y = mouse_y - view_yview ;
-    shader_set(shd_greyscale);
-    shader_set_uniform_f(uni_time, var_time_var);
-    //shader_set_uniform_f(uni_mouse_pos, var_mouse_pos_x, var_mouse_pos_y);
-    shader_set_uniform_f(uni_resolution, var_resolution_x, var_resolution_y);
-    shader_set_uniform_f(uni_greyscale_fade, var_greyscale_fade);
-}
-draw_set_color(c_white);
-draw_set_halign(fa_left);
-draw_set_font(fntMain);
+//Boxes
+draw_set_colour(c_black);
+draw_set_alpha(0.5);
+draw_rectangle(0,0,160,416,0);
+draw_set_colour(make_colour_rgb(44,62,80));
 draw_set_alpha(1);
-draw_sprite(sprpause,0,0,0);
-shader_reset();*/
+draw_rectangle(160,0,544,416,0);
+draw_set_colour(make_colour_rgb(52,73,94));
+draw_rectangle(0,386,160,416,0);
+draw_set_colour(c_white);
+draw_set_alpha(1);
+draw_set_halign(fa_center);
+draw_set_valign(fa_top);
 
+//Token counter
+draw_text(80,392,"99999 Token(s)")
+draw_set_halign(fa_left);
+
+//Menu
 var i=0;
 if fade==0.5 { fadeinout=0; }
 if fade==1 {fadeinout=1; }
@@ -182,6 +285,38 @@ repeat(options) {
         draw_set_alpha(1);
     }
     i++;
+}
+
+//Characters
+i=0;
+repeat(chars) {
+    draw_set_halign(fa_left);
+    if cname[i]=="Freddy" draw_sprite(sprFaces,0,168,8+(i*100));
+    else if cname[i]=="Bonnie" draw_sprite(sprFaces,1,168,8+(i*100));
+    else if cname[i]=="Chica" draw_sprite(sprFaces,2,168,8+(i*100));
+    else if cname[i]=="Foxy" draw_sprite(sprFaces,3,168,8+(i*100));
+    draw_text(272,30+(i*100),cname[i]);
+    draw_set_colour(c_blue);
+    draw_text(272,50+(i*100),"LV");
+    draw_set_colour(c_white);
+    draw_text(300,50+(i*100),"1");
+    draw_set_colour(c_blue);
+    draw_text_transformed(434,50+(i*100),"LIFE",0.6,0.9,0);
+    draw_set_colour(c_white);
+    draw_set_halign(fa_right);
+    draw_rectangle_colour(434,60+(i*100),434+45,65+(i*100),make_colour_rgb(211,84,0),make_colour_rgb(211,84,0),make_colour_rgb(243,156,18),make_colour_rgb(243,156,18),0)
+    draw_text(534,50+(i*100),"100/221");
+    draw_set_colour(c_blue);
+    draw_set_halign(fa_left);
+    draw_text_transformed(434,70+(i*100),"SKILL",0.6,0.9,0);
+    draw_set_colour(c_white);
+    draw_set_halign(fa_right);
+    draw_rectangle_colour(434,80+(i*100),434+85,85+(i*100),make_colour_rgb(41,128,185),make_colour_rgb(41,128,185),make_colour_rgb(52,152,219),make_colour_rgb(52,152,219),0)
+    draw_text(534,70+(i*100),"100/120");
+    i++;
+}
+if choosechar {
+    draw_line(168,104+(char*100),534,104+(char*100))
 }
 </string>
           </argument>
@@ -206,23 +341,59 @@ repeat(options) {
           <argument>
             <kind>1</kind>
             <string>///Do a thing
-audio_play_sound(sndpop,90,0);
-switch option {
-    case 0:
-        instance_create(0,0,ctrlNewGame);
-        instance_destroy();
-    break;
-    case 1:
-        instance_create(0,0,ctrlLoadGame);
-        instance_destroy();
-    break;
-    case 2:
-        instance_create(0,0,ctrlSettings);
-        instance_destroy();
-    break;
-    case 3:
-        game_end();
-    break;
+if !ask {
+    audio_play_sound(sndpop,90,0);
+    if !choosechar {
+        switch option {
+            case 0:
+                //Items
+            break;
+            case 1:
+                //Skills
+                choosechar=1;
+            break;
+            case 2:
+                //Parts
+                choosechar=1;
+            break;
+            case 3:
+                //Status
+                choosechar=1;
+            break;
+            case 4:
+                //Save Game
+                ask=1;
+                dialouge("Game saving isn't currently supported!#Update to a newer version to save the game.",0,0);
+            break;
+            case 5:
+                //Settings
+                instance_create(0,0,ctrlSettings);
+                instance_deactivate_object(self);
+            break;
+            case 6:
+                //End Game
+                gameend=1;
+                ask=1;
+                dialouge("Are you sure you want to end the game?",1,2,"No","Yes");
+            break;
+        }
+    } else {
+        choosechar=0;
+        switch option {
+            case 1:
+                //Skills
+                //Open skill browser for char
+            break;
+            case 2:
+                //Parts
+                //Open parts browser for char
+            break;
+            case 3:
+                //Status
+                //Show status for char
+            break;
+        }
+    }
 }
 </string>
           </argument>
