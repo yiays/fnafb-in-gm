@@ -26,7 +26,7 @@
     <showViews>0</showViews>
     <deleteUnderlyingObj>0</deleteUnderlyingObj>
     <deleteUnderlyingTiles>-1</deleteUnderlyingTiles>
-    <page>4</page>
+    <page>0</page>
     <xoffset>0</xoffset>
     <yoffset>0</yoffset>
   </makerSettings>
@@ -91,6 +91,7 @@
     <instance objName="objWall" x="192" y="224" name="inst_BD98F65C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objDoor" x="416" y="160" name="inst_B28E361D" locked="0" code="rm=rmStage;&#xA;rmx=0;&#xA;rmy=128;&#xA;rmpower=0;&#xA;rmindex=4;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objWall" x="448" y="160" name="inst_67E80500" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objtalk" x="224" y="224" name="inst_D5B93EBB" locked="0" code="say=&quot;39&quot;;&#xA;saydelay=10;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="tileGame" x="416" y="160" w="32" h="32" xo="64" yo="96" id="10000444" name="inst_AB60AF59" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

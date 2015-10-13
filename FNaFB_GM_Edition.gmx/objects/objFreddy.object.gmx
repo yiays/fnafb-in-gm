@@ -34,6 +34,40 @@ mspeed=2;
 onstage=1;
 tped=0;
 avatar=0;
+moved=0;
+transattack=0;
+
+//&lt; &gt;Stats and Inventory System
+
+hth=180;    //Health
+mxhth=180;  //Max Health
+skl=120;    //Skill
+mxskl=120;  //Max Skill
+atk=1;      //Attack
+def=1;      //Defence
+eff="none"; //Effect
+lvl=1       //Level
+xp=0        //XP
+// XP level boundaries                                                                                \\
+// 1  2   3   4   5   6   7   8   9   10   11   12   13    14    15    16     17    18    19    20    ||
+// 90                                                                                                 //
+
+items=ds_list_create();itemq=ds_list_create();    //Consumables
+    ds_list_add(items,"spizza");
+    ds_list_add(itemq,1);
+hands=ds_list_create();handq=ds_list_create();    //Weapons
+    //Player starts with no hands
+parts=ds_list_create();partq=ds_list_create();    //Armor
+    //Player starts with no parts
+keys=ds_list_create();keyq=ds_list_create();      //Key items
+    //Player starts with no keys
+
+equ=ds_list_create();   //Equipped items
+    ds_list_add(equ,"cmic","none","ha","ba","none");
+    //               hand  shield head body fuel
+skills=ds_list_create();//Character skills
+    //Player starts with no skills
+//&lt;/&gt;Stats and Inventory System
 
 //Say arr you ready for freddy.
 talking=1;
@@ -109,6 +143,39 @@ sndfreddy[45]=sndfreddy45;
         </arguments>
       </action>
     </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Clean up
+ds_list_destroy(items);
+ds_list_destroy(itemq);
+ds_list_destroy(hands);
+ds_list_destroy(handq);
+ds_list_destroy(parts);
+ds_list_destroy(partq);
+ds_list_destroy(keys);
+ds_list_destroy(keyq);
+ds_list_destroy(equ);
+ds_list_destroy(skills);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -153,7 +220,9 @@ if instance_position(x,y,objBathDoor) &amp;&amp; !tped &amp;&amp; move {
     move=0;
     tped=1;
 }
+moved=0;
 if move {
+    moved=1;
     if !talking &amp;&amp; !tped {
         udlri=4;
         if keyboard_check(vk_shift) {
@@ -248,6 +317,15 @@ if move {
         }
     }
 }
+if moved&amp;&amp;!move {
+    if random_range(1,60)==1 {
+        //Freddy is under attack!
+        transattack=1;
+        audio_pause_sound(bgmambience2);
+        audio_play_sound(sndanimatronicatdoor,99,0);
+        //play sound oh shit
+    }
+}
 if tped &amp;&amp; udlri!=4 {
     tped=0;
 }
@@ -279,13 +357,37 @@ if say!="0" {
         saydelay--;
     } else {
         audio_play_sound(sndfreddy[real(say)],99,0);
-        ini_open(working_directory+"en.ini");
+        ini_open(working_directory+global.lang+".ini");
         if ini_read_string("freddy",say,"ERR: STRING UNDEFINED!")!="-1" {
             dialouge(ini_read_string("freddy",say,"ERR: STRING UNDEFINED!"),0,0);
         }
         ini_close();
         say="0";
     }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Transitions
+if transattack {
+    
 }
 </string>
           </argument>

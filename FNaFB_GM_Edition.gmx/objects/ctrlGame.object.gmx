@@ -34,8 +34,13 @@ rmindex=9;
 setchk=0;
 
 if global.saveslot&gt;0 {
-    game_load("slot"+string(global.saveslot)+".fnafb");
-    show_debug_message("Loaded game in slot "+string(global.saveslot)+"!");
+    if global.saveslot&gt;=5 {
+        //loadGame(working_directory+"temp.fnafb");
+        show_debug_message("Recovered game from last session!");
+    } else {
+        //loadGame(working_directory+"slot"+string(global.saveslot)+".fnafb");
+        show_debug_message("Loaded game in slot "+string(global.saveslot)+"!");
+    }
 } else {
     //Start game from start.
     newgame=1;
@@ -68,6 +73,38 @@ if global.saveslot&gt;0 {
             <string>///End Game and Clean up
 global.ingame=0;
 global.saveslot=-1;
+
+//Delete recovery files
+file_delete(working_directory+"recover.ini");
+file_delete(working_directory+"temp.fnafb");
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Save a backup of the game in case it crashes
+alarm[0]=room_speed*20*(-global.graphics+3);
+saveGame(working_directory+"temp.fnafb");
+ini_open(working_directory+"recover.ini");
+ini_write_real("meta","exists",1);
+ini_close();
 </string>
           </argument>
         </arguments>
@@ -91,11 +128,9 @@ global.saveslot=-1;
           <argument>
             <kind>1</kind>
             <string>///Transition and pause the game
-if setchk {
+if setchk==1 {
     if global.touch {
-        if !instance_exists(ctrlTouch) {
-            instance_create(0,0,ctrlTouch);
-        }
+        instance_create(0,0,ctrlTouch);
     } else {
         if instance_exists(ctrlTouch) {
             with(ctrlTouch) {
@@ -104,6 +139,8 @@ if setchk {
         }
     }
     setchk=0;
+} else {
+    setchk--;
 }
 if newgame {
     if fadeinout {
@@ -115,6 +152,7 @@ if newgame {
             audio_play_sound(bgmambience2,100,1);
             instance_create(256,96,objFreddy);
             global.ingame=1;
+            alarm[0]=room_speed*20*(-global.graphics+3);
             newgame=0;
             //Add touch controls if neccesary
             if global.touch {
@@ -136,8 +174,13 @@ if newgame {
 if global.ingame {
     if keyboard_check_pressed(vk_escape)||keyboard_check_pressed(vk_backspace) {
         //Pause game and open pause menu
+        if instance_exists(ctrlTouch) {
+            with(ctrlTouch) {
+                instance_destroy();
+            }
+        }
         instance_deactivate_all(0);
-        setchk=1;
+        setchk=2;
         instance_activate_object(ctrlMaster);
         //screen_save(temp_directory+"pause.png");
         with (instance_create(0,0,ctrlPause)) {

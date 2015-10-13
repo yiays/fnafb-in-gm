@@ -31,12 +31,20 @@ steps=3;
 cdown=0;
 transition=0;
 tran=0;
+askupdate=0;
 
 //Request update news
-gnews=http_get("https://github.com/yesiateyoursheep/fnafb-in-gm/releases/download/v"+string(version)+"."+string(major)+"."+string(minor)+build+"/releasenotes.txt");
-news="Retreiving news...";
-gupdate=http_get("https://github.com/yesiateyoursheep/fnafb-in-gm/raw/master/project-test-tube.gmx/version.ini");
-update=0;
+if os_is_network_connected() {
+    gnews=http_get("https://github.com/yesiateyoursheep/fnafb-in-gm/releases/download/v"+string(version)+"."+string(major)+"."+string(minor)+build+"/releasenotes.txt");
+    news="Retreiving news...";
+    gupdate=http_get("https://github.com/yesiateyoursheep/fnafb-in-gm/raw/master/project-test-tube.gmx/version.ini");
+    update=0;
+} else {
+    news="Unable to fetch news when offline...";
+    gnews=-1;
+    update=0;
+    gupdate=-1;
+}
 </string>
           </argument>
         </arguments>
@@ -84,6 +92,13 @@ if transition {
         transition=0;
     }
 }
+if askupdate &amp;&amp; global.input!=-1 {
+    askupdate=0;
+    if global.input==0 {
+        url_open_ext("http://github.com/yesiateyoursheep/fnafb-in-gm/releases/latest","_blank");
+        game_end();
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -112,6 +127,7 @@ if ds_map_find_value(async_load, "id")==gnews {
        news = ds_map_find_value(async_load, "result");
        if string_char_at(news,1)=="&lt;" {
             news="This version doesn't have release notes...";
+            show_debug_message("News appears to be an html 404 page.")
        }
     }
     else {
@@ -124,10 +140,15 @@ if ds_map_find_value(async_load, "id")==gupdate {
        if (ini_read_real("version","version",0)*100)+(ini_read_real("version","major",0)*10)+ini_read_real("version","minor",0) &gt; (version*100)+(major*10)+minor {
             update=1;
             show_debug_message("FNaFB is out of date (Compared local version "+string((version*100)+(major*10)+minor)+" to serverside version "+string((ini_read_real("version","version",0)*100)+(ini_read_real("version","major",0)*10)+ini_read_real("version","minor",0))+")");
+            if !instance_exists(objDialouge) {
+                dialouge("An update to FNaFB-in-GM is available!#Would you like to download it now?",1,2,"yes","no");
+                askupdate=1;
+            }
        } else {
             update=0;
             show_debug_message("FNaFB is up to date (Compared local version "+string(version)+"."+string(major)+"."+string(minor)+" to serverside version "+string(ini_read_real("version","version",0))+"."+string(ini_read_real("version","major",0))+"."+string(ini_read_real("version","minor",0))+")");
        }
+       ini_close();
     }
     else {
         show_debug_message("update.ini invalid or missing!");
@@ -163,16 +184,17 @@ draw_rectangle(0,0,544,20,0);
 draw_set_alpha(1);
 draw_set_colour(c_black);
 draw_set_halign(fa_left);
+draw_set_font(fntMain);
 switch step {
     case 0:
         draw_set_alpha(tran/room_speed);
         if update { draw_text(4,1-tran,"There's an update available! Click here download."); }
         else { draw_text(4,1-tran,"No updates available right now."); }
-        draw_text(4,1,"DEVELOPMENT BUILD: "+string(version)+"."+string(major)+"."+string(minor)+string(build));
+        draw_text(4,1,"DEVELOPMENT BUILD: "+string(version)+"."+string(major)+"."+string(minor)+build);
     break;
     case 1:
         draw_set_alpha(tran/room_speed);
-        draw_text(4,1-tran,"DEVELOPMENT BUILD: "+string(version)+"."+string(major)+"."+string(minor)+string(build));
+        draw_text(4,1-tran,"DEVELOPMENT BUILD: "+string(version)+"."+string(major)+"."+string(minor)+build);
         draw_set_alpha(1);
         draw_text(4,1,"UPDATE NEWS: "+news);
     break;

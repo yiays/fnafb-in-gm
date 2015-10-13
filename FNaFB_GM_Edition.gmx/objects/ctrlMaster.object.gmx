@@ -151,16 +151,23 @@ logo=0;
 
 ask=0;
 
-//[EXPERIMENTAL] Performance boost - Disable surfaces
+//[EXPERIMENTAL] Performance boost - Disable surfaces - breaks when changing window scale
 application_surface_enable(0);
 
 //Load settings
-ini_open(working_directory+"settings.ini") {
-    scale=ini_read_real("main","windowsize",1);
-    graphics=ini_read_real("main","graphics",0);
-    window_set_fullscreen(ini_read_real("main","fullscreen",0));
-    touch=ini_read_real("main","touch",-1);
-    ini_close();
+ini_open(working_directory+"settings.ini")
+scale=ini_read_real("main","windowsize",1);
+graphics=ini_read_real("main","graphics",0);
+window_set_fullscreen(ini_read_real("main","fullscreen",0));
+touch=ini_read_real("main","touch",-1);
+ini_close();
+
+//Set language if possible
+if os_get_language()!="en"&amp;&amp;file_exists(working_directory+os_get_language()+".ini") {
+    lang=os_get_language();
+    show_debug_message("Language set to "+os_get_language()+"!");
+} else {
+    show_debug_message("No langauage available for "+os_get_language()+"!");
 }
 
 //Check if player is using a touchscreen
@@ -185,6 +192,17 @@ if 544*scale&lt;display_get_width()&amp;&amp;416*scale&lt;display_get_height() {
 }
 display_set_gui_size(544*scale,416*scale);
 alarm[0]=1;
+
+if file_exists(working_directory+"recover.ini")&amp;&amp;file_exists(working_directory+"temp.fnafb") {
+    ini_open(working_directory+"recover.ini");
+    if ini_read_real("meta","exists",0) {
+        saveslot=5;
+        ingame=1;
+        file_delete(working_directory+"recover.ini");
+        instance_create(0,0,ctrlGame);
+    }
+    ini_close();
+}
 </string>
           </argument>
         </arguments>
@@ -211,7 +229,7 @@ alarm[0]=1;
 if room==rmInit {
     draw_set_alpha(1);
     draw_set_colour(c_white);
-    draw_set_font(fntMain);
+    draw_set_font(fntHeader);
     draw_set_halign(fa_center);
     draw_set_valign(fa_top);
     if !ask {

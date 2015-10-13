@@ -29,7 +29,7 @@
 
 //Menu
 option=0;
-options=7;
+options=8;
 otext[0]="Items";
 otext[1]="Skills";
 otext[2]="Parts";
@@ -37,6 +37,7 @@ otext[3]="Status";
 otext[4]="Save";
 otext[5]="Settings";
 otext[6]="End Game";
+otext[7]="&lt;- Return";
 fade=1;
 fadeinout=1;
 
@@ -77,7 +78,7 @@ audio_pause_all();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Resume music
+            <string>///Resume game
 audio_resume_all();
 instance_activate_all();
 </string>
@@ -223,8 +224,8 @@ if !ask {
             <kind>1</kind>
             <string>///Dialouges
 if global.input!=-1 {
+    ask=0;
     if gameend {
-        ask=0;
         if global.input==1 {
             game_restart();
         }
@@ -362,8 +363,10 @@ if !ask {
             break;
             case 4:
                 //Save Game
+                instance_destroy();
+                saveGame(working_directory+"test.fnafb");
                 ask=1;
-                dialouge("Game saving isn't currently supported!#Update to a newer version to save the game.",0,0);
+                dialouge("Game Saved!"/*"Game saving isn't currently supported!#Update to a newer version to save the game."*/,0,0);
             break;
             case 5:
                 //Settings
@@ -375,6 +378,10 @@ if !ask {
                 gameend=1;
                 ask=1;
                 dialouge("Are you sure you want to end the game?",1,2,"No","Yes");
+            break;
+            case 7:
+                //Unpause
+                instance_destroy();
             break;
         }
     } else {

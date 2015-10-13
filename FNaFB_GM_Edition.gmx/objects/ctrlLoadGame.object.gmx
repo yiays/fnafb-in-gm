@@ -28,11 +28,12 @@
             <string>///Init
 audio_stop_all();
 option=0;
-options=4;
+options=5;
 otext[0]="File 1";
 otext[1]="File 2";
 otext[2]="File 3";
 otext[3]="File 4";
+otext[4]="&lt;- Return";
 fade=1;
 fadeinout=1;
 
@@ -50,6 +51,7 @@ set[1]=0;
 set[2]=0;
 set[3]=0;
 set[4]=0;
+set[5]=0;
 repeat(4) {
     if file_exists(working_directory+"slot"+string(i)+".meta") {
         a=file_text_open_read(working_directory+"slot"+string(i)+".meta");
@@ -236,9 +238,10 @@ if fadeinout==1 { fade=fade-0.05; }
 if fadeinout==0 { fade=fade+0.05; }
 draw_set_color(c_white);
 draw_set_halign(fa_left);
-draw_set_font(fntMain);
-draw_set_alpha(background_alpha[1]);
+draw_set_alpha(bga);
+draw_set_font(fntHeader);
 draw_text(16,16,"Load which file?");
+draw_set_font(fntMain);
 repeat(options) {
     draw_text(16,64+(i*80),otext[i]);
     if option == i {
@@ -292,19 +295,25 @@ repeat(options) {
           <argument>
             <kind>1</kind>
             <string>///Do a thing
-if !set[option+1] {
-    audio_play_sound(snderror,90,0);
-} else {
-    if file_exists(working_directory+"slot"+string(option+1)+".fnafb") {
-        global.copyright=copyright[option+1];
-        global.saveslot=saveslot[option+1];
-        global.gamemode=gamemode[option+1];
-        instance_create(0,0,ctrlGame);
-        audio_play_sound(sndhonk,90,0);
-        instance_destroy();
-    } else {
+if option&lt;4 {
+    //Load game
+    if !set[option+1] {
         audio_play_sound(snderror,90,0);
+    } else {
+        if file_exists(working_directory+"slot"+string(option+1)+".fnafb") {
+            global.copyright=copyright[option+1];
+            global.saveslot=saveslot[option+1];
+            global.gamemode=gamemode[option+1];
+            instance_create(0,0,ctrlGame);
+            audio_play_sound(sndhonk,90,0);
+            instance_destroy();
+        } else {
+            audio_play_sound(snderror,90,0);
+        }
     }
+} else {
+    audio_play_sound(sndwindup2,90,0);
+    transition=0;
 }
 </string>
           </argument>
