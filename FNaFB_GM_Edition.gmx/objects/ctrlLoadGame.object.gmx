@@ -41,56 +41,23 @@ fadeinout=1;
 bga=0;
 transition=1;
 
-//Load data from ini
+//Load data from .fnafb.meta
 var a i=1;
-save[1]="";
-save[2]="";
-save[3]="";
-save[4]="";
 set[1]=0;
 set[2]=0;
 set[3]=0;
 set[4]=0;
 set[5]=0;
 repeat(4) {
-    if file_exists(working_directory+"slot"+string(i)+".meta") {
-        a=file_text_open_read(working_directory+"slot"+string(i)+".meta");
-        while !file_text_eof(a) {
-            save[i]+=file_text_read_string(a)+"
-";
-            file_text_readln(a);
-        }
-        file_text_close(a);
-        save[i]=base64_decode(save[i]);
-        ini_open_from_string(save[i]);
-            if ini_read_real("meta","exists",0) &amp;&amp; (ini_read_real("meta","saveslot",0)==i) {
+    if file_exists(working_directory+"slot"+string(i)+".fnafb.meta") {
+        ini_open(working_directory+"slot"+string(i)+".fnafb.meta");
+            if ini_read_real("meta","exists",0) {// &amp;&amp; (ini_read_real("meta","saveslot",0)==i) {
                 set[i]=1;
-/* Template ini File;
-    [meta]
-    exists=1
-    saveslot=1
-    copyright=0
-    gamemode=0
-    [data]
-    freddy=1
-    bonnie=0
-    chica=0
-    foxy=0
-    [gametime]
-    hours=9
-    minutes=00
-    seconds=01
-*/
-                copyright[i]=ini_read_real("meta","copyright",0);
-                gamemode[i]=ini_read_real("meta","gamemode",0);
+                gametime[i]=ini_read_real("meta","gametime",0);
                 hasFreddy[i]=ini_read_real("data","freddy",0);
                 hasBonnie[i]=ini_read_real("data","bonnie",0);
                 hasChica[i]=ini_read_real("data","chica",0);
                 hasFoxy[i]=ini_read_real("data","foxy",0);
-                gametimeh[i]=ini_read_real("gametime","hours",0);
-                gametimem[i]=ini_read_real("gametime","minutes",0);
-                gametimes[i]=ini_read_real("gametime","seconds",0);
-                //gametime stored in seconds
             }
         ini_close();
     }
@@ -267,7 +234,7 @@ repeat(options) {
             draw_sprite(sprFoxy,0,x+192+dx,84+(i*80));
         }
         draw_set_halign(fa_right);
-        draw_text(528,128+(i*80),hms(gametimeh[i+1],gametimem[i+1],gametimes[i+1]));
+        draw_text(528,128+(i*80),hms(0,0,gametime[i+1]));
         draw_set_halign(fa_left);
     }
     i++;
@@ -294,16 +261,13 @@ repeat(options) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Do a thing
+            <string>///Load the game
 if option&lt;4 {
-    //Load game
     if !set[option+1] {
         audio_play_sound(snderror,90,0);
     } else {
         if file_exists(working_directory+"slot"+string(option+1)+".fnafb") {
-            global.copyright=copyright[option+1];
-            global.saveslot=saveslot[option+1];
-            global.gamemode=gamemode[option+1];
+            global.saveslot=option+1;
             instance_create(0,0,ctrlGame);
             audio_play_sound(sndhonk,90,0);
             instance_destroy();

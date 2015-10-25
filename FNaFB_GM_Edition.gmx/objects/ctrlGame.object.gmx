@@ -28,25 +28,29 @@
             <string>///Load Game and Go to appropriate room
 show_debug_message("Starting game...");
 newgame=0;
+fade=0;
+fadeinout=0;
+fadedelay=room_speed*2;
 gametime=0;
 rmpower=0;
 rmindex=9;
 setchk=0;
 
+//Increment gametime
+alarm[1]=room_speed;
+
 if global.saveslot&gt;0 {
     if global.saveslot&gt;=5 {
-        //loadGame(working_directory+"temp.fnafb");
+        loadGame(working_directory+"temp.fnafb");
         show_debug_message("Recovered game from last session!");
     } else {
-        //loadGame(working_directory+"slot"+string(global.saveslot)+".fnafb");
+        loadGame(working_directory+"slot"+string(global.saveslot)+".fnafb");
         show_debug_message("Loaded game in slot "+string(global.saveslot)+"!");
     }
 } else {
     //Start game from start.
     newgame=1;
-    fade=0;
-    fadeinout=0;
-    fadedelay=room_speed*2;
+    rm=rmStage;
 }
 </string>
           </argument>
@@ -73,10 +77,31 @@ if global.saveslot&gt;0 {
             <string>///End Game and Clean up
 global.ingame=0;
 global.saveslot=-1;
-
-//Delete recovery files
-file_delete(working_directory+"recover.ini");
-file_delete(working_directory+"temp.fnafb");
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Increment gametime
+gametime++;
+alarm[1]=room_speed;
 </string>
           </argument>
         </arguments>
@@ -102,9 +127,6 @@ file_delete(working_directory+"temp.fnafb");
             <string>///Save a backup of the game in case it crashes
 alarm[0]=room_speed*20*(-global.graphics+3);
 saveGame(working_directory+"temp.fnafb");
-ini_open(working_directory+"recover.ini");
-ini_write_real("meta","exists",1);
-ini_close();
 </string>
           </argument>
         </arguments>
@@ -216,8 +238,8 @@ if !newgame {
     draw_set_colour(c_black);
     draw_set_halign(fa_left);
     draw_rectangle(0,0,544,416,0);
-    if global.graphics&gt;0 { draw_sprite_stretched(sprStatic,-1,0,0,544,416); }
-    draw_background_tiled(bgScanlines,0,0);
+    if global.graphics&gt;0 draw_sprite_stretched(sprStatic,-1,0,0,544,416);
+    //draw_background_tiled(bgScanlines,0,0); Causes emmense lag!!!
     draw_set_alpha(1);
     draw_sprite_ext(sprOverlay,0,6,6,1,1,0,c_white,1);
     draw_sprite_ext(sprOverlay,0,538,6,1,1,270,c_white,1);

@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>///Init
+anim=0;
 udlri=4;
 pudlr=1;
 move=1;
@@ -36,6 +37,7 @@ tped=0;
 avatar=0;
 moved=0;
 transattack=0;
+steps=0;
 
 //&lt; &gt;Stats and Inventory System
 
@@ -213,7 +215,7 @@ if instance_position(x,y,objBathDoor) &amp;&amp; !tped &amp;&amp; move {
         objFreddy.x=rmx;
         objFreddy.y=rmy;
         ctrlGame.rmindex=rmindex;
-        //audio_play_sound(snddooropen
+        //audio_play_sound(snddooropen Sound missing!
         instance_deactivate_object(objFreddy);
         alarm[0]=room_speed/2;
     }
@@ -318,9 +320,11 @@ if move {
     }
 }
 if moved&amp;&amp;!move {
-    if random_range(1,60)==1 {
+    steps++;
+    if steps mod 30 == 0 {
         //Freddy is under attack!
         transattack=1;
+        anim=0;
         audio_pause_sound(bgmambience2);
         audio_play_sound(sndanimatronicatdoor,99,0);
         //play sound oh shit
@@ -387,7 +391,36 @@ if say!="0" {
             <kind>1</kind>
             <string>///Transitions
 if transattack {
-    
+    if anim&lt;1 {
+        anim+=0.01;
+        //Prevent player from moving somehow.
+    } else {
+        anim=0;
+        transattack=0;
+        rmpower=ctrlGame.rmpower;
+        with(ctrlTouch) instance_destroy();
+        ctrlGame.setchk=2;
+        instance_deactivate_all(0);
+        instance_activate_object(ctrlMaster);
+        with instance_create(0,0,ctrlBattle) {
+            //Initialize settings for battle
+            rmpower=other.rmpower;
+            onstage=other.onstage;
+            players=1;
+            name[0]="Freddy";
+            hth[0]=other.hth;
+            mxhth[0]=other.mxhth;
+            skl[0]=other.skl;
+            mxskl[0]=other.mxskl;
+            tec[0]=floor(random_range(0,15*abs(global.gamemode-3)));
+            mxtec[0]=100;
+            atk[0]=other.atk;
+            def[0]=other.def;
+            eff[0]=other.eff;
+            lvl[0]=other.lvl;
+            xp[0]=other.xp;
+        }
+    }
 }
 </string>
           </argument>
@@ -413,18 +446,11 @@ if transattack {
             <kind>1</kind>
             <string>///Ridiculous talking script
 if talking {
-    if instance_exists(objDialouge) {
-        if objDialouge.printed {
-            talking=0;
-            /*if audio_is_playing(sndfreddy[real(say)]) {
-                audio_stop_sound(sndfreddy[real(say)]);
-            }*/
-        }
-    } else {
+    if !instance_exists(objDialouge) {
         talking=0;
-        /*if audio_is_playing(sndfreddy[real(say)]) {
+        if audio_is_playing(sndfreddy[real(say)]) {
             audio_stop_sound(sndfreddy[real(say)]);
-        }*/
+        }
     }
 } else if move {
     switch pudlr {

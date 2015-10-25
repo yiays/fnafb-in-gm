@@ -260,6 +260,11 @@ if !printed {
     } else {
         global.input=0;
     }
+    if avatar&gt;=0 {
+        if instance_exists(objFreddy) {
+            objFreddy.talking=0;
+        }
+    }
     inout=1;
 }
 </string>

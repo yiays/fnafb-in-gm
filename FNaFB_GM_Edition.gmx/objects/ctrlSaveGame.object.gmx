@@ -26,19 +26,45 @@
           <argument>
             <kind>1</kind>
             <string>///Init
-option=1;
-options=3;
-otext[0]="New Game";
-otext[1]="Continue";
-otext[2]="Settings";
-if os_type==os_windows||os_type==os_linux||os_type==os_macosx||os_type==os_unknown {
-    options++;
-    otext[array_length_1d(otext)]="Exit Game";
-}
+audio_stop_all();
+option=0;
+options=5;
+otext[0]="File 1";
+otext[1]="File 2";
+otext[2]="File 3";
+otext[3]="File 4";
+otext[4]="&lt;- Return";
 fade=1;
 fadeinout=1;
+avatar=-1;
 
-audio_play_sound(bgmFNAFtitle,100,1);
+//Transition
+bga=0;
+transition=1;
+
+//Load data from .fnafb.meta
+var a i=1;
+set[1]=0;
+set[2]=0;
+set[3]=0;
+set[4]=0;
+set[5]=0;
+repeat(4) {
+    if file_exists(working_directory+"slot"+string(i)+".fnafb.meta") {
+        ini_open_from_string(working_directory+"slot"+string(i)+".fnafb.meta");
+            if ini_read_real("meta","exists",0) &amp;&amp; (ini_read_real("meta","saveslot",0)==i) {
+                set[i]=1;
+                copyright[i]=ini_read_real("meta","copyright",0);
+                gamemode[i]=ini_read_real("meta","gamemode",0);
+                gametime[i]=ini_read_real("meta","gametime",0);
+                hasFreddy[i]=ini_read_real("data","freddy",0);
+                hasBonnie[i]=ini_read_real("data","bonnie",0);
+                hasChica[i]=ini_read_real("data","chica",0);
+                hasFoxy[i]=ini_read_real("data","foxy",0);
+            }
+        ini_close();
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -61,22 +87,53 @@ audio_play_sound(bgmFNAFtitle,100,1);
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///Transition into page
+if bga&lt;1&amp;&amp;transition==1 {
+    bga+=0.05;
+}
+if transition==0 {
+    bga-=0.05;
+}
+if bga==0 {
+    instance_activate_object(ctrlPause);
+    instance_destroy();
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///Mouse controls
 //Do mouse related stuff
-if mouse_check_button_pressed(mb_left) {
-    if mouse_y&gt;y+(option*24)&amp;&amp;mouse_y&lt;y+((option+1)*24) {
-        event_perform(ev_keypress,vk_enter);
-    }
-}
 var i=0;
 repeat(options) {
-    if mouse_y&gt;y+(i*24)&amp;&amp;mouse_y&lt;y+((i+1)*24) {
+    if mouse_y&gt;64+(i*80)&amp;&amp;mouse_y&lt;64+((i+1)*80) {
         if option!=i {
             option=i;
             audio_play_sound(sndblip3,90,0);
         }
     }
     i++;
+}
+if mouse_check_button_pressed(mb_left)&amp;&amp;mouse_y&gt;y&amp;&amp;mouse_y&lt;64+options*80 {
+    if mouse_y&gt;64+(option*80)&amp;&amp;mouse_y&lt;64+((option+1)*80) {
+        event_perform(ev_keypress,vk_enter);
+    }
 }
 </string>
           </argument>
@@ -100,7 +157,8 @@ repeat(options) {
             <kind>1</kind>
             <string>///Keyboard controls
 if keyboard_check_pressed(vk_escape)||keyboard_check_pressed(vk_backspace) {
-    game_end();
+    audio_play_sound(sndwindup2,90,0);
+    transition=0;
 }
 if keyboard_check_pressed(vk_up) {
     if option&gt;=1 {
@@ -140,6 +198,9 @@ if keyboard_check_pressed(vk_down) {
           <argument>
             <kind>1</kind>
             <string>///Draw menu
+draw_set_alpha(bga);
+draw_background_tiled(bgSpots,0,0);
+
 var i=0;
 if fade==0.5 { fadeinout=0; }
 if fade==1 {fadeinout=1; }
@@ -147,17 +208,40 @@ if fadeinout==1 { fade=fade-0.05; }
 if fadeinout==0 { fade=fade+0.05; }
 draw_set_color(c_white);
 draw_set_halign(fa_left);
+draw_set_alpha(bga);
+draw_set_font(fntHeader);
+draw_text(16,16,"Select a save slot");
 draw_set_font(fntMain);
 repeat(options) {
-    draw_text(x+16,y+(i*24),otext[i]);
+    draw_text(16,64+(i*80),otext[i]);
     if option == i {
-        draw_set_alpha(fade);
-        draw_line(x+16,y+(i*24)+20,x+128,y+(i*24)+20);
-        draw_set_alpha(1);
+        draw_set_alpha(bga*fade);
+        draw_line(x+16,84+(i*80),x+128,84+(i*80));
+        draw_set_alpha(bga);
+    }
+    if set[i+1] {
+        var dx=0;
+        if hasFreddy[i+1] {
+            draw_sprite(sprFreddy,0,x+192+dx,84+(i*80));
+            dx+=48;
+        }
+        if hasBonnie[i+1] {
+            draw_sprite(sprBonnie,0,x+192+dx,84+(i*80));
+            dx+=48;
+        }
+        if hasChica[i+1] {
+            draw_sprite(sprChica,0,x+192+dx,84+(i*80));
+            dx+=48;
+        }
+        if hasFoxy[i+1] {
+            draw_sprite(sprFoxy,0,x+192+dx,84+(i*80));
+        }
+        draw_set_halign(fa_right);
+        draw_text(528,128+(i*80),hms(0,0,gametime[i+1]));
+        draw_set_halign(fa_left);
     }
     i++;
 }
-draw_text(4,394,"Make backups of saves before using them!");
 </string>
           </argument>
         </arguments>
@@ -181,23 +265,18 @@ draw_text(4,394,"Make backups of saves before using them!");
           <argument>
             <kind>1</kind>
             <string>///Do a thing
-audio_play_sound(sndpop,90,0);
-switch option {
-    case 0:
-        instance_create(0,0,ctrlNewGame);
-        instance_destroy();
-    break;
-    case 1:
-        instance_create(0,0,ctrlLoadGame);
-        instance_destroy();
-    break;
-    case 2:
-        instance_create(0,0,ctrlSettings);
-        instance_destroy();
-    break;
-    case 3:
-        game_end();
-    break;
+if option&lt;4 {
+    //Save game
+    global.saveslot=option+1;
+    instance_activate_all();
+    dialouge("Game Saved!",0,0);
+    with(ctrlPause) instance_destroy();
+    instance_destroy();
+    saveGame(working_directory+"slot"+string(option+1)+".fnafb");
+} else {
+    //Return
+    audio_play_sound(sndwindup2,90,0);
+    transition=0;
 }
 </string>
           </argument>

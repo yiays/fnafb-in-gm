@@ -227,6 +227,9 @@ if global.input!=-1 {
     ask=0;
     if gameend {
         if global.input==1 {
+            //Delete recovery files
+            file_delete(working_directory+"temp.fnafb");
+            file_delete(working_directory+"temp.fnafb.meta");
             game_restart();
         }
     }
@@ -305,14 +308,14 @@ repeat(chars) {
     draw_text_transformed(434,50+(i*100),"LIFE",0.6,0.9,0);
     draw_set_colour(c_white);
     draw_set_halign(fa_right);
-    draw_rectangle_colour(434,60+(i*100),434+45,65+(i*100),make_colour_rgb(211,84,0),make_colour_rgb(211,84,0),make_colour_rgb(243,156,18),make_colour_rgb(243,156,18),0)
+    draw_rectangle_colour(434,60+(i*100),434+45,65+(i*100),make_colour_rgb(211,84,0),make_colour_rgb(211,84,0),make_colour_rgb(243,156,18),make_colour_rgb(243,156,18),0);
     draw_text(534,50+(i*100),"100/221");
     draw_set_colour(c_blue);
     draw_set_halign(fa_left);
     draw_text_transformed(434,70+(i*100),"SKILL",0.6,0.9,0);
     draw_set_colour(c_white);
     draw_set_halign(fa_right);
-    draw_rectangle_colour(434,80+(i*100),434+85,85+(i*100),make_colour_rgb(41,128,185),make_colour_rgb(41,128,185),make_colour_rgb(52,152,219),make_colour_rgb(52,152,219),0)
+    draw_rectangle_colour(434,80+(i*100),434+85,85+(i*100),make_colour_rgb(41,128,185),make_colour_rgb(41,128,185),make_colour_rgb(52,152,219),make_colour_rgb(52,152,219),0);
     draw_text(534,70+(i*100),"100/120");
     i++;
 }
@@ -363,10 +366,8 @@ if !ask {
             break;
             case 4:
                 //Save Game
-                instance_destroy();
-                saveGame(working_directory+"test.fnafb");
-                ask=1;
-                dialouge("Game Saved!"/*"Game saving isn't currently supported!#Update to a newer version to save the game."*/,0,0);
+                instance_create(0,0,ctrlSaveGame);
+                instance_deactivate_object(self);
             break;
             case 5:
                 //Settings

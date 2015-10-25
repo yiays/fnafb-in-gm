@@ -1,17 +1,32 @@
 ///saveGame(file);
 //A backward compatable version of GameMaker's built in save_game() function
 //  Only has the essensials for this game, so can't be copied elsewhere
-file_delete(argument0);
-ini_open(argument0);
 
+//  This is a very early concept of how the real saveload system will work, this lacks
+//    quite a few critical variables, future versions of loadGame will resort to default
+//    values in future versions.
+file_delete(argument0);
+file_delete(argument0+".meta");
+
+//Save slotx.fnafb.meta
+ini_open(argument0+".meta");
+    ini_write_real("meta","exists",1);
+    ini_write_real("meta","saveslot",global.saveslot);
+    ini_write_real("meta","copyright",global.copyright);
+    ini_write_real("meta","gamemode",global.gamemode);
+    ini_write_real("meta","version",100*version+10*major+minor);
+    if instance_exists(objFreddy) ini_write_real("data","freddy",1);
+    ini_write_real("meta","gametime",ctrlGame.gametime);
+    ini_write_real("meta","rm",room);
+ini_close();
+
+//Save slotx.fnafb
+ini_open(argument0);
 //Save data for ctrlGame
     ini_write_real("ctrlGame","exists",1);
-    //[loadGame] newgame=0;
     ini_write_real("ctrlGame","gametime",ctrlGame.gametime);
     ini_write_real("ctrlGame","rmpower",ctrlGame.rmpower);
     ini_write_real("ctrlGame","rmindex",ctrlGame.rmindex);
-    //[loadGame] setchk=0;
-    //[loadGame] alarm[0]=room_speed*20*(-global.graphics+3);
 
 //Save data for Freddy
 if instance_exists(objFreddy) {
@@ -30,6 +45,7 @@ if instance_exists(objFreddy) {
     ini_write_real("objFreddy","moved",objFreddy.moved);
     ini_write_real("objFreddy","move",objFreddy.move);
     ini_write_real("objFreddy","transatack",objFreddy.transattack);
+    ini_write_real("objFreddy","steps",objFreddy.steps);
     ini_write_real("objFreddy","hth",objFreddy.hth);
     ini_write_real("objFreddy","mxhth",objFreddy.mxhth);
     ini_write_real("objFreddy","skl",objFreddy.skl);
@@ -39,7 +55,6 @@ if instance_exists(objFreddy) {
     ini_write_string("objFreddy","eff",objFreddy.eff);
     ini_write_real("objFreddy","lvl",objFreddy.lvl);
     ini_write_real("objFreddy","xp",objFreddy.xp);
-    //[loadGame] set say to "0", set saydelay to 0, set talking to 0
     //data structures
     ini_write_string("objFreddy","ds_items",ds_list_write(objFreddy.items));
     ini_write_string("objFreddy","ds_itemq",ds_list_write(objFreddy.itemq));
@@ -51,6 +66,18 @@ if instance_exists(objFreddy) {
     ini_write_string("objFreddy","ds_keyq",ds_list_write(objFreddy.keyq));
     ini_write_string("objFreddy","ds_equ",ds_list_write(objFreddy.equ));
     ini_write_string("objFreddy","ds_skills",ds_list_write(objFreddy.skills));
-    //[loadGame] create ds lists first
 }
 //More objects to come
+ini_close();
+
+//Encode slotx.fnafb
+var a=file_text_open_read(argument0) save="";
+while !file_text_eof(a) {
+    save+=file_text_read_string(a)+chr(13)+chr(10);
+    file_text_readln(a);
+}
+file_text_close(a);
+file_delete(argument0);
+file_text_open_write(argument0);
+file_text_write_string(a,base64_encode(save));
+file_text_close(a);

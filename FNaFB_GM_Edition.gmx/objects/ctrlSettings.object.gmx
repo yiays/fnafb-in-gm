@@ -136,10 +136,10 @@ if del&amp;&amp;keyboard_check(vk_delete) {
         file_delete(working_directory+"slot2.fnafb");
         file_delete(working_directory+"slot3.fnafb");
         file_delete(working_directory+"slot4.fnafb");
-        file_delete(working_directory+"slot1.meta");
-        file_delete(working_directory+"slot2.meta");
-        file_delete(working_directory+"slot3.meta");
-        file_delete(working_directory+"slot4.meta");
+        file_delete(working_directory+"slot1.fnafb.meta");
+        file_delete(working_directory+"slot2.fnafb.meta");
+        file_delete(working_directory+"slot3.fnafb.meta");
+        file_delete(working_directory+"slot4.fnafb.meta");
         deli=-1;
         if instance_exists(objDialouge) {
             with(objDialouge) { instance_destroy(); }

@@ -78,10 +78,27 @@ view_hport[0] = 416;
             <string>///Respond to dialouge change
 if ask {
     if input!=-1 {
-        touch=!input;
-        input=-1;
-        ask=0;
+        if asktouch {
+            touch=!input;
+            input=-1;
+            ask=0;
+        }
+        if askrecover {
+            if global.input==0 {
+                saveslot=5;
+                ingame=1;
+                instance_create(0,0,ctrlGame);
+            } else {
+                file_delete(working_directory+"temp.fnafb");
+                file_delete(working_directory+"temp.fnafb.meta");
+            }
+            input=-1;
+            ask=0;
+        }
     }
+}
+if room==rmInit&amp;&amp;(keyboard_check(vk_enter)||mouse_check_button(mb_left)) {
+    if logo&lt;100 logo=100;
 }
 </string>
           </argument>
@@ -134,8 +151,9 @@ view_hport[0] = 416;
           <argument>
             <kind>1</kind>
             <string>///Initialize globalvars and load settings
+show_debug_overlay(1); //Benchmarking performance
 randomize();
-globalvar input,gamemode,copyright,saveslot,graphics,touch,ingame,scale,lang;
+globalvar input,gamemode,copyright,saveslot,graphics,touch,ingame,scale,lang,legacy;
 input=-1;
 copyright=0;
 gamemode=0;
@@ -145,14 +163,17 @@ touch=-1;
 ingame=0;
 scale=1;
 lang="en";
+legacy=0;
 
 //logo animation
 logo=0;
 
 ask=0;
+asktouch=0;
+askrecover=0;
 
 //[EXPERIMENTAL] Performance boost - Disable surfaces - breaks when changing window scale
-application_surface_enable(0);
+//application_surface_enable(0);
 
 //Load settings
 ini_open(working_directory+"settings.ini")
@@ -163,11 +184,19 @@ touch=ini_read_real("main","touch",-1);
 ini_close();
 
 //Set language if possible
-if os_get_language()!="en"&amp;&amp;file_exists(working_directory+os_get_language()+".ini") {
-    lang=os_get_language();
-    show_debug_message("Language set to "+os_get_language()+"!");
+lang=os_get_language();
+if lang!="en" {
+    if file_exists(working_directory+lang+".ini") {
+        show_debug_message("Language set to "+lang+"!");
+    } else {
+        show_debug_message("No language file available for "+lang+", translators, get onto it!");
+        lang="en";
+    }
+} else if lang=="" {
+    lang="en";
+    show_debug_message("No langauage defined!");
 } else {
-    show_debug_message("No langauage available for "+os_get_language()+"!");
+    
 }
 
 //Check if player is using a touchscreen
@@ -179,6 +208,7 @@ if touch==-1 {
         //This might be a touch screen, let's ask to be sure
         touch=1;
         ask=1;
+        asktouch=1;
         dialouge("Is this device a touchscreen?",1,2,"yes","no");
     }
 }
@@ -193,15 +223,11 @@ if 544*scale&lt;display_get_width()&amp;&amp;416*scale&lt;display_get_height() {
 display_set_gui_size(544*scale,416*scale);
 alarm[0]=1;
 
-if file_exists(working_directory+"recover.ini")&amp;&amp;file_exists(working_directory+"temp.fnafb") {
-    ini_open(working_directory+"recover.ini");
-    if ini_read_real("meta","exists",0) {
-        saveslot=5;
-        ingame=1;
-        file_delete(working_directory+"recover.ini");
-        instance_create(0,0,ctrlGame);
-    }
-    ini_close();
+//Check if we can restore a game that was never exited
+if file_exists(working_directory+"temp.fnafb") {
+    ask=1;
+    askrecover=1;
+    dialouge("Autosave found!#Would you like to resume your previous game?",1,2,"Yes","No")
 }
 </string>
           </argument>
