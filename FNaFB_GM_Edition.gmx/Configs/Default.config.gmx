@@ -6,7 +6,7 @@
     <option_android_adcolony_enable_V4VC>0</option_android_adcolony_enable_V4VC>
     <option_android_advertising_enable>0</option_android_advertising_enable>
     <option_android_advertising_key></option_android_advertising_key>
-    <option_android_advertising_type>MoPub</option_android_advertising_type>
+    <option_android_advertising_type>Playhaven</option_android_advertising_type>
     <option_android_amazon_game_circle>0</option_android_amazon_game_circle>
     <option_android_amazon_gc_achievements>0</option_android_amazon_gc_achievements>
     <option_android_amazon_gc_leaderboards>0</option_android_amazon_gc_leaderboards>
@@ -267,8 +267,8 @@
     <option_savekey>true</option_savekey>
     <option_scale>-1</option_scale>
     <option_scaleprogress>true</option_scaleprogress>
-    <option_sci_UseSCI>-1</option_sci_UseSCI>
-    <option_sci_serverLocation>https://github.com/yesiateyoursheep/fnafb-in-gm/</option_sci_serverLocation>
+    <option_sci_UseSCI>0</option_sci_UseSCI>
+    <option_sci_serverLocation></option_sci_serverLocation>
     <option_screenkey>True</option_screenkey>
     <option_screenshotkey>true</option_screenshotkey>
     <option_shortcircuit>True</option_shortcircuit>
@@ -305,20 +305,20 @@
     <option_tizen_usesplash>False</option_tizen_usesplash>
     <option_use_new_audio>True</option_use_new_audio>
     <option_variableerrors>False</option_variableerrors>
-    <option_version>001</option_version>
-    <option_version_build>1</option_version_build>
+    <option_version>002</option_version>
+    <option_version_build>0</option_version_build>
     <option_version_company>Twisted Fork</option_version_company>
     <option_version_copyright>Creative Commons Attribution 3.0</option_version_copyright>
-    <option_version_description>FNAFB for everyone!</option_version_description>
+    <option_version_description>FNAFB in GM</option_version_description>
     <option_version_major>0</option_version_major>
     <option_version_minor>0</option_version_minor>
-    <option_version_product>FNAFB - GM Edition</option_version_product>
+    <option_version_product>FNAFB in GM</option_version_product>
     <option_version_release>2</option_version_release>
     <option_win8_advertising_appid></option_win8_advertising_appid>
     <option_win8_advertising_enable>0</option_win8_advertising_enable>
     <option_win8_advertising_key></option_win8_advertising_key>
     <option_win8_advertising_testing_enable>0</option_win8_advertising_testing_enable>
-    <option_win8_advertising_type></option_win8_advertising_type>
+    <option_win8_advertising_type>MS pubCenter</option_win8_advertising_type>
     <option_win8_analytics_enable>0</option_win8_analytics_enable>
     <option_win8_analytics_id></option_win8_analytics_id>
     <option_win8_build_version>2</option_win8_build_version>
@@ -351,17 +351,17 @@
     <option_win8_texture_page>2048</option_win8_texture_page>
     <option_win8_wide_logo>Configs\Default\Windows8\logos\logo310.png</option_win8_wide_logo>
     <option_windowcolor>clBlack</option_windowcolor>
-    <option_windows_build_version>1</option_windows_build_version>
+    <option_windows_build_version>0</option_windows_build_version>
     <option_windows_company_info>Twisted Fork</option_windows_company_info>
     <option_windows_copyright_info>Creative Commons Attribution 3.0</option_windows_copyright_info>
-    <option_windows_description_info>FNAFB for everyone!</option_windows_description_info>
+    <option_windows_description_info>FNAFB in GM</option_windows_description_info>
     <option_windows_enable_steam>0</option_windows_enable_steam>
     <option_windows_game_icon>Configs\Default\windows\runner_icon.ico</option_windows_game_icon>
     <option_windows_license>Configs\Default\windows\License.txt</option_windows_license>
     <option_windows_mainor_version>0</option_windows_mainor_version>
     <option_windows_major_version>0</option_windows_major_version>
     <option_windows_nsis_file>Configs\Default\windows\RunnerInstaller.nsi</option_windows_nsis_file>
-    <option_windows_product_info>FNAFB - GM Edition</option_windows_product_info>
+    <option_windows_product_info>FNAFB in GM</option_windows_product_info>
     <option_windows_release_version>2</option_windows_release_version>
     <option_windows_runner_finished>Configs\Default\windows\Runner_finish.bmp</option_windows_runner_finished>
     <option_windows_runner_header>Configs\Default\windows\Runner_header.bmp</option_windows_runner_header>

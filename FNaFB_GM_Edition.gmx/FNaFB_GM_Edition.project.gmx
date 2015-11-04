@@ -3,7 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="3" name="datafiles">
+  <datafiles number="1" name="datafiles">
     <datafile>
       <name>en.ini</name>
       <exists>-1</exists>
@@ -16,7 +16,7 @@
       <store>0</store>
       <ConfigOptions>
         <Config name="Default">
-          <CopyToMask>0</CopyToMask>
+          <CopyToMask>17593040736494</CopyToMask>
         </Config>
       </ConfigOptions>
       <filename>en.ini</filename>
@@ -265,6 +265,7 @@
     <script>scripts\hms.gml</script>
     <script>scripts\saveGame.gml</script>
     <script>scripts\loadGame.gml</script>
+    <script>scripts\touchctrl.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shdMosaic.shader</shader>
@@ -282,8 +283,8 @@
       <object>objects\ctrlDev</object>
       <object>objects\ctrlLoadGame</object>
       <object>objects\ctrlSaveGame</object>
-      <object>objects\ctrlSettings</object>
       <object>objects\ctrlNewGame</object>
+      <object>objects\ctrlSettings</object>
       <object>objects\ctrlTouch</object>
       <object>objects\ctrlGame</object>
       <object>objects\ctrlPause</object>
@@ -303,9 +304,7 @@
       <object>objects\objTable</object>
       <object>objects\objShortTable</object>
     </objects>
-    <objects name="Group_greyscale">
-      <object>objects\obj_controller_greyscale</object>
-    </objects>
+    <objects name="Group_greyscale"/>
   </objects>
   <rooms name="rooms">
     <room>rooms\rmInit</room>

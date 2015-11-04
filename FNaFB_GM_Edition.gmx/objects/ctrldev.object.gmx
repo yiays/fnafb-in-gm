@@ -35,7 +35,7 @@ askupdate=0;
 
 //Request update news
 if os_is_network_connected() {
-    gnews=http_get("https://github.com/yesiateyoursheep/fnafb-in-gm/releases/download/v"+string(version)+"."+string(major)+"."+string(minor)+build+"/releasenotes.txt");
+    gnews=http_get("https://github.com/yesiateyoursheep/fnafb-in-gm/releases/download/"+string(version)+"."+string(major)+"."+string(minor)+build+"/releasenotes.txt");
     news="Retreiving news...";
     gupdate=http_get("https://github.com/yesiateyoursheep/fnafb-in-gm/raw/master/project-test-tube.gmx/version.ini");
     update=0;

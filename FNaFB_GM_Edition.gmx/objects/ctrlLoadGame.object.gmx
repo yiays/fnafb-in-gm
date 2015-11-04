@@ -116,20 +116,21 @@ if bga==0 {
           <argument>
             <kind>1</kind>
             <string>///Mouse controls
-//Do mouse related stuff
-var i=0;
-repeat(options) {
-    if mouse_y&gt;64+(i*80)&amp;&amp;mouse_y&lt;64+((i+1)*80) {
-        if option!=i {
-            option=i;
-            audio_play_sound(sndblip3,90,0);
+if global.usemouse {
+    var i=0;
+    repeat(options) {
+        if mouse_y&gt;64+(i*80)&amp;&amp;mouse_y&lt;64+((i+1)*80) {
+            if option!=i {
+                option=i;
+                audio_play_sound(sndblip3,90,0);
+            }
         }
+        i++;
     }
-    i++;
-}
-if mouse_check_button_pressed(mb_left)&amp;&amp;mouse_y&gt;y&amp;&amp;mouse_y&lt;64+options*80 {
-    if mouse_y&gt;64+(option*80)&amp;&amp;mouse_y&lt;64+((option+1)*80) {
-        event_perform(ev_keypress,vk_enter);
+    if mouse_check_button_pressed(mb_left)&amp;&amp;mouse_y&gt;y&amp;&amp;mouse_y&lt;64+options*80 {
+        if mouse_y&gt;64+(option*80)&amp;&amp;mouse_y&lt;64+((option+1)*80) {
+            event_perform(ev_keypress,vk_enter);
+        }
     }
 }
 </string>

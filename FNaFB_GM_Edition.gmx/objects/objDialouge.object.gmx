@@ -98,21 +98,22 @@ if !printed {
           <argument>
             <kind>1</kind>
             <string>///Mouse controls
-//Do mouse related stuff
-if mouse_check_button_pressed(mb_left) {
-    if !keyboard_check(vk_enter) {
-        event_perform(ev_keypress,vk_enter);
-    }
-}
-var i=0;
-repeat(options) {
-    if mouse_y&gt;y-60-(options*20)+(i*24)&amp;&amp;mouse_y&lt;y-60-(options*20)+((i+1)*24) {
-        if option!=i {
-            option=i;
-            audio_play_sound(sndblip3,90,0);
+if global.usemouse {
+    if mouse_check_button_pressed(mb_left) {
+        if !yn||(mouse_y&gt;y-60-(options*20)+option*24&amp;&amp;mouse_y&lt;y-60-(options*20)+(option+1)*24) {
+            event_perform(ev_keypress,vk_enter);
         }
     }
-    i++;
+    var i=0;
+    repeat(options) {
+        if mouse_y&gt;y-60-(options*20)+i*24&amp;&amp;mouse_y&lt;y-60-(options*20)+(i+1)*24 {
+            if option!=i {
+                option=i;
+                audio_play_sound(sndblip3,90,0);
+            }
+        }
+        i++;
+    }
 }
 </string>
           </argument>

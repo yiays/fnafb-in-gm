@@ -398,10 +398,11 @@ if transattack {
         anim=0;
         transattack=0;
         rmpower=ctrlGame.rmpower;
-        with(ctrlTouch) instance_destroy();
-        ctrlGame.setchk=2;
+        touchctrl(1,1);
+        ctrlGame.alarm[2]=2;
         instance_deactivate_all(0);
         instance_activate_object(ctrlMaster);
+        if !global.usemouse instance_activate_object(ctrlTouch);
         with instance_create(0,0,ctrlBattle) {
             //Initialize settings for battle
             rmpower=other.rmpower;

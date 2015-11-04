@@ -105,7 +105,7 @@ instance_activate_all();
             <kind>1</kind>
             <string>///Mouse controls
 //Do mouse related stuff
-if !ask {
+if !ask&amp;&amp;global.usemouse {
     if mouse_x&lt;160&amp;&amp;!choosechar {
         //Selection in menu
         if mouse_check_button_pressed(mb_left) {

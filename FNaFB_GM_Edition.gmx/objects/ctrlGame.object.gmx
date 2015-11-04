@@ -82,6 +82,30 @@ global.saveslot=-1;
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Recreate touch controls
+touchctrl(0);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="1">
       <action>
         <libid>1</libid>
@@ -150,20 +174,6 @@ saveGame(working_directory+"temp.fnafb");
           <argument>
             <kind>1</kind>
             <string>///Transition and pause the game
-if setchk==1 {
-    if global.touch {
-        instance_create(0,0,ctrlTouch);
-    } else {
-        if instance_exists(ctrlTouch) {
-            with(ctrlTouch) {
-                instance_destroy();
-            }
-        }
-    }
-    setchk=0;
-} else {
-    setchk--;
-}
 if newgame {
     if fadeinout {
         if fade&gt;0 {
@@ -176,10 +186,7 @@ if newgame {
             global.ingame=1;
             alarm[0]=room_speed*20*(-global.graphics+3);
             newgame=0;
-            //Add touch controls if neccesary
-            if global.touch {
-                instance_create(0,0,ctrlTouch);
-            }
+            touchctrl(0);
         }
     } else {
         if fade&lt;1 {
@@ -196,14 +203,11 @@ if newgame {
 if global.ingame {
     if keyboard_check_pressed(vk_escape)||keyboard_check_pressed(vk_backspace) {
         //Pause game and open pause menu
-        if instance_exists(ctrlTouch) {
-            with(ctrlTouch) {
-                instance_destroy();
-            }
-        }
+        touchctrl(1,1);
+        alarm[2]=2;
         instance_deactivate_all(0);
-        setchk=2;
         instance_activate_object(ctrlMaster);
+        if !global.usemouse instance_activate_object(ctrlTouch);
         //screen_save(temp_directory+"pause.png");
         with (instance_create(0,0,ctrlPause)) {
             //sprpause=sprite_add(temp_directory+"pause.png",1,0,0,0,0);

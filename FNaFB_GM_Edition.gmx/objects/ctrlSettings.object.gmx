@@ -27,16 +27,19 @@
             <kind>1</kind>
             <string>///Init
 option=0;
-options=5;
+options=6;
 soptions[0]=3;
 soptions[1]=2;
-soptions[2]=0;
+soptions[2]=2;
 soptions[3]=0;
+soptions[4]=0;
+soptions[5]=0;
 soption[0]=1;
 soption[1]=1;
 ini_open(working_directory+"settings.ini") {
     soption[0]=ini_read_real("main","graphics",0)+1;
     soption[1]=ini_read_real("main","touch",0)+1;
+    soption[2]=ini_read_real("main","usemouse",1)+1;
     ini_close();
 }
 otext[0,0]="Graphics";
@@ -46,35 +49,39 @@ otext[0,0]="Graphics";
 otext[1,0]="Touchscreen";
     otext[1,1]="off";
     otext[1,2]="on";
-otext[2,0]="Reset game";
-otext[3,0]="Save";
-otext[4,0]="&lt;- Return";
+otext[2,0]="Input";
+    otext[2,1]="virtual keys only";
+    otext[2,2]="virtual keys + touchscreen";
+otext[3,0]="Reset game";
+otext[4,0]="Save";
+otext[5,0]="&lt;- Return";
 
 if os_type==os_windows||os_type==os_linux||os_type==os_macosx||os_type==os_unknown {
+    otext[2,1]="keyboard only";
+    otext[2,2]="keyboard + mouse";
     options+=2;
-    soptions[2]=4;
-    soptions[3]=2;
-    soptions[4]=0;
+    soptions[3]=3;
+    soptions[4]=2;
     soptions[5]=0;
     soptions[6]=0;
-    soption[2]=1;
+    soptions[7]=0;
     soption[3]=1;
+    soption[4]=1;
     ini_open(working_directory+"settings.ini") {
-        soption[2]=ini_read_real("main","windowsize",0);
-        soption[3]=ini_read_real("main","fullscreen",0)+1;
+        soption[3]=ini_read_real("main","windowsize",0);
+        soption[4]=ini_read_real("main","fullscreen",0)+1;
         ini_close();
     }
-    otext[2,0]="Window Size";
-        otext[2,1]="1x";
-        otext[2,2]="2x";
-        otext[2,3]="3x";
-        otext[2,4]="4x";
-    otext[3,0]="Fullscreen";
-        otext[3,1]="off";
-        otext[3,2]="on";
-    otext[4,0]="Reset game";
-    otext[5,0]="Save";
-    otext[6,0]="&lt;- Return";
+    otext[3,0]="Window Size";
+        otext[3,1]="1x";
+        otext[3,2]="2x";
+        otext[3,3]="3x";
+    otext[4,0]="Fullscreen";
+        otext[4,1]="off";
+        otext[4,2]="on";
+    otext[5,0]="Reset game";
+    otext[6,0]="Save";
+    otext[7,0]="&lt;- Return";
 }
 
 fade=1;
@@ -128,8 +135,11 @@ if bga==0 {
     audio_stop_sound(bgsOfficeFan);
     instance_destroy();
 }
-if del&amp;&amp;keyboard_check(vk_delete) {
-    if deli&gt;room_speed*3 {
+if del {
+    if !instance_exists(objDialouge) {
+        del=0;
+        deli=0;
+    } else if keyboard_check(vk_delete)&amp;&amp;deli&gt;room_speed*3 {
         audio_play_sound(sndend1,100,0);
         reset=room_speed;
         file_delete(working_directory+"slot1.fnafb");
@@ -140,10 +150,10 @@ if del&amp;&amp;keyboard_check(vk_delete) {
         file_delete(working_directory+"slot2.fnafb.meta");
         file_delete(working_directory+"slot3.fnafb.meta");
         file_delete(working_directory+"slot4.fnafb.meta");
+        file_delete(working_directory+"temp.fnafb");
+        file_delete(working_directory+"temp.fnafb.meta");
         deli=-1;
-        if instance_exists(objDialouge) {
-            with(objDialouge) { instance_destroy(); }
-        }
+        objDialouge.visible=0;
     }
     deli++
 }
@@ -169,7 +179,7 @@ if del&amp;&amp;keyboard_check(vk_delete) {
             <kind>1</kind>
             <string>///Mouse controls
 //Do mouse related stuff
-if !del {
+if !del &amp;&amp; global.usemouse {
     var i=0;
     repeat(options) {
         if mouse_y&gt;128+(i*24)&amp;&amp;mouse_y&lt;128+((i+1)*24) {
@@ -227,49 +237,20 @@ if !del {
         }
         audio_play_sound(sndblip3,90,0);
     }
-    if keyboard_check_pressed(vk_left) {
+    if keyboard_check_pressed(vk_left)&amp;&amp;option&lt;options-3 {
         soption[option]--;
         if soption[option]&lt;1 {
             soption[option]=soptions[option];
         }
         audio_play_sound(sndblip3,90,0);
     }
-    if keyboard_check_pressed(vk_right) {
+    if keyboard_check_pressed(vk_right)&amp;&amp;option&lt;options-3 {
         soption[option]++;
         if soption[option]&gt;soptions[option] {
             soption[option]=1;
         }
         audio_play_sound(sndblip3,90,0);
     }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="6" enumb="53">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if del {
-    if instance_exists(objDialouge) {
-        with(objDialouge) { instance_destroy() }
-    }
-    del=0;
-    deli=0;
 }
 </string>
           </argument>
@@ -359,14 +340,9 @@ if reset&gt;0 {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Apply settings
-if del {
-    if instance_exists(objDialouge) {
-        with(objDialouge) { instance_destroy() }
-    }
-    del=0;
-    deli=0;
-} else {
+            <string>///Apply/change settings
+if !del {
+    honk=1;
     tgl=options-3;
     if option&lt;tgl { //Change settings
         soption[option]++;
@@ -374,18 +350,22 @@ if del {
             soption[option]=1;
         }
         audio_play_sound(sndblip3,90,0);
+        honk=0;
     }
     if option==tgl { //Reset the game
         del=1;
         dialouge("To delete all saved data, hold down delete for 3 seconds.",0,0);
     }
     if option==tgl+1 { //Save the game
-        //Save all platform settings first
+        //Save cross-platform settings first
         global.graphics=soption[0]-1;
         global.touch=soption[1]-1;
+        global.usemouse=soption[2]-1;
+        if !global.usemouse&amp;&amp;global.touch touchctrl(0);
+        else touchctrl(1,0);
         if os_type==os_windows||os_type==os_linux||os_type==os_macosx||os_type==os_unknown {
             //Save desktop specfic settings
-            global.scale=soption[2];
+            global.scale=soption[3];
             //Make game fit in screen
             if 544*global.scale&lt;display_get_width()&amp;&amp;416*global.scale&lt;display_get_height() {
                 window_set_size(544*global.scale,416*global.scale);
@@ -400,18 +380,21 @@ if del {
         ini_open(working_directory+"settings.ini") {
             ini_write_real("main","graphics",global.graphics);
             ini_write_real("main","touch",global.touch);
+            ini_write_real("main","usemouse",global.usemouse);
             if os_type==os_windows||os_type==os_linux||os_type==os_macosx||os_type==os_unknown {
                 ini_write_real("main","windowsize",global.scale);
-                ini_write_real("main","fullscreen",soption[3]-1);
+                ini_write_real("main","fullscreen",soption[4]-1);
             }
             ini_close();
         }
     }
-    if option==tgl+2 {
+    if option==tgl+2 { //Return
         audio_play_sound(sndwindup2,90,0);
         transition=0;
+        honk=0;
+    } if honk {
+        audio_play_sound(sndhonk,90,0);
     }
-    audio_play_sound(sndhonk,90,0);
 }
 </string>
           </argument>

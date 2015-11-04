@@ -151,17 +151,14 @@ view_hport[0] = 416;
           <argument>
             <kind>1</kind>
             <string>///Initialize globalvars and load settings
-show_debug_overlay(1); //Benchmarking performance
+//show_debug_overlay(1); //Benchmarking performance
 randomize();
-globalvar input,gamemode,copyright,saveslot,graphics,touch,ingame,scale,lang,legacy;
+globalvar input,gamemode,copyright,saveslot,graphics,touch,ingame,scale,lang,legacy,usemouse;
 input=-1;
 copyright=0;
 gamemode=0;
 saveslot=-1;
-graphics=1;
-touch=-1;
 ingame=0;
-scale=1;
 lang="en";
 legacy=0;
 
@@ -181,22 +178,23 @@ scale=ini_read_real("main","windowsize",1);
 graphics=ini_read_real("main","graphics",0);
 window_set_fullscreen(ini_read_real("main","fullscreen",0));
 touch=ini_read_real("main","touch",-1);
+usemouse=ini_read_real("main","usemouse",1);
 ini_close();
 
+if !usemouse touchctrl(0);
+
 //Set language if possible
-lang=os_get_language();
+lang=string_lower(os_get_language());
 if lang!="en" {
-    if file_exists(working_directory+lang+".ini") {
+    if string_length(lang)!=2 {
+        show_debug_message("Language provided in invalid format ("+lang+")! Resorted to en.");
+        lang="en";
+    } else if file_exists(working_directory+lang+".ini") {
         show_debug_message("Language set to "+lang+"!");
     } else {
-        show_debug_message("No language file available for "+lang+", translators, get onto it!");
+        show_debug_message("No language file available for "+lang+", translators, get on to it!");
         lang="en";
     }
-} else if lang=="" {
-    lang="en";
-    show_debug_message("No langauage defined!");
-} else {
-    
 }
 
 //Check if player is using a touchscreen
