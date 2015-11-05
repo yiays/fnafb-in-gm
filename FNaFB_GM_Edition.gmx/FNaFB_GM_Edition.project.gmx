@@ -304,7 +304,6 @@
       <object>objects\objTable</object>
       <object>objects\objShortTable</object>
     </objects>
-    <objects name="Group_greyscale"/>
   </objects>
   <rooms name="rooms">
     <room>rooms\rmInit</room>
@@ -322,8 +321,8 @@
   <constants number="4">
     <constant name="version">0</constant>
     <constant name="major">0</constant>
-    <constant name="minor">2</constant>
-    <constant name="build">""</constant>
+    <constant name="minor">3</constant>
+    <constant name="build">"alpha1"</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

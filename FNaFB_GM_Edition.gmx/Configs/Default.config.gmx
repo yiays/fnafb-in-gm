@@ -19,7 +19,7 @@
     <option_android_arch_mipsr2>false</option_android_arch_mipsr2>
     <option_android_arch_mipsr2sf>false</option_android_arch_mipsr2sf>
     <option_android_arch_x86>True</option_android_arch_x86>
-    <option_android_build_version>2</option_android_build_version>
+    <option_android_build_version>3</option_android_build_version>
     <option_android_color_depth>0</option_android_color_depth>
     <option_android_display_name>FNaFB</option_android_display_name>
     <option_android_google_analytics_enable>false</option_android_google_analytics_enable>
@@ -305,15 +305,15 @@
     <option_tizen_usesplash>False</option_tizen_usesplash>
     <option_use_new_audio>True</option_use_new_audio>
     <option_variableerrors>False</option_variableerrors>
-    <option_version>002</option_version>
-    <option_version_build>0</option_version_build>
+    <option_version>003</option_version>
+    <option_version_build>1</option_version_build>
     <option_version_company>Twisted Fork</option_version_company>
     <option_version_copyright>Creative Commons Attribution 3.0</option_version_copyright>
     <option_version_description>FNAFB in GM</option_version_description>
     <option_version_major>0</option_version_major>
     <option_version_minor>0</option_version_minor>
     <option_version_product>FNAFB in GM</option_version_product>
-    <option_version_release>2</option_version_release>
+    <option_version_release>3</option_version_release>
     <option_win8_advertising_appid></option_win8_advertising_appid>
     <option_win8_advertising_enable>0</option_win8_advertising_enable>
     <option_win8_advertising_key></option_win8_advertising_key>
@@ -321,7 +321,7 @@
     <option_win8_advertising_type>MS pubCenter</option_win8_advertising_type>
     <option_win8_analytics_enable>0</option_win8_analytics_enable>
     <option_win8_analytics_id></option_win8_analytics_id>
-    <option_win8_build_version>2</option_win8_build_version>
+    <option_win8_build_version>3</option_win8_build_version>
     <option_win8_certificate_location>Windows8_TemporaryKey.pfx</option_win8_certificate_location>
     <option_win8_display_name>FNaFB</option_win8_display_name>
     <option_win8_internet_capable>-1</option_win8_internet_capable>
@@ -362,7 +362,7 @@
     <option_windows_major_version>0</option_windows_major_version>
     <option_windows_nsis_file>Configs\Default\windows\RunnerInstaller.nsi</option_windows_nsis_file>
     <option_windows_product_info>FNAFB in GM</option_windows_product_info>
-    <option_windows_release_version>2</option_windows_release_version>
+    <option_windows_release_version>3</option_windows_release_version>
     <option_windows_runner_finished>Configs\Default\windows\Runner_finish.bmp</option_windows_runner_finished>
     <option_windows_runner_header>Configs\Default\windows\Runner_header.bmp</option_windows_runner_header>
     <option_windows_save_location>0</option_windows_save_location>
