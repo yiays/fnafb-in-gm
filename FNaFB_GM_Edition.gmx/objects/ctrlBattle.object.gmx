@@ -67,6 +67,29 @@ level=0;
         </arguments>
       </action>
     </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>audio_resume_all();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
@@ -90,12 +113,15 @@ hpower="Unoun";
 switch rmpower {
     case 0:
         hpower="Alpha";
+        audio_play_sound(bgm181,90,1);
     break;
     case 1:
-        hpower="Gamma";
+        hpower="Beta";
+        audio_play_sound(bgm181,90,1);
     break;
     case 2:
-        hpower="Beta";
+        hpower="Gamma";
+        audio_play_sound(bgmOFFOST4,90,1);
     break;
     case 3:
         hpower="Omega";
@@ -187,7 +213,10 @@ if global.usemouse {
             <string>///Keyboard controls
 if keyboard_check_pressed(vk_escape)||keyboard_check_pressed(vk_backspace) {
     if level&gt;0 {
+        audio_play_sound(sndwindup2,90,0);
         level--;
+    } else {
+        audio_play_sound(snderror,90,0);
     }
 }
 if keyboard_check_pressed(vk_up) {
@@ -372,6 +401,7 @@ repeat(players) {
     draw_set_halign(fa_left);
     draw_text_transformed(x+464,y+16+(i*24),"TECH",0.6,0.9,0);
     if level&gt;=1&amp;&amp;option[1]==i {
+        draw_set_colour(c_white);
         draw_set_alpha(fade);
         draw_line(x+160,y+(i*24)+36,x+526,y+(i*24)+36);
         draw_set_alpha(1);

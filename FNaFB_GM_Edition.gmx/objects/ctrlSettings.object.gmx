@@ -356,7 +356,7 @@ if !del {
         del=1;
         dialouge("To delete all saved data, hold down delete for 3 seconds.",0,0);
     }
-    if option==tgl+1 { //Save the game
+    if option==tgl+1 { //Save and apply settings
         //Save cross-platform settings first
         global.graphics=soption[0]-1;
         global.touch=soption[1]-1;

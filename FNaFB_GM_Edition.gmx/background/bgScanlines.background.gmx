@@ -13,7 +13,7 @@
     <TextureGroup0>0</TextureGroup0>
   </TextureGroups>
   <For3D>0</For3D>
-  <width>1</width>
-  <height>2</height>
+  <width>64</width>
+  <height>64</height>
   <data>images\bgScanlines.png</data>
 </background>

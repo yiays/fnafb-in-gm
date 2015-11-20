@@ -151,6 +151,9 @@ view_hport[0] = 416;
           <argument>
             <kind>1</kind>
             <string>///Initialize globalvars and load settings
+/* Debugging zone */
+show_debug_message("ff="+string(hextodec("ff"))+" aa="+string(hextodec("aa"))+" 00="+string(hextodec("00")));
+
 //show_debug_overlay(1); //Benchmarking performance
 randomize();
 globalvar input,gamemode,copyright,saveslot,graphics,touch,ingame,scale,lang,legacy,usemouse;

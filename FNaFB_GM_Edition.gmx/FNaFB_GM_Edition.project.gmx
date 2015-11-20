@@ -3,7 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="1" name="datafiles">
+  <datafiles number="2" name="datafiles">
     <datafile>
       <name>en.ini</name>
       <exists>-1</exists>
@@ -266,6 +266,8 @@
     <script>scripts\saveGame.gml</script>
     <script>scripts\loadGame.gml</script>
     <script>scripts\touchctrl.gml</script>
+    <script>scripts\draw_text_rtf.gml</script>
+    <script>scripts\hextodec.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shdMosaic.shader</shader>
@@ -273,6 +275,9 @@
   </shaders>
   <fonts name="fonts">
     <font>fonts\fntMain</font>
+    <font>fonts\fntMainBold</font>
+    <font>fonts\fntMainItalic</font>
+    <font>fonts\fntMainBoldItalic</font>
     <font>fonts\fntHeader</font>
   </fonts>
   <objects name="objects">
@@ -322,7 +327,7 @@
     <constant name="version">0</constant>
     <constant name="major">0</constant>
     <constant name="minor">3</constant>
-    <constant name="build">"alpha1"</constant>
+    <constant name="build">"alpha2"</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

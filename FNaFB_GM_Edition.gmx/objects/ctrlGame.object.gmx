@@ -35,6 +35,8 @@ gametime=0;
 rmpower=0;
 rmindex=9;
 setchk=0;
+barsub=0;
+bary=-36;
 
 //Increment gametime
 alarm[1]=room_speed;
@@ -214,6 +216,12 @@ if global.ingame {
         }
     }
 }
+//Animate bar sprite
+bary+=4;
+if bary&gt;=544 {
+    barsub=!barsub;
+    bary=-36;
+}
 </string>
           </argument>
         </arguments>
@@ -243,7 +251,8 @@ if !newgame {
     draw_set_halign(fa_left);
     draw_rectangle(0,0,544,416,0);
     if global.graphics&gt;0 draw_sprite_stretched(sprStatic,-1,0,0,544,416);
-    //draw_background_tiled(bgScanlines,0,0); Causes emmense lag!!!
+    draw_background_tiled(bgScanlines,0,0);
+    draw_sprite_stretched(sprBar,barsub,0,bary,544,36)
     draw_set_alpha(1);
     draw_sprite_ext(sprOverlay,0,6,6,1,1,0,c_white,1);
     draw_sprite_ext(sprOverlay,0,538,6,1,1,270,c_white,1);
