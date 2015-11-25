@@ -178,6 +178,35 @@ ds_list_destroy(skills);
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Check to see if the dialogue is gone.
+if !instance_exists(objDialouge) {
+    talking=0;
+    if audio_is_playing(sndfreddy[real(say)]) {
+        audio_stop_sound(sndfreddy[real(say)]);
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -447,12 +476,7 @@ if transattack {
             <kind>1</kind>
             <string>///Ridiculous talking script
 if talking {
-    if !instance_exists(objDialouge) {
-        talking=0;
-        if audio_is_playing(sndfreddy[real(say)]) {
-            audio_stop_sound(sndfreddy[real(say)]);
-        }
-    }
+    alarm[0]=1;
 } else if move {
     switch pudlr {
         //Check for any objects to talk about in direction freddy is facing.

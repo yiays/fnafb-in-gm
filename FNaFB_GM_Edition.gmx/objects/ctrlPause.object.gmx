@@ -223,7 +223,7 @@ if !ask {
           <argument>
             <kind>1</kind>
             <string>///Dialouges
-if global.input!=-1 {
+if ask&amp;&amp;global.input!=-1 {
     ask=0;
     if gameend {
         if global.input==1 {

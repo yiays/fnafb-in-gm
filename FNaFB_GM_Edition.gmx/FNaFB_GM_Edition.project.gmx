@@ -268,6 +268,8 @@
     <script>scripts\touchctrl.gml</script>
     <script>scripts\draw_text_rtf.gml</script>
     <script>scripts\hextodec.gml</script>
+    <script>scripts\bbcode_decode.gml</script>
+    <script>scripts\bbcode_print.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shdMosaic.shader</shader>
@@ -275,7 +277,7 @@
   </shaders>
   <fonts name="fonts">
     <font>fonts\fntMain</font>
-    <font>fonts\fntMainBold</font>
+    <font>fonts\fntMainReg</font>
     <font>fonts\fntMainItalic</font>
     <font>fonts\fntMainBoldItalic</font>
     <font>fonts\fntHeader</font>
@@ -309,6 +311,7 @@
       <object>objects\objTable</object>
       <object>objects\objShortTable</object>
     </objects>
+    <object>objects\objTest</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rmInit</room>
@@ -322,6 +325,7 @@
     <room>rooms\rmEastHall</room>
     <room>rooms\rmEastHallCorner</room>
     <room>rooms\rmCloset</room>
+    <room>rooms\rmtest</room>
   </rooms>
   <constants number="4">
     <constant name="version">0</constant>

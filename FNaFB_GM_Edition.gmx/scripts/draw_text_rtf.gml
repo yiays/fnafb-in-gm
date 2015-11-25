@@ -79,7 +79,7 @@ modes
 mode     = 1;
 
 //begin parsing the formatting syntax out of the raw rtf string
-for(i = 0; i <= string_length(str); i++){
+for(i = 1; i <= string_length(str); i++){
     sc3 = string_copy(str, i, 3);
     sc4 = string_copy(str, i, 4);
     if(sc3 == "[b]"){

@@ -39,6 +39,36 @@ fade=1;
 fadeinout=1;
 option=0;
 avatar=-1;
+
+//Init based on settings provided by dialouge()
+rtf=0;
+alarm[0]=1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Init based on settings from dialouge()
+if string_copy(text,0,1)=="~" {
+    rtf=1;
+}
 </string>
           </argument>
         </arguments>
@@ -148,10 +178,14 @@ draw_set_colour(c_white);
 draw_set_halign(fa_left);
 draw_set_font(fntMain);
 if avatar==-1 {
-    draw_text_ext(x+8,y-40,dtext,20,528);
+    if rtf draw_text_rtf(x+4,y-40,text,fntMainReg,fntMain,fntMainItalic,fntMainBoldItalic);
+    else draw_text_ext(x+8,y-40,dtext,20,528);
 } else {
-    draw_sprite(sprFaces,avatar,x,y-48);
-    draw_text_ext(x+104,y-40,dtext,20,432);
+    if rtf draw_text_rtf(x+100,y-40,text,fntMainReg,fntMain,fntMainItalic,fntMainBoldItalic);
+    else {
+        draw_sprite(sprFaces,avatar,x,y-48);
+        draw_text_ext(x+104,y-40,dtext,20,432);
+    }
 }
 if yn&amp;&amp;printed {
     var i=0;
@@ -260,11 +294,6 @@ if !printed {
         global.input=option;
     } else {
         global.input=0;
-    }
-    if avatar&gt;=0 {
-        if instance_exists(objFreddy) {
-            objFreddy.talking=0;
-        }
     }
     inout=1;
 }

@@ -32,17 +32,19 @@ cdown=room_speed*5;
 transition=0;
 tran=0;
 askupdate=0;
+ask=0;
 olddrawtext="";
 drawtext="Please Wait...";
 
 //Request update news
 if os_is_network_connected() {
     gnews=http_get("https://github.com/yesiateyoursheep/fnafb-in-gm/releases/download/"+string(version)+"."+string(major)+"."+string(minor)+build+"/releasenotes.txt");
-    news="Retreiving news...";
+    news=" [i]Retreiving news...[/i]";
+    newsdetails="~[b]Missing details![/b]#For details on this update, select [i]More Info[/i].";
     gupdate=http_get("https://github.com/yesiateyoursheep/fnafb-in-gm/raw/master/project-test-tube.gmx/version.ini");
     update=0;
 } else {
-    news="Unable to fetch news when offline...";
+    news=" [b]Unable to fetch news when offline...[/b]";
     gnews=-1;
     update=0;
     gupdate=-1;
@@ -75,8 +77,21 @@ if os_is_network_connected() {
 } else {
     glow=1;
 }
-if mouse_y&lt;20 &amp;&amp; mouse_check_button_pressed(mb_left) {
-    url_open_ext("http://github.com/yesiateyoursheep/fnafb-in-gm/releases","_blank");
+if !ask &amp;&amp; mouse_y&lt;20 &amp;&amp; mouse_check_button_pressed(mb_left) {
+    if step!=1 {
+        url_open_ext("http://github.com/yesiateyoursheep/fnafb-in-gm/releases/"+string(version)+"."+string(major)+"."+string(minor)+"-"+build+"/","_blank");
+        dialouge("Opening your default web browser...",0,0);
+    } else {
+        ask=1;
+        dialouge(newsdetails,1,2,"More info","Dismiss");
+    }
+}
+if ask &amp;&amp; global.input!=-1 {
+    ask=0;
+    if global.input==0 {
+        url_open_ext("http://github.com/yesiateyoursheep/fnafb-in-gm/releases/"+string(version)+"."+string(major)+"."+string(minor)+"-"+build+"/","_blank");
+        dialouge("Opening your default web browser...",0,0);
+    }
 }
 cdown--;
 if cdown&lt;=0 {
@@ -98,7 +113,7 @@ if transition {
 if askupdate &amp;&amp; global.input!=-1 {
     askupdate=0;
     if global.input==0 {
-        url_open_ext("http://github.com/yesiateyoursheep/fnafb-in-gm/releases/latest","_blank");
+        url_open_ext("http://github.com/yesiateyoursheep/fnafb-in-gm/releases","_blank");
         game_end();
     }
 }
@@ -127,14 +142,24 @@ if askupdate &amp;&amp; global.input!=-1 {
             <string>///Retreive news
 if ds_map_find_value(async_load, "id")==gnews {
     if ds_map_find_value(async_load, "status") == 0 {
-       news = ds_map_find_value(async_load, "result");
-       if string_char_at(news,1)=="&lt;" {
+        news=ds_map_find_value(async_load, "result");
+        if string_char_at(news,1)=="&lt;" {
             news="[c=c0392b][b]This version doesn't have release notes...[/b][/c]";
             show_debug_message("News appears to be an html 404 page.")
-       }
+        } else {
+            var i=file_text_open_from_string(news) {
+                news=file_text_read_string(i);
+                file_text_readln(i);
+                newsdetails="~";
+                while(!file_text_eof(i)){
+                    newsdetails+=file_text_read_string(i)+"#";
+                    file_text_readln(i);
+                }
+            }
+        }
     }
     else {
-       news = "[c=c0392b][b]Failed to retreive news...[/b][/c]";
+       news = " [c=c0392b][b]Failed to retreive news...[/b][/c]";
     }
 }
 if ds_map_find_value(async_load, "id")==gupdate {
@@ -186,24 +211,24 @@ draw_set_colour(c_white);
 draw_rectangle(0,0,544,20,0);
 switch step {
     case 0:
-        drawtext="[b]DEVELOPMENT BUILD: [/b][i]"+string(version)+"."+string(major)+"."+string(minor)+build+"[/i]";
+        drawtext=" [b]DEVELOPMENT BUILD: [/b][i]"+string(version)+"."+string(major)+"."+string(minor)+build+"[/i]";
     break;
     case 1:
-        drawtext="[b]UPDATE NEWS[/b]: "+news;
+        drawtext=" [b]UPDATE NEWS[/b]: "+news;
     break;
     case 2:
         if update drawtext="[c=2ecc71][b]There's an update available.[/b][/c] Click here to download.";
-        else drawtext="[i]No updates available right now.[i]";
+        else drawtext=" [i]No updates available right now.[i]";
     break;
 }
 
-draw_set_alpha(tran/room_speed);
+draw_set_alpha(abs(-(tran/room_speed)));
 draw_set_colour(c_black);
 draw_set_halign(fa_left);
-draw_text_rtf(4,1-tran,olddrawtext,fntMain,fntMainBold,fntMainItalic,fntMainBoldItalic);
+draw_text_rtf(0,1-tran,olddrawtext,fntMainReg,fntMain,fntMainItalic,fntMainBoldItalic);
 
 draw_set_alpha(1);
-draw_text_rtf(4,1,drawtext,fntMain,fntMainBold,fntMainItalic,fntMainBoldItalic);
+draw_text_rtf(4,1,drawtext,fntMainReg,fntMain,fntMainItalic,fntMainBoldItalic);
 </string>
           </argument>
         </arguments>
