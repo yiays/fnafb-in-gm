@@ -168,6 +168,7 @@ for(i = 1; i <= string_length(str); i++){
 
 //reset color
 draw_set_color(original_color);
+draw_set_font(fntMain);
 //free up the ds_maps
 ds_map_destroy(rtf_map);
 ds_map_destroy(col_map);

@@ -284,8 +284,8 @@ if done&amp;&amp;!ask {
     }
 }
 //Move x
-if level==0&amp;&amp;x&lt;0 x+=8;
-else if level==1&amp;&amp;x&gt;-152 x-=8;
+if level&lt;=1&amp;&amp;x&lt;0 x+=8;
+else if level&gt;=2&amp;&amp;x&gt;-152 x-=8;
 </string>
           </argument>
         </arguments>
@@ -356,56 +356,68 @@ switch room {
 draw_sprite(sprDialouge,0,x,y+48);
 var i=0;
 repeat(options[0]) {
-    draw_text(x+16,y+16+(i*24),otext[0,i]);
+    draw_text(x+16,y+8+i*20,otext[0,i]);
     if option[0]==i&amp;&amp;level==0 {
         draw_set_alpha(fade);
-        draw_line(x+16,y+(i*24)+36,x+128,y+(i*24)+36);
+        draw_line(x+16,y+i*20+24,x+128,y+i*20+24);
         draw_set_alpha(1);
     }
     i++;
 }
 i=0;
 if level&gt;=1 {
-    repeat(options[2]) {
-        draw_text(x+560,y+16+(i*24),otext[2,i]);
-        if option[2]==i {
-            draw_set_alpha(fade);
-            draw_line(x+560,y+(i*24)+36,x+688,y+(i*24)+36);
-            draw_set_alpha(1);
+    if level==1 draw_set_alpha(0.2);
+    else draw_set_alpha(0.5);
+    draw_rectangle(x+544,y,x+696,416,0);
+    draw_set_alpha(1);
+    if level==2 {
+        repeat(options[2]) {
+            draw_text(x+560,y+8+i*20,otext[2,i]);
+            if option[2]==i {
+                draw_set_alpha(fade);
+                draw_line(x+560,y+i*20+24,x+688,y+i*20+24);
+                draw_set_alpha(1);
+            }
+            i++;
         }
-        i++;
     }
 }
 i=0;
 repeat(players) {
-    draw_text(x+160,y+16+(i*24),name[i]);
-    draw_set_colour(c_white);
-    draw_set_halign(fa_right);
-    draw_rectangle_colour(x+306,y+16+(i*24),x+306+(hth[i]/mxhth[i])*74,y+30+(i*24),make_colour_rgb(211,84,0),make_colour_rgb(211,84,0),make_colour_rgb(243,156,18),make_colour_rgb(243,156,18),0);
-    draw_text(x+380,y+16+(i*24),string(hth[i]));
-    draw_set_colour(c_blue);
-    draw_set_halign(fa_left);
-    draw_text_transformed(x+306,y+16+(i*24),"LIFE",0.6,0.9,0);
-    draw_set_colour(c_white);
-    draw_set_halign(fa_right);
-    draw_rectangle_colour(x+390,y+16+(i*24),x+390+(skl[i]/mxskl[i])*66,y+30+(i*24),make_colour_rgb(41,128,185),make_colour_rgb(41,128,185),make_colour_rgb(52,152,219),make_colour_rgb(52,152,219),0);
-    draw_text(x+456,y+16+(i*24),string(skl[i]));
-    draw_set_colour(c_blue);
-    draw_set_halign(fa_left);
-    draw_text_transformed(x+390,y+16+(i*24),"SKILL",0.6,0.9,0);
-    draw_set_colour(c_white);
-    draw_set_halign(fa_right);
-    draw_rectangle_colour(x+464,y+16+(i*24),x+464+(tec[i]/mxtec[i])*62,y+30+(i*24),make_colour_rgb(41,128,185),make_colour_rgb(41,128,185),make_colour_rgb(52,152,219),make_colour_rgb(52,152,219),0);
-    draw_text(x+526,y+16+(i*24),string(tec[i]));
-    draw_set_colour(c_blue);
-    draw_set_halign(fa_left);
-    draw_text_transformed(x+464,y+16+(i*24),"TECH",0.6,0.9,0);
-    if level&gt;=1&amp;&amp;option[1]==i {
+    if level==1&amp;&amp;option[1]==i {
         draw_set_colour(c_white);
         draw_set_alpha(fade);
-        draw_line(x+160,y+(i*24)+36,x+526,y+(i*24)+36);
+        draw_line(x+160,y+i*20+24,x+526,y+i*20+24);
         draw_set_alpha(1);
     }
+    if level&gt;&gt;1 {
+        draw_set_colour(c_white);
+        draw_set_alpha(0.5);
+        draw_rectangle(x+160,y+6+i*20,x+543,y+i*20+24,0);
+        draw_set_alpha(1);
+    }
+    draw_text(x+160,y+8+i*20,name[i]);
+    draw_set_colour(c_white);
+    draw_set_halign(fa_right);
+    draw_rectangle_colour(x+306,y+8+i*20,x+306+(hth[i]/mxhth[i])*74,y+22+i*20,make_colour_rgb(211,84,0),make_colour_rgb(211,84,0),make_colour_rgb(243,156,18),make_colour_rgb(243,156,18),0);
+    draw_text(x+380,y+8+i*20,string(hth[i]));
+    draw_set_colour(c_blue);
+    draw_set_halign(fa_left);
+    draw_text_transformed(x+306,y+8+i*20,"LIFE",0.6,0.9,0);
+    draw_set_colour(c_white);
+    draw_set_halign(fa_right);
+    draw_rectangle_colour(x+390,y+8+i*20,x+390+(skl[i]/mxskl[i])*66,y+22+i*20,make_colour_rgb(41,128,185),make_colour_rgb(41,128,185),make_colour_rgb(52,152,219),make_colour_rgb(52,152,219),0);
+    draw_text(x+456,y+8+i*20,string(skl[i]));
+    draw_set_colour(c_blue);
+    draw_set_halign(fa_left);
+    draw_text_transformed(x+390,y+8+i*20,"SKILL",0.6,0.9,0);
+    draw_set_colour(c_white);
+    draw_set_halign(fa_right);
+    draw_rectangle_colour(x+464,y+8+i*20,x+464+(tec[i]/mxtec[i])*62,y+22+i*20,make_colour_rgb(64,214,74),make_colour_rgb(64,214,74),make_colour_rgb(61,245,73),make_colour_rgb(61,245,73),0);
+    draw_text(x+526,y+8+i*20,string(tec[i]));
+    draw_set_colour(c_blue);
+    draw_set_halign(fa_left);
+    draw_text_transformed(x+464,y+8+i*20,"TECH",0.6,0.9,0);
     i++;
 }
 </string>

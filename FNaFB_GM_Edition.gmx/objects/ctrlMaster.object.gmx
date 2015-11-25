@@ -152,7 +152,7 @@ view_hport[0] = 416;
             <kind>1</kind>
             <string>///Initialize globalvars and load settings
 /* Debugging zone */
-show_debug_message("ff="+string(hextodec("ff"))+" aa="+string(hextodec("aa"))+" 00="+string(hextodec("00")));
+
 
 //show_debug_overlay(1); //Benchmarking performance
 randomize();
@@ -278,7 +278,7 @@ if room==rmInit {
             ini_write_real("main","touch",touch);
             ini_close();
         }
-        room_goto(1);
+        room_goto(rmIntro);
     }
 }
 </string>

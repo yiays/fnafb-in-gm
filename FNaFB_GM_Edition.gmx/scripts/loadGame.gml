@@ -5,7 +5,7 @@
 //  This is a very early concept of how the real saveload system will work, this lacks
 //    quite a few critical variables, loadGame will resort to default values when data
 //    is missing, a version variable in the .fnafb.meta file will allow loadGame to
-//    work around critical missing data.
+//    work around critical missing data, if I code for it to handle it.
 
 //Backward compatability system global.legacy=0 for current version, or anything else
 //  for an older version.
@@ -15,7 +15,8 @@ if file_exists(argument0)&&file_exists(argument0+".meta") {
     ini_open(argument0+".meta");
         global.copyright=ini_read_real("meta","copyright",1);
         global.gamemode=ini_read_real("meta","gamemode",0);
-        room=ini_read_real("meta","rm",rmStage);
+        var realrm=ini_read_real("meta","rm",rmStage);
+        room_goto(realrm);
         if ini_read_real("meta","version",-1)!=100*version+10*major+minor global.legacy=ini_read_real("meta","version",-1);
         else global.legacy=0;
     ini_close();
@@ -29,18 +30,16 @@ if file_exists(argument0)&&file_exists(argument0+".meta") {
         }
         file_text_close(a);
         i=base64_decode(i);
-        show_debug_message("Save file decoded;"+i);
         ini_open_from_string(i);
         global.ingame=1;
         
         //Load data for ctrlGame
         with(ctrlGame) {
             newgame=0;
-            gametime=ini_read_real("ctrlGame","gametime",gametime);
-            rmpower=ini_read_real("ctrlGame","rmpower",rmpower);
-            rmindex=ini_read_real("ctrlGame","rmindex",rmindex);
-            rm=real(ini_read_string("ctrlGame","rm",rmStage));
-            room_goto(rm);
+            gametime=ini_read_real("ctrlGame","gametime",0);
+            rmpower=ini_read_real("ctrlGame","rmpower",0);
+            rmindex=ini_read_real("ctrlGame","rmindex",2);
+            rm=realrm;
             setchk=0;
             alarm[0]=room_speed*20*(-global.graphics+3);
         }
@@ -87,6 +86,6 @@ if file_exists(argument0)&&file_exists(argument0+".meta") {
         //More objects to come
         ini_close();
     } else {
-        dialouge("Error! This version of the game isn't compatable with this save file!",0,0);
+        dialouge("Error! This version of the game isn't compatable with this save file!#Resorting to creating a new game with settings that could be salvaged from the save data...",0,0);
     }
 }
