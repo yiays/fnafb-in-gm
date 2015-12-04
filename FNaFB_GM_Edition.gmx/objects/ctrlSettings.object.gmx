@@ -27,13 +27,14 @@
             <kind>1</kind>
             <string>///Init
 option=0;
-options=6;
+options=7;
 soptions[0]=3;
 soptions[1]=2;
 soptions[2]=2;
 soptions[3]=0;
 soptions[4]=0;
 soptions[5]=0;
+soptions[6]=0;
 soption[0]=1;
 soption[1]=1;
 ini_open(working_directory+"settings.ini") {
@@ -53,8 +54,9 @@ otext[2,0]="Input";
     otext[2,1]="virtual keys only";
     otext[2,2]="virtual keys + touchscreen";
 otext[3,0]="Reset game";
-otext[4,0]="Save";
-otext[5,0]="&lt;- Return";
+otext[4,0]="Import/Export Saves";
+otext[5,0]="Save";
+otext[6,0]="&lt;- Return";
 
 if os_type==os_windows||os_type==os_linux||os_type==os_macosx||os_type==os_unknown {
     otext[2,1]="keyboard only";
@@ -65,6 +67,7 @@ if os_type==os_windows||os_type==os_linux||os_type==os_macosx||os_type==os_unkno
     soptions[5]=0;
     soptions[6]=0;
     soptions[7]=0;
+    soptions[8]=0;
     soption[3]=1;
     soption[4]=1;
     ini_open(working_directory+"settings.ini") {
@@ -80,8 +83,9 @@ if os_type==os_windows||os_type==os_linux||os_type==os_macosx||os_type==os_unkno
         otext[4,1]="off";
         otext[4,2]="on";
     otext[5,0]="Reset game";
-    otext[6,0]="Save";
-    otext[7,0]="&lt;- Return";
+    otext[6,0]="Import/Export Saves";
+    otext[7,0]="Save";
+    otext[8,0]="&lt;- Return";
 }
 
 fade=1;
@@ -343,7 +347,7 @@ if reset&gt;0 {
             <string>///Apply/change settings
 if !del {
     honk=1;
-    tgl=options-3;
+    tgl=options-4;
     if option&lt;tgl { //Change settings
         soption[option]++;
         if soption[option]&gt;soptions[option] {
@@ -356,7 +360,10 @@ if !del {
         del=1;
         dialouge("To delete all saved data, hold down delete for 3 seconds.",0,0);
     }
-    if option==tgl+1 { //Save and apply settings
+    if option==tgl+1 { //Launch backup manager
+        show_message_async("Work in progress...");
+    }
+    if option==tgl+2 { //Save and apply settings
         //Save cross-platform settings first
         global.graphics=soption[0]-1;
         global.touch=soption[1]-1;
@@ -388,7 +395,7 @@ if !del {
             ini_close();
         }
     }
-    if option==tgl+2 { //Return
+    if option==tgl+3 { //Return
         audio_play_sound(sndwindup2,90,0);
         transition=0;
         honk=0;

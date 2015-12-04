@@ -422,9 +422,12 @@ if say!="0" {
 if transattack {
     if anim&lt;1 {
         anim+=0.01;
-        //Prevent player from moving somehow.
+        talking=1;
+        move=0;
+        udlri=4;
     } else {
         anim=0;
+        talking=0;
         transattack=0;
         rmpower=ctrlGame.rmpower;
         touchctrl(1,1);
@@ -436,7 +439,7 @@ if transattack {
             //Initialize settings for battle
             rmpower=other.rmpower;
             onstage=other.onstage;
-            players=1;
+            players=1; //Init Players
             name[0]="Freddy";
             hth[0]=other.hth;
             mxhth[0]=other.mxhth;
@@ -449,6 +452,38 @@ if transattack {
             eff[0]=other.eff;
             lvl[0]=other.lvl;
             xp[0]=other.xp;
+            
+            enemies=floor(random_range(1,4+other.rmpower));
+            i=0;
+            repeat(enemies){
+                switch rmpower {
+                    case 0:
+                        ename[i]="Alpha";
+                        espr[i]=sprpartyhat;
+                    break;
+                    case 1:
+                        ename[i]="Beta";
+                        espr[i]=sprbetapartyhat;
+                    break;
+                    case 2:
+                        ename[i]="Gamma";
+                        espr[i]=sprgammapartyhat;
+                    break;
+                    case 3:
+                        ename[i]="Omega";
+                        espr[i]=spromegapartyhat;
+                    break;
+                }
+                ename[i]+=" Party Hat";
+                ehth[0]=100*(rmpower+1);
+                emxhth[0]=100*(rmpower+1);
+                //eskl[0]=other.skl;    I'm not sure if these are used
+                //emxskl[0]=other.mxskl;
+                eatk[0]=(rmpower+1);
+                edef[0]=(rmpower+1);
+                eeff[0]="none";
+                i++;
+            }
         }
     }
 }

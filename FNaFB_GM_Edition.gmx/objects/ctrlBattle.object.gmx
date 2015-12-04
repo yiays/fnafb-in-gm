@@ -52,9 +52,10 @@ options[0]=2;
 otext[0,0]="Engage";
     //Level 1 is players
         otext[2,0]="Scream";
-            //Level 3 is Enemies
+            //Level 4 is Enemies
         otext[2,1]="Skills";
-            //Level 4 is Skills
+            //Level 3 is Skills
+                //Level 4 is Enemies
         otext[2,2]="Guard";
         otext[2,3]="&lt;- Return";
 otext[0,1]="Run";
@@ -109,26 +110,21 @@ level=0;
             <kind>1</kind>
             <string>///Setup to be done after creator has set variables
 //"Party hat appeared"
-hpower="Unoun";
 switch rmpower {
     case 0:
-        hpower="Alpha";
         audio_play_sound(bgm181,90,1);
     break;
     case 1:
-        hpower="Beta";
         audio_play_sound(bgm181,90,1);
     break;
     case 2:
-        hpower="Gamma";
         audio_play_sound(bgmOFFOST4,90,1);
     break;
     case 3:
-        hpower="Omega";
         audio_play_sound(bgmOFFOST4,90,1);
     break;
 }
-dialouge(hpower+" Party Hat appeared!",0,0);
+dialouge(ename[0]+" appeared!",0,0);
 ask=1;
 options[1]=players;
 options[3]=enemies;
@@ -353,6 +349,52 @@ switch room {
     break;
 }
 
+//Draw enemies
+switch enemies {
+    case 1:
+        draw_sprite(espr[0],-1,272,160);
+    break;
+    case 2:
+        draw_sprite(espr[0],-1,180,160);
+        draw_sprite(espr[1],-1,363,160);
+    break;
+    case 3:
+        draw_sprite(espr[0],-1,136,140);
+        draw_sprite(espr[1],-1,272,170);
+        draw_sprite(espr[2],-1,408,150);
+    break;
+    case 4:
+        draw_sprite(espr[0],-1,109,140);
+        draw_sprite(espr[1],-1,217,180);
+        draw_sprite(espr[2],-1,326,160);
+        draw_sprite(espr[3],-1,434,140);
+    break;
+    case 5:
+        draw_sprite(espr[0],-1,90,180);
+        draw_sprite(espr[1],-1,180,140);
+        draw_sprite(espr[2],-1,271,160);
+        draw_sprite(espr[3],-1,362,140);
+        draw_sprite(espr[3],-1,423,180);
+    break;
+    case 6:
+        draw_sprite(espr[0],-1,77,160);
+        draw_sprite(espr[1],-1,154,160);
+        draw_sprite(espr[2],-1,231,160);
+        draw_sprite(espr[3],-1,310,160);
+        draw_sprite(espr[3],-1,388,160);
+        draw_sprite(espr[3],-1,466,160);
+    break;
+    case 7:
+        draw_sprite(espr[0],-1,77,160);
+        draw_sprite(espr[1],-1,154,160);
+        draw_sprite(espr[2],-1,231,160);
+        draw_sprite(espr[3],-1,310,160);
+        draw_sprite(espr[3],-1,388,160);
+        draw_sprite(espr[3],-1,466,160);
+    break;
+}
+
+//Draw battle GUI
 draw_sprite(sprDialouge,0,x,y+48);
 var i=0;
 repeat(options[0]) {

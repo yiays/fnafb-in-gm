@@ -79,7 +79,9 @@ modes
 mode     = 1;
 
 //begin parsing the formatting syntax out of the raw rtf string
-for(i = 1; i <= string_length(str); i++){
+i=0;
+while(i<string_length(str)) {
+    i++;
     sc3 = string_copy(str, i, 3);
     sc4 = string_copy(str, i, 4);
     if(sc3 == "[b]"){
@@ -139,9 +141,11 @@ for(i = 1; i <= string_length(str); i++){
 }
 
 //draw the formatted rtf string to the screen
-for(i = 1; i <= string_length(str); i++){
+i=0;
+while(i<string_length(str)){
+    i++;
     if(string_copy(str, i, 1) == "#"){next_x = 0; next_y += string_height("#");}
-    draw_set_color(ds_map_find_value(col_map, i));
+    if !is_undefined(ds_map_find_value(col_map, i)) draw_set_color(ds_map_find_value(col_map, i));
     switch(ds_map_find_value(rtf_map, i)){
         case 1:
         draw_set_font(f_r);

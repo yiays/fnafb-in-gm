@@ -235,7 +235,7 @@ repeat(options) {
             draw_sprite(sprFoxy,0,x+192+dx,84+(i*80));
         }
         draw_set_halign(fa_right);
-        draw_text(528,128+(i*80),hms(0,0,gametime[i+1]));
+        draw_text(528,128+(i*80),hms(gametime[i+1]));
         draw_set_halign(fa_left);
     }
     i++;

@@ -51,11 +51,9 @@ set[4]=0;
 set[5]=0;
 repeat(4) {
     if file_exists(working_directory+"slot"+string(i)+".fnafb.meta") {
-        ini_open_from_string(working_directory+"slot"+string(i)+".fnafb.meta");
-            if ini_read_real("meta","exists",0) &amp;&amp; (ini_read_real("meta","saveslot",0)==i) {
+        ini_open(working_directory+"slot"+string(i)+".fnafb.meta");
+            if ini_read_real("meta","exists",0) {// &amp;&amp; (ini_read_real("meta","saveslot",0)==i) {
                 set[i]=1;
-                copyright[i]=ini_read_real("meta","copyright",0);
-                gamemode[i]=ini_read_real("meta","gamemode",0);
                 gametime[i]=ini_read_real("meta","gametime",0);
                 hasFreddy[i]=ini_read_real("data","freddy",0);
                 hasBonnie[i]=ini_read_real("data","bonnie",0);
@@ -238,7 +236,7 @@ repeat(options) {
             draw_sprite(sprFoxy,0,x+192+dx,84+(i*80));
         }
         draw_set_halign(fa_right);
-        draw_text(528,128+(i*80),hms(0,0,gametime[i+1]));
+        draw_text(528,128+(i*80),hms(gametime[i+1]));
         draw_set_halign(fa_left);
     }
     i++;

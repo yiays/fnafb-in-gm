@@ -207,13 +207,28 @@ if global.ingame {
         //Pause game and open pause menu
         touchctrl(1,1);
         alarm[2]=2;
-        instance_deactivate_all(0);
-        instance_activate_object(ctrlMaster);
-        if !global.usemouse instance_activate_object(ctrlTouch);
         //screen_save(temp_directory+"pause.png");
         with (instance_create(0,0,ctrlPause)) {
             //sprpause=sprite_add(temp_directory+"pause.png",1,0,0,0,0);
+            //Initialize game info for use when Freddy is paused
+            players=1;
+            name[0]="Freddy";
+            hth[0]=objFreddy.hth;
+            mxhth[0]=objFreddy.mxhth;
+            skl[0]=objFreddy.skl;
+            mxskl[0]=objFreddy.mxskl;
+            tec[0]=floor(random_range(0,15*abs(global.gamemode-3)));
+            mxtec[0]=100;
+            atk[0]=objFreddy.atk;
+            def[0]=objFreddy.def;
+            eff[0]=objFreddy.eff;
+            lvl[0]=objFreddy.lvl;
+            xp[0]=objFreddy.xp;
         }
+        instance_deactivate_all(0);
+        instance_activate_object(ctrlMaster);
+        instance_activate_object(ctrlPause);
+        if !global.usemouse instance_activate_object(ctrlTouch);
     }
 }
 //Animate bar sprite

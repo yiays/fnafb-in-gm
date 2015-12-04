@@ -167,14 +167,14 @@
   </sounds>
   <sprites name="sprites">
     <sprites name="Enemies">
+      <sprite>sprites\sprpartyhat</sprite>
       <sprite>sprites\sprbetapartyhat</sprite>
+      <sprite>sprites\sprgammapartyhat</sprite>
+      <sprite>sprites\spromegapartyhat</sprite>
       <sprite>sprites\sprBonBon</sprite>
       <sprite>sprites\sprBonBon1</sprite>
-      <sprite>sprites\sprgammapartyhat</sprite>
       <sprite>sprites\sprGolden_Freddy</sprite>
       <sprite>sprites\spreneMangle</sprite>
-      <sprite>sprites\spromegapartyhat</sprite>
-      <sprite>sprites\sprpartyhat</sprite>
       <sprite>sprites\sprenePuppet</sprite>
       <sprite>sprites\sprPuppetmaster</sprite>
       <sprite>sprites\sprSecurity_Camera</sprite>

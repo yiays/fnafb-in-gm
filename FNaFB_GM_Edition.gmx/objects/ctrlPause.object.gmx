@@ -43,17 +43,27 @@ fadeinout=1;
 
 //Characters
 char=0;
-chars=4;
-cname[0]="Freddy";
-cname[1]="Bonnie";
-cname[2]="Chica";
-cname[3]="Foxy";
+players=1;
+name[0]="Error";
 
 //Variables
 gameend=0;
 choosechar=0;
 ask=0;
 avatar=-1;
+
+//Initialize game info for use when Freddy is paused
+hth[0]=0;
+mxhth[0]=0;
+skl[0]=0;
+mxskl[0]=0;
+tec[0]=0;
+mxtec[0]=100;
+atk[0]=0;
+def[0]=0;
+eff[0]=0;
+lvl[0]=0;
+xp[0]=0;
 
 audio_pause_all();
 </string>
@@ -131,7 +141,7 @@ if !ask&amp;&amp;global.usemouse {
             }
         }
         var i=0;
-        repeat(chars) {
+        repeat(players) {
             if mouse_y&gt;y+8+(i*100)&amp;&amp;mouse_y&lt;y+8+((i+1)*100) {
                 if char!=i {
                     char=i;
@@ -189,13 +199,13 @@ if !ask {
             if char&gt;=1 {
                 char--;
             } else {
-                char=chars-1;
+                char=players-1;
             }
             audio_play_sound(sndblip3,90,0);
         }
         if keyboard_check_pressed(vk_down) {
             char++;
-            if char&gt;=chars {
+            if char&gt;=players {
                 char=0;
             }
             audio_play_sound(sndblip3,90,0);
@@ -293,30 +303,30 @@ repeat(options) {
 
 //Characters
 i=0;
-repeat(chars) {
+repeat(players) {
     draw_set_halign(fa_left);
-    if cname[i]=="Freddy" draw_sprite(sprFaces,0,168,8+(i*100));
-    else if cname[i]=="Bonnie" draw_sprite(sprFaces,1,168,8+(i*100));
-    else if cname[i]=="Chica" draw_sprite(sprFaces,2,168,8+(i*100));
-    else if cname[i]=="Foxy" draw_sprite(sprFaces,3,168,8+(i*100));
-    draw_text(272,30+(i*100),cname[i]);
+    if name[i]=="Freddy" draw_sprite(sprFaces,0,168,8+(i*100));
+    else if name[i]=="Bonnie" draw_sprite(sprFaces,1,168,8+(i*100));
+    else if name[i]=="Chica" draw_sprite(sprFaces,2,168,8+(i*100));
+    else if name[i]=="Foxy" draw_sprite(sprFaces,3,168,8+(i*100));
+    draw_text(272,30+(i*100),name[i]);
     draw_set_colour(c_blue);
     draw_text(272,50+(i*100),"LV");
     draw_set_colour(c_white);
-    draw_text(300,50+(i*100),"1");
+    draw_text(300,50+(i*100),string(lvl[i]));
     draw_set_colour(c_blue);
     draw_text_transformed(434,50+(i*100),"LIFE",0.6,0.9,0);
     draw_set_colour(c_white);
     draw_set_halign(fa_right);
-    draw_rectangle_colour(434,60+(i*100),434+45,65+(i*100),make_colour_rgb(211,84,0),make_colour_rgb(211,84,0),make_colour_rgb(243,156,18),make_colour_rgb(243,156,18),0);
-    draw_text(534,50+(i*100),"100/221");
+    draw_rectangle_colour(434,60+(i*100),434+(hth[i]/mxhth[i])*100,65+(i*100),make_colour_rgb(211,84,0),make_colour_rgb(211,84,0),make_colour_rgb(243,156,18),make_colour_rgb(243,156,18),0);
+    draw_text(534,50+(i*100),string(hth[i])+"/"+string(mxhth[i]));
     draw_set_colour(c_blue);
     draw_set_halign(fa_left);
     draw_text_transformed(434,70+(i*100),"SKILL",0.6,0.9,0);
     draw_set_colour(c_white);
     draw_set_halign(fa_right);
-    draw_rectangle_colour(434,80+(i*100),434+85,85+(i*100),make_colour_rgb(41,128,185),make_colour_rgb(41,128,185),make_colour_rgb(52,152,219),make_colour_rgb(52,152,219),0);
-    draw_text(534,70+(i*100),"100/120");
+    draw_rectangle_colour(434,80+(i*100),434+(skl[i]/mxskl[i])*100,85+(i*100),make_colour_rgb(41,128,185),make_colour_rgb(41,128,185),make_colour_rgb(52,152,219),make_colour_rgb(52,152,219),0);
+    draw_text(534,70+(i*100),string(skl[i])+"/"+string(mxskl[i]));
     i++;
 }
 if choosechar {
