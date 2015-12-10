@@ -145,6 +145,7 @@ i=0;
 while(i<string_length(str)){
     i++;
     if(string_copy(str, i, 1) == "#"){next_x = 0; next_y += string_height("#");}
+    else if(next_x>room_width){next_x = 0; next_y += string_height("#");}
     if !is_undefined(ds_map_find_value(col_map, i)) draw_set_color(ds_map_find_value(col_map, i));
     switch(ds_map_find_value(rtf_map, i)){
         case 1:

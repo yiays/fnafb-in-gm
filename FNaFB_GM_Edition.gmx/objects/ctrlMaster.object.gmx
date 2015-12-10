@@ -152,16 +152,18 @@ view_hport[0] = 416;
             <kind>1</kind>
             <string>///Initialize globalvars and load settings
 /* Debugging zone */
-
-
 //show_debug_overlay(1); //Benchmarking performance
+
+application_surface_draw_enable(false);
 randomize();
-globalvar input,gamemode,copyright,saveslot,graphics,touch,ingame,scale,lang,legacy,usemouse;
+globalvar input,ask,gamemode,copyright,saveslot,graphics,touch,ingame,nighttime,scale,lang,legacy,usemouse;
 input=-1;
+ask=0;
 copyright=0;
 gamemode=0;
 saveslot=-1;
 ingame=0;
+nighttime=1;
 lang="en";
 legacy=0;
 
@@ -178,7 +180,7 @@ askrecover=0;
 //Load settings
 ini_open(working_directory+"settings.ini")
 scale=ini_read_real("main","windowsize",1);
-graphics=ini_read_real("main","graphics",0);
+graphics=ini_read_real("main","graphics",1);
 window_set_fullscreen(ini_read_real("main","fullscreen",0));
 touch=ini_read_real("main","touch",-1);
 usemouse=ini_read_real("main","usemouse",1);
@@ -230,6 +232,32 @@ if file_exists(working_directory+"temp.fnafb") {
     askrecover=1;
     dialouge("Autosave found!#Would you like to resume your previous game?",1,2,"Yes","No")
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="74">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Draw application_surface with shaders
+if ingame&amp;&amp;graphics&gt;0&amp;&amp;nighttime shader_set(shdNight);
+draw_surface(application_surface,0,0);
+if ingame&amp;&amp;graphics&gt;0&amp;&amp;nighttime shader_reset();
 </string>
           </argument>
         </arguments>

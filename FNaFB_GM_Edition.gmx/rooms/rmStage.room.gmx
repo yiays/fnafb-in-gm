@@ -26,7 +26,7 @@
     <showViews>0</showViews>
     <deleteUnderlyingObj>0</deleteUnderlyingObj>
     <deleteUnderlyingTiles>-1</deleteUnderlyingTiles>
-    <page>0</page>
+    <page>2</page>
     <xoffset>0</xoffset>
     <yoffset>0</yoffset>
   </makerSettings>
@@ -361,6 +361,8 @@
     <tile bgName="tileGame" x="128" y="32" w="32" h="32" xo="0" yo="64" id="10001218" name="inst_B3CC1B50" depth="900000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="tileGame" x="32" y="32" w="32" h="32" xo="0" yo="32" id="10001219" name="inst_19D96601" depth="900000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="tileGame" x="448" y="32" w="32" h="32" xo="0" yo="32" id="10001220" name="inst_E82E6C92" depth="900000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="tileGame" x="32" y="192" w="32" h="32" xo="160" yo="160" id="10001222" name="inst_766531E8" depth="900000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="tileGame" x="32" y="224" w="32" h="32" xo="160" yo="160" id="10001223" name="inst_25D2E446" depth="900000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
   </tiles>
   <PhysicsWorld>0</PhysicsWorld>
   <PhysicsWorldTop>0</PhysicsWorldTop>

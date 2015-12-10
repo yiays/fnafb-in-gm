@@ -150,9 +150,8 @@ if ds_map_find_value(async_load, "id")==gnews {
             var i=file_text_open_from_string(news) {
                 news=file_text_read_string(i);
                 file_text_readln(i);
-                newsdetails="~";
                 while(!file_text_eof(i)){
-                    newsdetails+=file_text_read_string(i)+"#";
+                    newsdetails=file_text_read_string(i)+"#";
                     file_text_readln(i);
                 }
             }

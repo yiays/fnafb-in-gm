@@ -34,6 +34,7 @@ fadedelay=room_speed*2;
 gametime=0;
 rmpower=0;
 rmindex=9;
+night=1;
 setchk=0;
 barsub=0;
 bary=-36;
@@ -103,6 +104,7 @@ global.saveslot=-1;
             <kind>1</kind>
             <string>///Recreate touch controls
 touchctrl(0);
+global.nighttime=night;
 </string>
           </argument>
         </arguments>
@@ -205,6 +207,8 @@ if newgame {
 if global.ingame {
     if keyboard_check_pressed(vk_escape)||keyboard_check_pressed(vk_backspace) {
         //Pause game and open pause menu
+        night=global.nighttime;
+        global.nighttime=0;
         touchctrl(1,1);
         alarm[2]=2;
         //screen_save(temp_directory+"pause.png");
@@ -261,7 +265,9 @@ if bary&gt;=544 {
             <kind>1</kind>
             <string>///Draw game gui
 if !newgame {
-    draw_set_alpha(0.2);
+    draw_set_alpha(1);
+    draw_sprite(sprRec,0,0,416);
+    draw_set_alpha(0.3);
     draw_set_colour(c_black);
     draw_set_halign(fa_left);
     draw_rectangle(0,0,544,416,0);
@@ -275,11 +281,13 @@ if !newgame {
     draw_sprite_ext(sprOverlay,0,6,410,1,1,90,c_white,1);
     draw_set_colour(c_white);
     draw_set_halign(fa_center);
-    draw_text(272,400,"Power");
+    draw_set_font(fntMid);
+    draw_set_colour(make_colour_rgb(125,125,125));
+    draw_text(272,390,"POWER");
+    draw_set_font(fntMain);
     draw_set_halign(fa_left);
     draw_sprite(sprMap,rmindex,544,416);
     draw_sprite(sprPowerBar,rmpower,272,384);
-    draw_sprite(sprRec,0,0,416);
 }
 </string>
           </argument>
@@ -303,7 +311,8 @@ if !newgame {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Draw git gud and join today poster
+            <string>///Draw game elements
+//Git gud and join today
 if fade&gt;0 {
     draw_set_alpha(1);
     draw_set_colour(c_black);

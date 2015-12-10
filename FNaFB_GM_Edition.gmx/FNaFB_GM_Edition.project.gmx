@@ -274,9 +274,11 @@
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shdMosaic.shader</shader>
     <shader type="GLSLES">shaders\shd_greyscale.shader</shader>
+    <shader type="GLSLES">shaders\shdNight.shader</shader>
   </shaders>
   <fonts name="fonts">
     <font>fonts\fntMain</font>
+    <font>fonts\fntMid</font>
     <font>fonts\fntMainReg</font>
     <font>fonts\fntMainItalic</font>
     <font>fonts\fntMainBoldItalic</font>
@@ -330,8 +332,8 @@
   <constants number="4">
     <constant name="version">0</constant>
     <constant name="major">0</constant>
-    <constant name="minor">3</constant>
-    <constant name="build">"alpha2"</constant>
+    <constant name="minor">4</constant>
+    <constant name="build">"-alpha1"</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

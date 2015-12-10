@@ -38,15 +38,15 @@ soptions[6]=0;
 soption[0]=1;
 soption[1]=1;
 ini_open(working_directory+"settings.ini") {
-    soption[0]=ini_read_real("main","graphics",0)+1;
+    soption[0]=ini_read_real("main","graphics",1)+1;
     soption[1]=ini_read_real("main","touch",0)+1;
     soption[2]=ini_read_real("main","usemouse",1)+1;
     ini_close();
 }
 otext[0,0]="Graphics";
-    otext[0,1]="fast";
+    otext[0,1]="minimal";
     otext[0,2]="decent";
-    otext[0,3]="fancy";
+    otext[0,3]="overkill";
 otext[1,0]="Touchscreen";
     otext[1,1]="off";
     otext[1,2]="on";
