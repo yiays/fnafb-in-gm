@@ -187,6 +187,7 @@
     <sprites name="System">
       <sprite>sprites\sprGameOver</sprite>
       <sprite>sprites\sprLogo</sprite>
+      <sprite>sprites\sprRedArrow</sprite>
     </sprites>
     <sprites name="Sequences">
       <sprite>sprites\seqNews</sprite>
@@ -307,6 +308,7 @@
       <object>objects\objDoor</object>
       <object>objects\objBathDoor</object>
       <object>objects\objtalk</object>
+      <object>objects\objstory</object>
       <object>objects\objFreddy</object>
       <object>objects\objMyCollection</object>
       <object>objects\objSatanDesk</object>

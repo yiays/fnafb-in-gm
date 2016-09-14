@@ -97,7 +97,7 @@ if ask {
         }
     }
 }
-if room==rmInit&amp;&amp;(keyboard_check(vk_enter)||mouse_check_button(mb_left)) {
+if !ask&amp;&amp;(room==rmInit&amp;&amp;(keyboard_check(vk_enter)||mouse_check_button(mb_left))) {
     if logo&lt;100 logo=100;
 }
 </string>
@@ -189,7 +189,7 @@ ini_close();
 if !usemouse touchctrl(0);
 
 //Set language if possible
-lang=string_lower(os_get_language());
+lang=string_lower(os_get_language()); //This code assumes that en.ini will always be available. The game won't work otherwise.
 if lang!="en" {
     if string_length(lang)!=2 {
         show_debug_message("Language provided in invalid format ("+lang+")! Resorted to en.");
@@ -226,11 +226,11 @@ if 544*scale&lt;display_get_width()&amp;&amp;416*scale&lt;display_get_height() {
 display_set_gui_size(544*scale,416*scale);
 alarm[0]=1;
 
-//Check if we can restore a game that was never exited
+//Check if we can restore a game that was never saved properly
 if file_exists(working_directory+"temp.fnafb") {
     ask=1;
     askrecover=1;
-    dialouge("Autosave found!#Would you like to resume your previous game?",1,2,"Yes","No")
+    dialouge("Autosave found!#Would you like to resume your previous game?",1,2,"Yes","No");
 }
 </string>
           </argument>

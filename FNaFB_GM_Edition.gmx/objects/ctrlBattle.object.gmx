@@ -30,6 +30,7 @@ audio_pause_all();
 avatar=-1;
 done=0;
 trans=0;
+selenemies=0;
 
 players=0;
 enemies=0;
@@ -43,19 +44,15 @@ option[0]=0;
     option[1]=0;
         option[2]=0;
             option[3]=0;
-            option[4]=0;
 options[0]=2;
     options[1]=0;
         options[2]=4;
             options[3]=0;
-            options[4]=0;
 otext[0,0]="Engage";
     //Level 1 is players
         otext[2,0]="Scream";
-            //Level 4 is Enemies
         otext[2,1]="Skills";
-            //Level 3 is Skills
-                //Level 4 is Enemies
+            otext[3,0]="&lt;no skills&gt;"
         otext[2,2]="Guard";
         otext[2,3]="&lt;- Return";
 otext[0,1]="Run";
@@ -157,11 +154,11 @@ if global.usemouse {
             if mouse_y&gt;y+16+(option[0]*24)&amp;&amp;mouse_y&lt;y+16+((option[0]+1)*24) {
                 event_perform(ev_keypress,vk_enter);
             }
-        } else if level==1 {
+        }/* else if level==1 {
             if mouse_y&lt;y+16+(option[1]*24)&amp;&amp;mouse_y&lt;y+16+((option[1]+1)*24) {
                 event_perform(ev_keypress,vk_enter);
             }
-        }
+        }*/
     }
     var i=0;
     if level==0 {
@@ -174,7 +171,7 @@ if global.usemouse {
             }
             i++;
         }
-    } else if level==1 {
+    }/* else if level==1 {
         repeat(options[1]) {
             if depth==0&amp;&amp;mouse_x&gt;144&amp;&amp;mouse_y&gt;y+16+(i*24)&amp;&amp;mouse_y&lt;y+16+((i+1)*24) {
                 if option[1]!=i {
@@ -184,7 +181,7 @@ if global.usemouse {
             }
             i++;
         }
-    }
+    }*/
 }
 </string>
           </argument>
@@ -207,31 +204,48 @@ if global.usemouse {
           <argument>
             <kind>1</kind>
             <string>///Keyboard controls
-if keyboard_check_pressed(vk_escape)||keyboard_check_pressed(vk_backspace) {
-    if level&gt;0 {
-        audio_play_sound(sndwindup2,90,0);
-        level--;
-    } else {
-        audio_play_sound(snderror,90,0);
-    }
-}
-if keyboard_check_pressed(vk_up) {
-    if option[level]&gt;=1 {
-        option[level]--;
-    } else {
-        option[level]=options[level]-1;
-    }
-    audio_play_sound(sndblip3,90,0);
-}
-if keyboard_check_pressed(vk_down) {
-    option[level]++;
-    if option[level]&gt;=options[level] {
-        option[level]=0;
-    }
-    audio_play_sound(sndblip3,90,0);
+if ask||selenemies&gt;0 {
+  if keyboard_check_pressed(vk_escape)||keyboard_check_pressed(vk_backspace) {
+      if level&gt;0 {
+          audio_play_sound(sndwindup2,90,0);
+          level--;
+      } else {
+          audio_play_sound(snderror,90,0);
+      }
+  }
+  if keyboard_check_pressed(vk_up)&amp;&amp;level!=1 {
+      if option[level]&gt;=1 {
+          option[level]--;
+      } else {
+          option[level]=options[level]-1;
+      }
+      audio_play_sound(sndblip3,90,0);
+  }
+  if keyboard_check_pressed(vk_down)&amp;&amp;level!=1 {
+      option[level]++;
+      if option[level]&gt;=options[level] {
+          option[level]=0;
+      }
+      audio_play_sound(sndblip3,90,0);
+  }
 }
 if ask&amp;&amp;!instance_exists(objDialouge) {
     ask=0;
+}
+if selenemies&gt;0{
+   if keyboard_check_pressed(vk_left){
+      selenemies--;
+      if selenemies&lt;=0{
+         selenemies=enemies;
+      }
+      audio_play_sound(sndblip3,90,0);
+   }
+   if keyboard_check_pressed(vk_right){
+      selenemies++;
+      if selenemies&gt;enemies{
+         selenemies=1;
+      }
+   }
 }
 </string>
           </argument>
@@ -396,6 +410,9 @@ switch enemies {
 
 //Draw battle GUI
 draw_sprite(sprDialouge,0,x,y+48);
+if selenemies&gt;0{
+    draw_sprite(sprRedArrow,-1,(selenemies/(enemies+1))*544,70)
+}
 var i=0;
 repeat(options[0]) {
     draw_text(x+16,y+8+i*20,otext[0,i]);
@@ -484,10 +501,10 @@ repeat(players) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Do a thing
+            <string>///Battle mechanics
 if !ask {
     audio_play_sound(sndpop,90,0);
-    if level==0 {
+    if level==0 { //Engage or Run
         switch option[0] {
             case 0:
                 level++;
@@ -499,10 +516,20 @@ if !ask {
                 ask=1;
             break;
         }
-    } else if level==1 {
+    } else if level==1 { //Character
         level++;
-    } else if level==2 {
+    } else if level==2 { //Action
         switch option[2] {
+            case 0: //Scream
+                selenemies=1;
+            break;
+            case 1: //Skills
+                level++;
+            break;
+            case 2: //Guard
+                //increase defence
+                level=0;
+            break;
             case 3:
                 level--;
             break;

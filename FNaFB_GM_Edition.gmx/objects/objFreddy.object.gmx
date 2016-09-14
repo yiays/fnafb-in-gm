@@ -75,6 +75,9 @@ skills=ds_list_create();//Character skills
 talking=1;
 say="1";
 saydelay=20;
+story=0;
+storycount=0;
+saychar=0;
 </string>
           </argument>
         </arguments>
@@ -140,6 +143,28 @@ sndfreddy[42]=sndfreddy42;
 sndfreddy[43]=sndfreddy43;
 sndfreddy[44]=sndfreddy44;
 sndfreddy[45]=sndfreddy45;
+sndbonnie[1]=sndbonnie1;
+sndbonnie[2]=sndbonnie2;
+sndbonnie[3]=sndbonnie3;
+sndbonnie[4]=sndbonnie4;
+sndfoxy[1]=sndfoxy1;
+sndfoxy[2]=sndfoxy2;
+sndfoxy[3]=sndfoxy3;
+sndfoxy[4]=sndfoxy4;
+sndmangle[1]=sndmangle1;
+
+//map character sprites to names
+chartoname[0]='freddy';
+chartoname[1]='bonnie';
+chartoname[2]='chica';
+chartoname[3]='foxy';
+chartoname[4]='bb';
+chartoname[5]='bonnie';
+chartoname[6]='gfreddy';
+chartoname[7]='toybonnie';
+chartoname[8]='toyfreddy';
+chartoname[9]='toychica';
+chartoname[10]='mangle';
 </string>
           </argument>
         </arguments>
@@ -200,6 +225,20 @@ if !instance_exists(objDialouge) {
     talking=0;
     if audio_is_playing(sndfreddy[real(say)]) {
         audio_stop_sound(sndfreddy[real(say)]);
+    }
+    if story&gt;0{
+        if story&lt;storycount{
+            talking=1;
+            with instance_nearest(x,y,objstory){
+                objFreddy.say=say[objFreddy.story];
+                objFreddy.saydelay=saydelay[objFreddy.story];
+                objFreddy.saychar=char[objFreddy.story];
+            }
+            story++;
+        }else{
+            story=0;
+            saychar=0;
+        }
     }
 }
 </string>
@@ -338,8 +377,9 @@ if move {
     }
     if place_snapped(32,32) {
         move=1;
-        if instance_position(x,y,objStairs) {
-            onstage=!onstage;
+        if room=rmStage{
+            if (x&gt;=160&amp;&amp;x&lt;=352)&amp;&amp;y&lt;=160 onstage=1;
+            else onstage=0;
             if onstage {
                 ctrlGame.rmindex=9;
             } else {
@@ -384,15 +424,28 @@ animatePlayer(udlri,mspeed);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Overcomplicated dialouge script
+            <string>///Dialouge script
 if say!="0" {
     if saydelay&gt;0 {
         saydelay--;
     } else {
-        audio_play_sound(sndfreddy[real(say)],99,0);
+        switch chartoname[saychar]{
+            case 'freddy':
+                audio_play_sound(sndfreddy[real(say)],99,0);
+            break;
+            case 'bonnie':
+                audio_play_sound(sndbonnie[real(say)],99,0);
+            break;
+            case 'foxy':
+                audio_play_sound(sndfoxy[real(say)],99,0);
+            break;
+            case 'mangle':
+                audio_play_sound(sndmangle[real(say)],99,0);
+            break;
+        }
         ini_open(working_directory+global.lang+".ini");
-        if ini_read_string("freddy",say,"ERR: STRING UNDEFINED!")!="-1" {
-            dialouge(ini_read_string("freddy",say,"ERR: STRING UNDEFINED!"),0,0);
+        if ini_read_string(chartoname[saychar],say,"wow, I don't know what to say...")!="-1" {
+            dialouge(ini_read_string(chartoname[saychar],say,"wow, I don't know what to say..."),0,0);
         }
         ini_close();
         say="0";
@@ -513,7 +566,7 @@ if transattack {
             <kind>1</kind>
             <string>///Ridiculous talking script
 if talking {
-    alarm[0]=1;
+    alarm[0]=2;
 } else if move {
     switch pudlr {
         //Check for any objects to talk about in direction freddy is facing.
@@ -525,6 +578,16 @@ if talking {
                 }
                 talking=1;
             }
+            else if instance_position(x,y-32,objstory)!=noone {
+                with instance_position(x,y-32,objstory) {
+                    objFreddy.say=say[0];
+                    objFreddy.saydelay=saydelay[0];
+                    objFreddy.saychar=char[0];
+                    objFreddy.storycount=count;
+                }
+                talking=1;
+                story=1;
+            }
         break;
         case 1:
             if instance_position(x,y+32,objtalk)!=noone {
@@ -533,6 +596,16 @@ if talking {
                     objFreddy.saydelay=saydelay;
                 }
                 talking=1;
+            }
+            else if instance_position(x,y+32,objstory)!=noone {
+                with instance_position(x,y+32,objstory) {
+                    objFreddy.say=say[0];
+                    objFreddy.saydelay=saydelay[0];
+                    objFreddy.saychar=char[0];
+                    objFreddy.storycount=count;
+                }
+                talking=1;
+                story=1;
             }
         break;
         case 2:
@@ -543,6 +616,16 @@ if talking {
                 }
                 talking=1;
             }
+            else if instance_position(x-32,y,objstory)!=noone {
+                with instance_position(x-32,y,objstory) {
+                    objFreddy.say=say[0];
+                    objFreddy.saydelay=saydelay[0];
+                    objFreddy.saychar=char[0];
+                    objFreddy.storycount=count;
+                }
+                talking=1;
+                story=1;
+            }
         break;
         case 3:
             if instance_position(x+32,y,objtalk)!=noone {
@@ -551,6 +634,16 @@ if talking {
                     objFreddy.saydelay=saydelay;
                 }
                 talking=1;
+            }
+            else if instance_position(x+32,y,objstory)!=noone {
+                with instance_position(x+32,y,objstory) {
+                    objFreddy.say=say[0];
+                    objFreddy.saydelay=saydelay[0];
+                    objFreddy.saychar=char[0];
+                    objFreddy.storycount=count;
+                }
+                talking=1;
+                story=1;
             }
         break;
     }

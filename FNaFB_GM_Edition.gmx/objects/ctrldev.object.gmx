@@ -71,7 +71,8 @@ if os_is_network_connected() {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if mouse_y&lt;64 {
+            <string>///Handle input
+if mouse_y&lt;64 {
     glow=abs(-((mouse_y+20)/88))+0.5;
     if glow&gt;1 { glow=1; }
 } else {
@@ -79,7 +80,7 @@ if os_is_network_connected() {
 }
 if !ask &amp;&amp; mouse_y&lt;20 &amp;&amp; mouse_check_button_pressed(mb_left) {
     if step!=1 {
-        url_open_ext("http://github.com/yesiateyoursheep/fnafb-in-gm/releases/"+string(version)+"."+string(major)+"."+string(minor)+"-"+build+"/","_blank");
+        url_open_ext("http://github.com/yesiateyoursheep/fnafb-in-gm/releases/"+string(version)+"."+string(major)+"."+string(minor)+build+"/","_blank");
         dialouge("Opening your default web browser...",0,0);
     } else {
         ask=1;
@@ -89,7 +90,7 @@ if !ask &amp;&amp; mouse_y&lt;20 &amp;&amp; mouse_check_button_pressed(mb_left) 
 if ask &amp;&amp; global.input!=-1 {
     ask=0;
     if global.input==0 {
-        url_open_ext("http://github.com/yesiateyoursheep/fnafb-in-gm/releases/"+string(version)+"."+string(major)+"."+string(minor)+"-"+build+"/","_blank");
+        url_open_ext("http://github.com/yesiateyoursheep/fnafb-in-gm/releases/"+string(version)+"."+string(major)+"."+string(minor)+build+"/","_blank");
         dialouge("Opening your default web browser...",0,0);
     }
 }

@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>///Load Game and Go to appropriate room
 show_debug_message("Starting game...");
+avatar=-1;
 newgame=0;
 fade=0;
 fadeinout=0;
@@ -204,7 +205,7 @@ if newgame {
         }
     }
 }
-if global.ingame {
+if global.ingame&amp;&amp;instance_exists(objFreddy) {
     if keyboard_check_pressed(vk_escape)||keyboard_check_pressed(vk_backspace) {
         //Pause game and open pause menu
         night=global.nighttime;

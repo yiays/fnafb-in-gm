@@ -3,8 +3,8 @@
 with instance_create(0,368,objDialouge) {
     text=argument[0];
     yn=argument[1];
-    if global.ingame {
-        avatar=other.avatar;
+    if other==instance_find(objFreddy,0) {
+        avatar=other.saychar;
     } else {
         avatar=-1;
     }
