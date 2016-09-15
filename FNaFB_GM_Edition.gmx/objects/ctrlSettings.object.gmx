@@ -46,14 +46,15 @@ otext[0,0]="Graphics";
     otext[0,2]="decent";
     otext[0,3]="overkill";
 otext[1,0]="Input";
-    otext[1,1]="virtual keys only";
-    otext[1,2]="virtual keys + touchscreen";
+    otext[1,1]="buttons only";
+    otext[1,2]="buttons + touchscreen";
 otext[2,0]="Reset game";
 otext[3,0]="Import/Export Saves";
 otext[4,0]="Apply";
 otext[5,0]="&lt;- Return";
 
 if os_type==os_windows||os_type==os_linux||os_type==os_macosx||os_type==os_unknown {
+    //Desktop focused features, 
     otext[1,1]="keyboard only";
     otext[1,2]="keyboard + mouse";
     options+=3;
@@ -103,6 +104,7 @@ audio_play_sound(bgsOfficeFan,90,1);
 
 //Dialouge handling
 avatar=-1;
+ask=0;
 del=0;
 deli=0;
 reset=-1;
@@ -185,7 +187,7 @@ if del {
             <kind>1</kind>
             <string>///Mouse controls
 //Do mouse related stuff
-if !del &amp;&amp; global.usemouse {
+if (!del&amp;&amp;!ask)&amp;&amp;global.usemouse {
     var i=0;
     repeat(options) {
         if mouse_y&gt;128+(i*24)&amp;&amp;mouse_y&lt;128+((i+1)*24) {
@@ -223,7 +225,7 @@ if !del &amp;&amp; global.usemouse {
           <argument>
             <kind>1</kind>
             <string>///Keyboard controls
-if !del {
+if !del&amp;&amp;!ask {
     if keyboard_check_pressed(vk_escape)||keyboard_check_pressed(vk_backspace) {
         audio_play_sound(sndwindup2,90,0);
         transition=0;
@@ -257,6 +259,9 @@ if !del {
         }
         audio_play_sound(sndblip3,90,0);
     }
+}
+else if ask&amp;&amp;!instance_exists(objDialouge){
+    ask=0;
 }
 </string>
           </argument>
@@ -347,7 +352,7 @@ if reset&gt;0 {
           <argument>
             <kind>1</kind>
             <string>///Apply/change settings
-if !del {
+if !del&amp;&amp;!ask {
     honk=1;
     tgl=options-4;
     if option&lt;tgl { //Change settings
@@ -360,30 +365,33 @@ if !del {
     }
     if option==tgl { //Reset the game
         del=1;
-        dialouge("To delete all saved data, hold down delete for 3 seconds.",0,0);
+        dialouge("To delete all saved data (including game progress!), hold down delete for 3 seconds.",0,0);
     }
     if option==tgl+1 { //Launch backup manager
-        show_message_async("Work in progress...");
+        ask=1;
+        dialouge("Work in progress...",0,0);
     }
     if option==tgl+2 { //Save and apply settings
         //Save cross-platform settings first
         global.graphics=soption[0]-1;
-        global.touch=soption[1]-1;
-        global.usemouse=soption[2]-1;
+        global.usemouse=soption[1]-1;
         if !global.usemouse&amp;&amp;global.touch touchctrl(0);
         else touchctrl(1,0);
         if os_type==os_windows||os_type==os_linux||os_type==os_macosx||os_type==os_unknown {
             //Save desktop specfic settings
+            global.touch=soption[2]-1;
             global.scale=soption[3];
             //Make game fit in screen
             if 544*global.scale&lt;display_get_width()&amp;&amp;416*global.scale&lt;display_get_height() {
                 window_set_size(544*global.scale,416*global.scale);
             } else {
+                ask=1;
+                dialouge("Your screen needs to be at least "+string(544*global.scale)+"x"+string(416*global.scale)+" to support "+string(global.scale)+"x resolution.#You can go in fullscreen to have unrestriced resolutions.",0,0);
                 global.scale=1;
-                window_set_size(544*global.scale,416*global.scale);
+                window_set_size(544,416);
             }
             display_set_gui_size(544*global.scale,416*global.scale);
-            window_set_fullscreen(soption[3]-1);
+            window_set_fullscreen(soption[4]-1);
             ctrlMaster.alarm[0]=1;
         }
         ini_open(working_directory+"settings.ini") {

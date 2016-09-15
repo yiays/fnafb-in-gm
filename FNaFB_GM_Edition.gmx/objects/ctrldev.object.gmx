@@ -33,6 +33,7 @@ transition=0;
 tran=0;
 askupdate=0;
 ask=0;
+update=0;
 olddrawtext="";
 drawtext="Please Wait...";
 
@@ -42,11 +43,9 @@ if os_is_network_connected() {
     news=" [i]Retreiving news...[/i]";
     newsdetails="~[b]Missing details![/b]#For details on this update, select [i]More Info[/i].";
     gupdate=http_get("https://github.com/yesiateyoursheep/fnafb-in-gm/raw/master/project-test-tube.gmx/version.ini");
-    update=0;
 } else {
     news=" [b]Unable to fetch news when offline...[/b]";
     gnews=-1;
-    update=0;
     gupdate=-1;
 }
 </string>
@@ -87,12 +86,13 @@ if !ask &amp;&amp; mouse_y&lt;20 &amp;&amp; mouse_check_button_pressed(mb_left) 
         dialouge(newsdetails,1,2,"More info","Dismiss");
     }
 }
-if ask &amp;&amp; global.input!=-1 {
-    ask=0;
+if ask&amp;&amp;global.input!=-1 {
     if global.input==0 {
         url_open_ext("http://github.com/yesiateyoursheep/fnafb-in-gm/releases/"+string(version)+"."+string(major)+"."+string(minor)+build+"/","_blank");
         dialouge("Opening your default web browser...",0,0);
     }
+    ask=0;
+    global.input=-1;
 }
 cdown--;
 if cdown&lt;=0 {
@@ -171,6 +171,7 @@ if ds_map_find_value(async_load, "id")==gupdate {
             if !instance_exists(objDialouge) {
                 dialouge("An update to FNaFB-in-GM is available!#Would you like to download it now?",1,2,"yes","no");
                 askupdate=1;
+                ask=1;
             }
        } else {
             update=0;
@@ -217,7 +218,7 @@ switch step {
         drawtext=" [b]UPDATE NEWS[/b]: "+news;
     break;
     case 2:
-        if update drawtext="[c=2ecc71][b]There's an update available.[/b][/c] Click here to download.";
+        if update drawtext="[c=2ecc71][b]There's an update available![/b][/c] Click here to download.";
         else drawtext=" [i]No updates available right now.[i]";
     break;
 }

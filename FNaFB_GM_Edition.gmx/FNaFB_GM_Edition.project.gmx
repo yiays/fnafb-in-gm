@@ -304,7 +304,6 @@
       <object>objects\objWall</object>
       <object>objects\objWall1</object>
       <object>objects\objWall2</object>
-      <object>objects\objStairs</object>
       <object>objects\objDoor</object>
       <object>objects\objBathDoor</object>
       <object>objects\objtalk</object>
@@ -335,7 +334,7 @@
     <constant name="version">0</constant>
     <constant name="major">0</constant>
     <constant name="minor">4</constant>
-    <constant name="build">"-alpha1"</constant>
+    <constant name="build">'-alpha2'</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

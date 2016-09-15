@@ -1,10 +1,5 @@
 ///saveGame(file);
-//A backward compatable version of GameMaker's built in save_game() function
-//  Only has the essensials for this game, so can't be copied elsewhere
-
-//  This is a very early concept of how the real saveload system will work, this lacks
-//    quite a few critical variables, future versions of loadGame will resort to default
-//    values in future versions.
+//A specialized backwards compatable version of GameMaker's built in save_game() function.
 file_delete(argument0);
 file_delete(argument0+".meta");
 
@@ -66,11 +61,13 @@ if instance_exists(objFreddy) {
     ini_write_string("objFreddy","ds_keyq",ds_list_write(objFreddy.keyq));
     ini_write_string("objFreddy","ds_equ",ds_list_write(objFreddy.equ));
     ini_write_string("objFreddy","ds_skills",ds_list_write(objFreddy.skills));
+}else{
+    show_debug_message("Freddy doesn't exist!!!");
 }
 //More objects to come
 ini_close();
 
-//Encode slotx.fnafb
+//Encrypt slotx.fnafb to prevent user editing
 var a=file_text_open_read(argument0) save="";
 while !file_text_eof(a) {
     save+=file_text_read_string(a)+chr(13)+chr(10);

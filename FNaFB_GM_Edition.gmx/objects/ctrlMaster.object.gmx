@@ -76,12 +76,13 @@ view_hport[0] = 416;
           <argument>
             <kind>1</kind>
             <string>///Respond to dialouge change
-if ask {
-    if input!=-1 {
+if room==rmInit{
+    if ask&amp;&amp;input!=-1 {
         if asktouch {
             touch=!input;
             input=-1;
             ask=0;
+            asktouch=0;
         }
         if askrecover {
             if global.input==0 {
@@ -94,11 +95,12 @@ if ask {
             }
             input=-1;
             ask=0;
+            askrecover=0;
         }
     }
-}
-if !ask&amp;&amp;(room==rmInit&amp;&amp;(keyboard_check(vk_enter)||mouse_check_button(mb_left))) {
-    if logo&lt;100 logo=100;
+    else if keyboard_check(vk_enter)||mouse_check_button(mb_left) {
+        if logo&lt;100 logo=100;
+    }
 }
 </string>
           </argument>

@@ -282,6 +282,7 @@ if instance_position(x,y,objBathDoor) &amp;&amp; !tped &amp;&amp; move {
     with instance_nearest(x,y,objBathDoor) {
         objFreddy.x=rmx;
         objFreddy.y=rmy;
+        objFreddy.udlri=udlri;
         ctrlGame.rmindex=rmindex;
         //audio_play_sound(snddooropen Sound missing!
         instance_deactivate_object(objFreddy);

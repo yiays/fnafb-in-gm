@@ -3,7 +3,7 @@
 with instance_create(0,368,objDialouge) {
     text=argument[0];
     yn=argument[1];
-    if other==instance_find(objFreddy,0) {
+    if instance_exists(objFreddy)&&other.id==objFreddy.id {
         avatar=other.saychar;
     } else {
         avatar=-1;
